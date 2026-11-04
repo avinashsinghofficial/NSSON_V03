@@ -1,0 +1,9 @@
+Source: original six-pair campaign JSON files.
+No pilot observations included; no runs selected by performance.
+Receiver rates use each flow's own interval span.
+Do not sum receiver means as synchronized aggregate goodput.
+Probe loss and final reported jitter use receiver end.sum.
+Inferred received packets = reported total minus reported losses.
+Run-level SD is descriptive, not a confidence interval.
+NSSON legend denotes static-queue configuration only.
+This campaign does not test inference-aware controller behavior.

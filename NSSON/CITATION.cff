@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it."
+type: software
+title: "NSSON_V02: Neuromorphic Spiking Split-computing with OpenFlow Network"
+version: "1.0.2"
+date-released: 2026-09-18
+authors:
+  - family-names: "Singh"
+    given-names: "Avinash"
+  - family-names: "Das"
+    given-names: "Rohit Kumar"
+repository-code: "https://github.com/avinashsinghofficial/NSSON_V02"
+url: "https://github.com/avinashsinghofficial/NSSON_V02"

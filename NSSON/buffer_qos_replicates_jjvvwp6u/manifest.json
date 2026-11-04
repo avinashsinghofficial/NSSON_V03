@@ -1,0 +1,63 @@
+{
+  "source_script": "/home/avi/NSSON/buffer_controlled_qos_1zzghfj8/pilot.py",
+  "source_sha256": "d588b58c00af46d6806cd0521d2cd72b27cd43498eb1cf61c03ad799d3e02096",
+  "randomization_seed": 73129,
+  "planned_pairs": 6,
+  "scope": "Static queue allocation, not inference-aware controller",
+  "schedule": [
+    {
+      "pair": 1,
+      "order": [
+        "static_queues",
+        "baseline"
+      ],
+      "script": "/home/avi/NSSON/buffer_qos_replicates_jjvvwp6u/pair_01/pilot.py",
+      "script_sha256": "ffd587477b807cd2190112b1a4fabbf0c461640d76fdecdba66e040645896a20"
+    },
+    {
+      "pair": 2,
+      "order": [
+        "baseline",
+        "static_queues"
+      ],
+      "script": "/home/avi/NSSON/buffer_qos_replicates_jjvvwp6u/pair_02/pilot.py",
+      "script_sha256": "677d464770361c31b9e4744c4b55dabc5317e7e2b73a00ac14058e99222450bf"
+    },
+    {
+      "pair": 3,
+      "order": [
+        "baseline",
+        "static_queues"
+      ],
+      "script": "/home/avi/NSSON/buffer_qos_replicates_jjvvwp6u/pair_03/pilot.py",
+      "script_sha256": "677d464770361c31b9e4744c4b55dabc5317e7e2b73a00ac14058e99222450bf"
+    },
+    {
+      "pair": 4,
+      "order": [
+        "static_queues",
+        "baseline"
+      ],
+      "script": "/home/avi/NSSON/buffer_qos_replicates_jjvvwp6u/pair_04/pilot.py",
+      "script_sha256": "ffd587477b807cd2190112b1a4fabbf0c461640d76fdecdba66e040645896a20"
+    },
+    {
+      "pair": 5,
+      "order": [
+        "baseline",
+        "static_queues"
+      ],
+      "script": "/home/avi/NSSON/buffer_qos_replicates_jjvvwp6u/pair_05/pilot.py",
+      "script_sha256": "677d464770361c31b9e4744c4b55dabc5317e7e2b73a00ac14058e99222450bf"
+    },
+    {
+      "pair": 6,
+      "order": [
+        "static_queues",
+        "baseline"
+      ],
+      "script": "/home/avi/NSSON/buffer_qos_replicates_jjvvwp6u/pair_06/pilot.py",
+      "script_sha256": "ffd587477b807cd2190112b1a4fabbf0c461640d76fdecdba66e040645896a20"
+    }
+  ]
+}

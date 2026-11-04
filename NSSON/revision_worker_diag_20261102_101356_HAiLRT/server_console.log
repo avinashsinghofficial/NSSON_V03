@@ -1,0 +1,38 @@
+{
+  "role": "server",
+  "pid": 24656,
+  "uid": 1000,
+  "gid": 1000,
+  "actual_network_namespace": "net:[4026533318]",
+  "expected_network_namespace": "net:[4026533318]",
+  "expected_ip": "10.231.77.2",
+  "observed_ipv4_addresses": [
+    "10.231.77.2",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "expected_ip_present": true
+}
+SERVER namespace and address checks passed
+STAGE: before NumPy import
+STAGE: NumPy import completed
+STAGE: before PyTorch import
+STAGE: PyTorch import completed; version=2.12.1+cu130
+STAGE: before torch.manual_seed
+STAGE: torch.manual_seed completed
+STAGE: before CUDA availability check
+STAGE: CUDA availability check completed: True
+STAGE: tensor environment ready: cuda:0
+STAGE: before CNN loading
+STAGE: CNN loading completed
+STAGE: before server warm-up
+STAGE: server warm-up completed
+STAGE: before bind 10.231.77.2:8090; netns=net:[4026533318]
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py", line 994, in <module>
+    main()
+  File "/home/avi/NSSON/revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py", line 987, in main
+    run_server(args)
+  File "/home/avi/NSSON/revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py", line 295, in run_server
+    listener.bind((SERVER_IP, SERVER_PORT))
+OSError: [Errno 99] Cannot assign requested address

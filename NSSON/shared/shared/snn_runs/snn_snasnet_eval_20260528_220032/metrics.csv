@@ -1,0 +1,2 @@
+dataset,acc,loss,avg_latency_ms,total_samples
+cifar10,0.903045,0.517007,172.707741,9984

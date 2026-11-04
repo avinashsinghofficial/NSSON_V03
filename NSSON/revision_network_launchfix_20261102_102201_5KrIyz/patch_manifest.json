@@ -1,0 +1,12 @@
+{
+  "source": "/home/avi/NSSON/revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py",
+  "source_sha256": "c44541ff9a30858fa6f9afca88cf5bd8ed3a243454e5533b96388be7a0e07738",
+  "patched_script": "/home/avi/NSSON/revision_network_launchfix_20261102_102201_5KrIyz/network_smoke.py",
+  "patched_sha256": "da5d67266c7af14451d3db8412147cb1fd4ddfce95df519ab084a2027bef14ff",
+  "changes": [
+    "Override Node.popen mncmd with mnexec -a HOST_PID.",
+    "Remove launcher detachment, retaining process-group isolation.",
+    "Verify server and client worker PIDs against Popen PIDs.",
+    "Preserve previous namespace and startup diagnostics."
+  ]
+}

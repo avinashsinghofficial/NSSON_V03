@@ -1,0 +1,308 @@
+#!/usr/bin/env python3
+"""
+Single-path measured QoS experiment for NSSON_V02.
+
+Purpose:
+- Compare baseline SDN-IoT vs NSSON inference-aware priority.
+- Use measured Mininet values for RTT, packet loss, UDP jitter/loss,
+  and TCP/8090 inference throughput.
+- Avoid unsupported multipath claims in the current topology.
+
+Topology:
+    qos_client + qos_bg_source -- s1 -- s2 -- qos_server + qos_bg_sink
+
+The bottleneck s1-s2 carries both:
+- TCP/8090 inference traffic
+- UDP background traffic
+
+Run with system Python:
+sudo /usr/bin/python3 qos_experiments/qos_priority_experiment.py \
+  --mode nsson_full --load moderate --rep 1
+"""
+
+import argparse
+import csv
+import os
+import re
+import time
+from datetime import datetime
+
+from mininet.link import TCLink
+from mininet.log import info, setLogLevel
+from mininet.net import Mininet
+from mininet.node import OVSKernelSwitch, RemoteController
+
+ROOT = "/home/avi/NSSON_V02"
+RAW_DIR = os.path.join(ROOT, "logs", "qos_raw")
+
+LOADS = {
+    "light": {
+        "background_mbps": 2,
+        "bottleneck_mbps": 20,
+        "bottleneck_delay": "3ms",
+        "duration_sec": 12,
+    },
+    "moderate": {
+        "background_mbps": 12,
+        "bottleneck_mbps": 20,
+        "bottleneck_delay": "3ms",
+        "duration_sec": 12,
+    },
+    "heavy": {
+        "background_mbps": 19,
+        "bottleneck_mbps": 20,
+        "bottleneck_delay": "3ms",
+        "duration_sec": 12,
+    },
+}
+
+
+def safe_cleanup():
+    """Remove only experiment bridges and temporary test processes."""
+    for bridge in ("s1", "s2"):
+        os.system(f"ovs-vsctl --if-exists del-br {bridge} >/dev/null 2>&1")
+    os.system("pkill -f 'mininet:qos_' >/dev/null 2>&1 || true")
+    os.system("rm -f /tmp/nsson_qos_* >/dev/null 2>&1")
+    time.sleep(1)
+
+
+def parse_ping(output):
+    tx = 0
+    rx = 0
+    loss_pct = 100.0
+    rtt_min = float("nan")
+    rtt_avg = float("nan")
+    rtt_max = float("nan")
+    rtt_mdev = float("nan")
+
+    match = re.search(
+        r"(\d+) packets transmitted, (\d+) received, ([0-9.]+)% packet loss",
+        output,
+    )
+    if match:
+        tx = int(match.group(1))
+        rx = int(match.group(2))
+        loss_pct = float(match.group(3))
+
+    match = re.search(
+        r"rtt min/avg/max/mdev = ([0-9.]+)/([0-9.]+)/([0-9.]+)/([0-9.]+) ms",
+        output,
+    )
+    if match:
+        rtt_min = float(match.group(1))
+        rtt_avg = float(match.group(2))
+        rtt_max = float(match.group(3))
+        rtt_mdev = float(match.group(4))
+
+    return tx, rx, loss_pct, rtt_min, rtt_avg, rtt_max, rtt_mdev
+
+
+def parse_iperf_bandwidth(output):
+    lines = [line for line in output.splitlines() if "Mbits/sec" in line]
+    if not lines:
+        return float("nan")
+
+    match = re.search(r"([0-9.]+)\s+Mbits/sec", lines[-1])
+    return float(match.group(1)) if match else float("nan")
+
+
+def parse_udp_iperf(output):
+    bandwidth_mbps = parse_iperf_bandwidth(output)
+    jitter_ms = float("nan")
+    loss_pct = float("nan")
+
+    lines = [line for line in output.splitlines() if "Mbits/sec" in line]
+    if lines:
+        match = re.search(
+            r"([0-9.]+)\s+Mbits/sec\s+([0-9.]+)\s+ms\s+\d+/\s*\d+\s+\(([0-9.]+)%\)",
+            lines[-1],
+        )
+        if match:
+            bandwidth_mbps = float(match.group(1))
+            jitter_ms = float(match.group(2))
+            loss_pct = float(match.group(3))
+
+    return bandwidth_mbps, jitter_ms, loss_pct
+
+
+def append_row(path, row):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    new_file = not os.path.exists(path)
+
+    with open(path, "a", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=list(row.keys()))
+        if new_file:
+            writer.writeheader()
+        writer.writerow(row)
+
+
+def run_experiment(mode, load_name, rep, controller_port):
+    cfg = LOADS[load_name]
+    duration = cfg["duration_sec"]
+
+    safe_cleanup()
+    os.makedirs(RAW_DIR, exist_ok=True)
+
+    info(
+        f"\n*** NSSON measured QoS experiment: "
+        f"mode={mode}, load={load_name}, rep={rep}\n"
+    )
+
+    net = Mininet(
+        controller=RemoteController,
+        switch=OVSKernelSwitch,
+        link=TCLink,
+        autoSetMacs=True,
+        build=False,
+    )
+
+    controller = net.addController(
+        "c0",
+        controller=RemoteController,
+        ip="127.0.0.1",
+        port=controller_port,
+    )
+
+    client = net.addHost("qc", ip="10.20.0.1/24")
+    server = net.addHost("qs", ip="10.20.0.2/24")
+    bg_source = net.addHost("qb1", ip="10.20.0.11/24")
+    bg_sink = net.addHost("qb2", ip="10.20.0.12/24")
+
+    s1 = net.addSwitch("s1", protocols="OpenFlow13")
+    s2 = net.addSwitch("s2", protocols="OpenFlow13")
+
+    net.addLink(client, s1, bw=100, delay="1ms")
+    net.addLink(bg_source, s1, bw=100, delay="1ms")
+    net.addLink(server, s2, bw=100, delay="1ms")
+    net.addLink(bg_sink, s2, bw=100, delay="1ms")
+
+    net.addLink(
+        s1,
+        s2,
+        bw=cfg["bottleneck_mbps"],
+        delay=cfg["bottleneck_delay"],
+        max_queue_size=30,
+        use_htb=True,
+    )
+
+    net.build()
+    controller.start()
+    s1.start([controller])
+    s2.start([controller])
+
+    info("*** Waiting for OpenFlow handshakes\n")
+    time.sleep(4)
+
+    server.cmd("pkill -f 'iperf -s' >/dev/null 2>&1 || true")
+    bg_sink.cmd("pkill -f 'iperf -s' >/dev/null 2>&1 || true")
+
+    server.cmd("iperf -s -p 8090 >/tmp/nsson_qos_tcp_server.log 2>&1 &")
+    bg_sink.cmd("iperf -s -u -p 5001 >/tmp/nsson_qos_udp_server.log 2>&1 &")
+    time.sleep(1)
+
+    info("*** Checking TCP/8090 server reachability\n")
+    probe = client.cmd(f"nc -zvw 2 {server.IP()} 8090 2>&1")
+    info(probe)
+
+    info(f"*** Starting background UDP load: {cfg['background_mbps']} Mbit/s\n")
+    bg_source.cmd(
+        f"iperf -c {bg_sink.IP()} -u -p 5001 "
+        f"-b {cfg['background_mbps']}M -t {duration} -i 1 "
+        f">/tmp/nsson_qos_background.log 2>&1 &"
+    )
+    time.sleep(2)
+
+    info("*** Measuring inference-path RTT and loss\n")
+    ping_output = client.cmd(f"ping -c 30 -i 0.2 -W 1 {server.IP()}")
+
+    info("*** Measuring TCP/8090 inference throughput\n")
+    tcp_output = client.cmd(f"iperf -c {server.IP()} -p 8090 -t 5 -i 1")
+
+    info("*** Measuring UDP background jitter, throughput, and loss\n")
+    udp_output = bg_source.cmd(
+        f"iperf -c {bg_sink.IP()} -u -p 5001 "
+        f"-b {cfg['background_mbps']}M -t 5 -i 1"
+    )
+
+    tx, rx, ping_loss, rtt_min, rtt_avg, rtt_max, rtt_mdev = parse_ping(
+        ping_output
+    )
+    tcp_mbps = parse_iperf_bandwidth(tcp_output)
+    udp_mbps, udp_jitter, udp_loss = parse_udp_iperf(udp_output)
+
+    row = {
+        "timestamp_utc": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "mode": mode,
+        "load": load_name,
+        "rep": rep,
+        "controller_port": controller_port,
+        "bottleneck_mbps": cfg["bottleneck_mbps"],
+        "bottleneck_delay_ms": float(cfg["bottleneck_delay"].replace("ms", "")),
+        "offered_background_mbps": cfg["background_mbps"],
+        "ping_tx": tx,
+        "ping_rx": rx,
+        "ping_loss_pct": ping_loss,
+        "rtt_min_ms": rtt_min,
+        "rtt_avg_ms": rtt_avg,
+        "rtt_max_ms": rtt_max,
+        "rtt_jitter_mdev_ms": rtt_mdev,
+        "control_tcp_throughput_mbps": tcp_mbps,
+        "background_udp_throughput_mbps": udp_mbps,
+        "background_udp_jitter_ms": udp_jitter,
+        "background_udp_loss_pct": udp_loss,
+    }
+
+    csv_path = os.path.join(
+        RAW_DIR,
+        f"qos_{mode}_{load_name}_rep{rep}.csv",
+    )
+    append_row(csv_path, row)
+
+    text_path = os.path.join(
+        RAW_DIR,
+        f"qos_{mode}_{load_name}_rep{rep}.txt",
+    )
+    with open(text_path, "w", encoding="utf-8") as file:
+        file.write("=== ICMP PING ===\n")
+        file.write(ping_output)
+        file.write("\n=== TCP IPERF 8090 ===\n")
+        file.write(tcp_output)
+        file.write("\n=== UDP IPERF BACKGROUND ===\n")
+        file.write(udp_output)
+
+    info(
+        f"\n*** RESULT: RTT={rtt_avg:.3f} ms; "
+        f"RTT mdev={rtt_mdev:.3f} ms; "
+        f"loss={ping_loss:.2f}%; "
+        f"TCP/8090={tcp_mbps:.3f} Mbit/s; "
+        f"UDP jitter={udp_jitter:.3f} ms; "
+        f"UDP loss={udp_loss:.2f}%\n"
+        f"*** Saved: {csv_path}\n"
+    )
+
+    net.stop()
+    safe_cleanup()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--mode",
+        choices=["baseline_sdn_iot", "nsson_full"],
+        required=True,
+    )
+    parser.add_argument(
+        "--load",
+        choices=["light", "moderate", "heavy"],
+        required=True,
+    )
+    parser.add_argument("--rep", type=int, required=True)
+    parser.add_argument("--controller-port", type=int, default=6633)
+    args = parser.parse_args()
+
+    setLogLevel("info")
+    run_experiment(args.mode, args.load, args.rep, args.controller_port)
+
+
+if __name__ == "__main__":
+    main()

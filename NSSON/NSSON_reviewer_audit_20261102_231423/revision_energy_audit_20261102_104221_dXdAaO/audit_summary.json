@@ -1,0 +1,74 @@
+{
+  "status": "completed",
+  "input_directory": "/home/avi/NSSON/revision_network_launchfix_20261102_102201_5KrIyz",
+  "audit_directory": "/home/avi/NSSON/revision_energy_audit_20261102_104221_dXdAaO",
+  "client_requests": 80,
+  "matched_remote_requests": 20,
+  "observed_cross_log_mismatches": 0,
+  "maximum_residual_mismatch_sec": 0.0,
+  "negative_roundoff_residuals_clipped": 0,
+  "energy_model_tests": {
+    "status": "passed",
+    "scope": "Arithmetic, unit conversion, input validation, and average-power bounds; not hardware calibration."
+  },
+  "policy_duration_summary": {
+    "adaptive_fixed": {
+      "requests": 20,
+      "offloaded": 0,
+      "mean_request_sec": 0.01524402695,
+      "mean_local_cnn_sec": 0.0,
+      "mean_local_snn_sec": 0.015239380949999999,
+      "mean_rpc_sec": 0.0,
+      "mean_other_sec": 4.6459999999999035e-06
+    },
+    "local_cnn": {
+      "requests": 20,
+      "offloaded": 0,
+      "mean_request_sec": 0.0018581098,
+      "mean_local_cnn_sec": 0.00185440415,
+      "mean_local_snn_sec": 0.0,
+      "mean_rpc_sec": 0.0,
+      "mean_other_sec": 3.70565e-06
+    },
+    "local_snn": {
+      "requests": 20,
+      "offloaded": 0,
+      "mean_request_sec": 0.0146954146,
+      "mean_local_cnn_sec": 0.0,
+      "mean_local_snn_sec": 0.01469113495,
+      "mean_rpc_sec": 0.0,
+      "mean_other_sec": 4.279650000000093e-06
+    },
+    "remote_cnn": {
+      "requests": 20,
+      "offloaded": 20,
+      "mean_request_sec": 0.0202401094,
+      "mean_local_cnn_sec": 0.0,
+      "mean_local_snn_sec": 0.0,
+      "mean_rpc_sec": 0.02023262055,
+      "mean_other_sec": 7.488849999999665e-06
+    }
+  },
+  "remote_only_break_even_rpc_power_ratio": {
+    "local_cnn": 0.0914671900966383,
+    "local_snn": 0.7259527115482823
+  },
+  "break_even_assumption": "Local CNN, local SNN, and other states share one reference power; RPC-state power is rho times that reference power. These are conditional bounds, not calibrated hardware results.",
+  "absolute_energy_results": "not_computed",
+  "reason": "No justified state-power inputs have been supplied.",
+  "limitations": [
+    "20 requests per policy; smoke-test data only.",
+    "Sequential application association, not concurrent SDN validation.",
+    "RPC aggregates communication, server waiting, and response handling.",
+    "Server energy is excluded from this originating-client model.",
+    "The same physical workstation/GPU serves both namespaces.",
+    "No Jetson hardware energy or latency is established.",
+    "Sensitivity ratios are analytical assumptions, not confidence intervals.",
+    "No feedback-controlled decision or QoS improvement is established."
+  ],
+  "input_sha256": {
+    "client_requests.csv": "9a460165479c45088ba58cee85d351fa9c1a0bcca6544bd24d8ca46689841fd4",
+    "server_requests.csv": "82c0f8737d01717737bf850bddc4732465327500415748f979667aecdd8ac395",
+    "summary.json": "1bdf4c645269d38c30bef5a9d05d59d086ff0f11730872d192acb4bfdf4fa4da"
+  }
+}

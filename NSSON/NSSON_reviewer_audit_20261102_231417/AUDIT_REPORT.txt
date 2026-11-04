@@ -1,0 +1,984 @@
+Project: /home/avi/NSSON
+Audit created: 20261102_231417
+
+COPIED FILES
+NSSON_main_working.log
+NSSON_main_working.tex
+backups/controller_patches/nsson_multislice_sla_controller_before_bidirectional_udp_fix_20260916_224726.py
+backups/invalid_or_mixed_runs/multislice_baseline_sdn_iot_light_rep1_mixed_20260916_223158.csv
+backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep1_INVALID_20260916_223833.csv
+backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep2_NO_RYU_INVALID.csv
+backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep3_INVALID_udp_healthcare_industrial.csv
+backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep4_INVALID_udp_probe.csv
+backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep5_INVALID_udp_probe.csv
+backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep6_INVALID_udp_ack.csv
+backups/nsson_multislice_sla_controller_before_udp_fix_20260916_224040.py
+backups/qos_binary_priority_final_20260916_192012/qos_all_runs_balanced_complete.csv
+backups/qos_binary_priority_final_20260916_192012/qos_nsson_controller.py
+backups/qos_binary_priority_final_20260916_192012/qos_priority_experiment.py
+backups/qos_binary_priority_final_20260916_192012/qos_summary_clean_final.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194907/nsson_multislice_sla_controller.py
+backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/multislice_slicing_sla_heavy_rep101.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/multislice_slicing_sla_light_rep101.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/multislice_slicing_sla_moderate_rep101.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/ryu_multislice_flows.jsonl
+backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_sla_experiment.py
+backups/qos_multislice/before_concurrent_multisource_20260916_194935/nsson_multislice_sla_controller.py
+backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/multislice_slicing_sla_heavy_rep101.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/multislice_slicing_sla_light_rep101.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/multislice_slicing_sla_moderate_rep101.csv
+backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/ryu_multislice_flows.jsonl
+backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_sla_experiment.py
+backups/qos_multislice/before_multislice_20260916_192111/qos_all_runs_balanced_complete.csv
+backups/qos_multislice/before_multislice_20260916_192111/qos_nsson_controller.py
+backups/qos_multislice/before_multislice_20260916_192111/qos_priority_experiment.py
+backups/qos_multislice/concurrent_icmp_saturated_pilot_20260916_195529/multislice_slicing_sla_heavy_rep1.csv
+backups/qos_multislice/concurrent_icmp_saturated_pilot_20260916_195529/multislice_slicing_sla_light_rep1.csv
+backups/qos_multislice/concurrent_icmp_saturated_pilot_20260916_195529/multislice_slicing_sla_moderate_rep1.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_heavy_rep301.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep201.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep301.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep401.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep501.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep601.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep701.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep801.csv
+backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_moderate_rep301.csv
+backups/qos_multislice/first_flow_bias_pilots/multislice_slicing_sla_heavy_rep1.csv
+backups/qos_multislice/first_flow_bias_pilots/multislice_slicing_sla_light_rep1.csv
+backups/qos_multislice/first_flow_bias_pilots/multislice_slicing_sla_moderate_rep1.csv
+backups/qos_multislice/serial_probe_pilot_20260916_194854/multislice_slicing_sla_heavy_rep101.csv
+backups/qos_multislice/serial_probe_pilot_20260916_194854/multislice_slicing_sla_light_rep101.csv
+backups/qos_multislice/serial_probe_pilot_20260916_194854/multislice_slicing_sla_moderate_rep101.csv
+backups/qos_multislice/validated_slicing_light_rep1_20260916_193352/multislice_slicing_sla_light_rep1.csv
+backups/qos_multislice/validated_slicing_light_rep1_20260916_193352/nsson_multislice_sla_controller.py
+backups/qos_multislice/validated_slicing_light_rep1_20260916_193352/qos_multislice_sla_experiment.py
+backups/qos_multislice/validated_slicing_light_rep1_20260916_193352/ryu_multislice_flows.jsonl
+backups/qos_multislice_patches/qos_multislice_sla_experiment_before_steady_state_tcp_parser_20260916_231206.py
+backups/qos_multislice_patches/qos_multislice_sla_experiment_before_tcp_throughput_parser_fix_20260916_231000.py
+backups/qos_multislice_patches/qos_multislice_sla_experiment_before_udp_first_ordering_20260916_225931.py
+backups/qos_multislice_patches/qos_multislice_sla_experiment_before_udp_healthcheck_20260916_225610.py
+backups/qos_multislice_patches/qos_multislice_sla_experiment_before_udp_receiver_diagnostics_20260916_225409.py
+backups/qos_multislice_sla_experiment_before_udp_server_fix_20260916_225020.py
+backups/qos_validated_run_20260916_185608/qos_nsson_controller.py
+backups/qos_validated_run_20260916_185608/qos_nsson_full_light_rep6.csv
+backups/qos_validated_run_20260916_185608/qos_priority_experiment.py
+backups/simrunner_before_logfix_20260916_150618.py
+controllers/baseline_sdn_iot_controller.py
+controllers/nsson_isar_controller.py
+controllers/nsson_multislice_sla_controller.py
+controllers/nsson_qos_slicing_controller.py
+controllers/qos_nsson_controller.py
+experiments/qos_multislice/plot_final_qos_sla_results.py
+experiments/qos_sla/live_path_probe.py
+experiments/qos_sla/plot_four_by_four.py
+experiments/qos_slicing/adaptive_routing.py
+experiments/qos_slicing/plot_qos_slicing_4x4.py
+experiments/qos_slicing/plot_qos_slicing_individual.py
+experiments/qos_slicing/qos_probe.py
+feedbackloop.py
+fig_theta_sweep_from_real_log.py
+fix_remaining.py
+generate_qos_data.py
+jetson_emulation/jetson_emulation/jetson_runner.py
+logs/controller_runs/baseline_qos_light_rep1_20260916_162150.jsonl
+logs/controller_runs/baseline_qos_light_rep1_metrics_20260916_162150.csv
+logs/controller_runs/nsson_qos_2nodes_clean_20260916_161336.jsonl
+logs/controller_runs/nsson_qos_2nodes_clean_trace_20260916_161336.csv
+logs/controller_runs/nsson_qos_2nodes_icmp_tcp8090_20260916_160750.jsonl
+logs/controller_runs/nsson_qos_2nodes_node_trace_20260916_160758.csv
+logs/controller_runs/ryuflowlog_before_nsson_20260916_155520.jsonl
+logs/logs/offloaddecisionlog.json
+logs/logs/offloadlatencylog.csv
+logs/logs/offloadpowerlog.csv
+logs/offloaddecisionlog.json
+logs/offloadlatencylog.csv
+logs/offloadpowerlog.csv
+logs/qos_aggregated/qos_all_runs.csv
+logs/qos_aggregated/qos_all_runs_balanced_complete.csv
+logs/qos_aggregated/qos_all_runs_clean.csv
+logs/qos_aggregated/qos_all_runs_clean_final.csv
+logs/qos_aggregated/qos_all_runs_quality_checked.csv
+logs/qos_aggregated/qos_missing_throughput_rows.csv
+logs/qos_aggregated/qos_stats_by_condition.csv
+logs/qos_aggregated/qos_stats_by_condition.json
+logs/qos_aggregated/qos_summary_after_rep10.csv
+logs/qos_aggregated/qos_summary_clean_final.csv
+logs/qos_debug/qos_nsson_full_light_rep1_mixed_controller.csv
+logs/qos_multislice_raw/multislice_baseline_sdn_iot_heavy_rep13.csv
+logs/qos_multislice_raw/multislice_baseline_sdn_iot_light_rep1.csv
+logs/qos_multislice_raw/multislice_baseline_sdn_iot_light_rep11.csv
+logs/qos_multislice_raw/multislice_baseline_sdn_iot_light_rep8.csv
+logs/qos_multislice_raw/multislice_baseline_sdn_iot_moderate_rep12.csv
+logs/qos_multislice_raw/multislice_priority_only_heavy_rep13.csv
+logs/qos_multislice_raw/multislice_priority_only_light_rep1.csv
+logs/qos_multislice_raw/multislice_priority_only_light_rep11.csv
+logs/qos_multislice_raw/multislice_priority_only_light_rep8.csv
+logs/qos_multislice_raw/multislice_priority_only_moderate_rep12.csv
+logs/qos_multislice_raw/multislice_slicing_sla_heavy_rep13.csv
+logs/qos_multislice_raw/multislice_slicing_sla_light_rep11.csv
+logs/qos_multislice_raw/multislice_slicing_sla_light_rep1_INVALID.csv
+logs/qos_multislice_raw/multislice_slicing_sla_light_rep7.csv
+logs/qos_multislice_raw/multislice_slicing_sla_moderate_rep12.csv
+logs/qos_multislice_raw/ryu_multislice_flows.jsonl
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep1.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep10.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep2.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep3.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep4.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep5.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep6.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep7.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep8.csv
+logs/qos_raw/qos_baseline_sdn_iot_heavy_rep9.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep1.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep10.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep2.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep3.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep4.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep5.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep6.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep7.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep8.csv
+logs/qos_raw/qos_baseline_sdn_iot_light_rep9.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep1.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep10.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep2.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep3.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep4.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep5.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep6.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep7.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep8.csv
+logs/qos_raw/qos_baseline_sdn_iot_moderate_rep9.csv
+logs/qos_raw/qos_nsson_full_heavy_rep1.csv
+logs/qos_raw/qos_nsson_full_heavy_rep10.csv
+logs/qos_raw/qos_nsson_full_heavy_rep11.csv
+logs/qos_raw/qos_nsson_full_heavy_rep2.csv
+logs/qos_raw/qos_nsson_full_heavy_rep3.csv
+logs/qos_raw/qos_nsson_full_heavy_rep4.csv
+logs/qos_raw/qos_nsson_full_heavy_rep5.csv
+logs/qos_raw/qos_nsson_full_heavy_rep6.csv
+logs/qos_raw/qos_nsson_full_heavy_rep7.csv
+logs/qos_raw/qos_nsson_full_heavy_rep8.csv
+logs/qos_raw/qos_nsson_full_heavy_rep9.csv
+logs/qos_raw/qos_nsson_full_light_rep1.csv
+logs/qos_raw/qos_nsson_full_light_rep10.csv
+logs/qos_raw/qos_nsson_full_light_rep12.csv
+logs/qos_raw/qos_nsson_full_light_rep2.csv
+logs/qos_raw/qos_nsson_full_light_rep3.csv
+logs/qos_raw/qos_nsson_full_light_rep4.csv
+logs/qos_raw/qos_nsson_full_light_rep5.csv
+logs/qos_raw/qos_nsson_full_light_rep6.csv
+logs/qos_raw/qos_nsson_full_light_rep7.csv
+logs/qos_raw/qos_nsson_full_light_rep8.csv
+logs/qos_raw/qos_nsson_full_light_rep9.csv
+logs/qos_raw/qos_nsson_full_moderate_rep1.csv
+logs/qos_raw/qos_nsson_full_moderate_rep10.csv
+logs/qos_raw/qos_nsson_full_moderate_rep2.csv
+logs/qos_raw/qos_nsson_full_moderate_rep3.csv
+logs/qos_raw/qos_nsson_full_moderate_rep4.csv
+logs/qos_raw/qos_nsson_full_moderate_rep5.csv
+logs/qos_raw/qos_nsson_full_moderate_rep6.csv
+logs/qos_raw/qos_nsson_full_moderate_rep7.csv
+logs/qos_raw/qos_nsson_full_moderate_rep8.csv
+logs/qos_raw/qos_nsson_full_moderate_rep9.csv
+logs/qos_slicing/reroute_events.csv
+logs/qos_slicing/route_adaptive_heavy_autonomous_1.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_10.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_2.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_3.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_4.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_5.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_6.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_7.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_8.json
+logs/qos_slicing/route_adaptive_heavy_autonomous_9.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_1.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_10.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_2.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_3.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_4.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_5.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_6.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_7.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_8.json
+logs/qos_slicing/route_adaptive_heavy_healthcare_9.json
+logs/qos_slicing/route_adaptive_heavy_industrial_1.json
+logs/qos_slicing/route_adaptive_heavy_industrial_10.json
+logs/qos_slicing/route_adaptive_heavy_industrial_2.json
+logs/qos_slicing/route_adaptive_heavy_industrial_3.json
+logs/qos_slicing/route_adaptive_heavy_industrial_4.json
+logs/qos_slicing/route_adaptive_heavy_industrial_5.json
+logs/qos_slicing/route_adaptive_heavy_industrial_6.json
+logs/qos_slicing/route_adaptive_heavy_industrial_7.json
+logs/qos_slicing/route_adaptive_heavy_industrial_8.json
+logs/qos_slicing/route_adaptive_heavy_industrial_9.json
+logs/qos_slicing/route_adaptive_light_autonomous_1.json
+logs/qos_slicing/route_adaptive_light_autonomous_10.json
+logs/qos_slicing/route_adaptive_light_autonomous_2.json
+logs/qos_slicing/route_adaptive_light_autonomous_3.json
+logs/qos_slicing/route_adaptive_light_autonomous_4.json
+logs/qos_slicing/route_adaptive_light_autonomous_5.json
+logs/qos_slicing/route_adaptive_light_autonomous_6.json
+logs/qos_slicing/route_adaptive_light_autonomous_7.json
+logs/qos_slicing/route_adaptive_light_autonomous_8.json
+logs/qos_slicing/route_adaptive_light_autonomous_9.json
+logs/qos_slicing/route_adaptive_light_healthcare_1.json
+logs/qos_slicing/route_adaptive_light_healthcare_10.json
+logs/qos_slicing/route_adaptive_light_healthcare_2.json
+logs/qos_slicing/route_adaptive_light_healthcare_3.json
+logs/qos_slicing/route_adaptive_light_healthcare_4.json
+logs/qos_slicing/route_adaptive_light_healthcare_5.json
+logs/qos_slicing/route_adaptive_light_healthcare_6.json
+logs/qos_slicing/route_adaptive_light_healthcare_7.json
+logs/qos_slicing/route_adaptive_light_healthcare_8.json
+logs/qos_slicing/route_adaptive_light_healthcare_9.json
+logs/qos_slicing/route_adaptive_light_industrial_1.json
+logs/qos_slicing/route_adaptive_light_industrial_10.json
+logs/qos_slicing/route_adaptive_light_industrial_2.json
+logs/qos_slicing/route_adaptive_light_industrial_3.json
+logs/qos_slicing/route_adaptive_light_industrial_4.json
+logs/qos_slicing/route_adaptive_light_industrial_5.json
+logs/qos_slicing/route_adaptive_light_industrial_6.json
+logs/qos_slicing/route_adaptive_light_industrial_7.json
+logs/qos_slicing/route_adaptive_light_industrial_8.json
+logs/qos_slicing/route_adaptive_light_industrial_9.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_1.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_10.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_2.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_3.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_4.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_5.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_6.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_7.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_8.json
+logs/qos_slicing/route_adaptive_moderate_autonomous_9.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_1.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_10.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_2.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_3.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_4.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_5.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_6.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_7.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_8.json
+logs/qos_slicing/route_adaptive_moderate_healthcare_9.json
+logs/qos_slicing/route_adaptive_moderate_industrial_1.json
+logs/qos_slicing/route_adaptive_moderate_industrial_10.json
+logs/qos_slicing/route_adaptive_moderate_industrial_2.json
+logs/qos_slicing/route_adaptive_moderate_industrial_3.json
+logs/qos_slicing/route_adaptive_moderate_industrial_4.json
+logs/qos_slicing/route_adaptive_moderate_industrial_5.json
+logs/qos_slicing/route_adaptive_moderate_industrial_6.json
+logs/qos_slicing/route_adaptive_moderate_industrial_7.json
+logs/qos_slicing/route_adaptive_moderate_industrial_8.json
+logs/qos_slicing/route_adaptive_moderate_industrial_9.json
+logs/ryuflowlog.jsonl
+make_revision.py
+nsson_qos_plots.py
+offload/adaptive_no_sdn/decision_log.json
+offload/adaptive_no_sdn/latency_log.csv
+offload/adaptive_no_sdn/power_log.csv
+offload/baseline_sdn_iot/decision_log.json
+offload/baseline_sdn_iot/latency_log.csv
+offload/baseline_sdn_iot/power_log.csv
+offload/decision_log.json
+offload/latency_log.csv
+offload/local_only/decision_log.json
+offload/local_only/latency_log.csv
+offload/local_only/power_log.csv
+offload/nsson_full/decision_log.json
+offload/nsson_full/latency_log.csv
+offload/nsson_full/power_log.csv
+offload/offload_only/decision_log.json
+offload/offload_only/latency_log.csv
+offload/offload_only/power_log.csv
+offload/power_log.csv
+offloadengine.py
+plot_300cycle_telemetry.py
+plot_qos_results.py
+plotting/plot_latest_nsson_experimental.py
+plotting/plot_nsson_experimental.py
+plotting/plot_nsson_results.py
+plotting/plot_results.py
+powermodel.py
+qos/qos_metrics_builder.py
+qos/qos_plots_ieee.py
+qos_experiments/qos_priority_experiment.py
+qos_metrics.csv
+qos_multislice/qos_multislice_sla_experiment.py
+recompute_energy_correct.py
+recompute_energy_decision_aware.py
+record_real_gpu_workloads.py
+references.bib
+results/integration_test_placeholder/run_20260916_150942/adaptive_no_sdn/decision_log.json
+results/integration_test_placeholder/run_20260916_150942/adaptive_no_sdn/latency_log.csv
+results/integration_test_placeholder/run_20260916_150942/adaptive_no_sdn/power_log.csv
+results/integration_test_placeholder/run_20260916_150942/baseline_sdn_iot/decision_log.json
+results/integration_test_placeholder/run_20260916_150942/baseline_sdn_iot/latency_log.csv
+results/integration_test_placeholder/run_20260916_150942/baseline_sdn_iot/power_log.csv
+results/integration_test_placeholder/run_20260916_150942/final_csv/qos_metrics.csv
+results/integration_test_placeholder/run_20260916_150942/local_only/decision_log.json
+results/integration_test_placeholder/run_20260916_150942/local_only/latency_log.csv
+results/integration_test_placeholder/run_20260916_150942/local_only/power_log.csv
+results/integration_test_placeholder/run_20260916_150942/nsson_full/decision_log.json
+results/integration_test_placeholder/run_20260916_150942/nsson_full/latency_log.csv
+results/integration_test_placeholder/run_20260916_150942/nsson_full/power_log.csv
+results/integration_test_placeholder/run_20260916_150942/offload_only/decision_log.json
+results/integration_test_placeholder/run_20260916_150942/offload_only/latency_log.csv
+results/integration_test_placeholder/run_20260916_150942/offload_only/power_log.csv
+results/qos_multislice_clean/multislice_baseline_sdn_iot_light_rep11_VALID.csv
+results/qos_multislice_clean/multislice_baseline_sdn_iot_light_rep8_VALID.csv
+results/qos_multislice_clean/multislice_baseline_sdn_iot_light_valid.csv
+results/qos_multislice_clean/multislice_baseline_sdn_iot_moderate_rep12_VALID.csv
+results/qos_multislice_clean/multislice_priority_only_light_rep11_VALID.csv
+results/qos_multislice_clean/multislice_priority_only_moderate_rep12_VALID.csv
+results/qos_multislice_clean/multislice_slicing_sla_light_rep11_VALID.csv
+results/qos_multislice_clean/multislice_slicing_sla_light_rep7_VALID.csv
+results/qos_multislice_clean/multislice_slicing_sla_light_rep7_VALID.json
+results/qos_multislice_final/baseline_sdn_iot_heavy_rep13_VALID.csv
+results/qos_multislice_final/baseline_sdn_iot_heavy_rep13_manifest.json
+results/qos_multislice_final/baseline_sdn_iot_light_rep11_VALID.csv
+results/qos_multislice_final/baseline_sdn_iot_light_rep11_manifest.json
+results/qos_multislice_final/baseline_sdn_iot_moderate_rep12_VALID.csv
+results/qos_multislice_final/baseline_sdn_iot_moderate_rep12_manifest.json
+results/qos_multislice_final/priority_only_heavy_rep13_VALID.csv
+results/qos_multislice_final/priority_only_heavy_rep13_manifest.json
+results/qos_multislice_final/priority_only_light_rep11_VALID.csv
+results/qos_multislice_final/priority_only_light_rep11_manifest.json
+results/qos_multislice_final/priority_only_moderate_rep12_VALID.csv
+results/qos_multislice_final/priority_only_moderate_rep12_manifest.json
+results/qos_multislice_final/qos_multislice_final_comparative_summary.csv
+results/qos_multislice_final/qos_multislice_final_sla_summary.csv
+results/qos_multislice_final/qos_multislice_final_summary.csv
+results/qos_multislice_final/slicing_sla_heavy_rep13_VALID.csv
+results/qos_multislice_final/slicing_sla_heavy_rep13_manifest.json
+results/qos_multislice_final/slicing_sla_light_rep11_VALID.csv
+results/qos_multislice_final/slicing_sla_light_rep11_manifest.json
+results/qos_multislice_final/slicing_sla_moderate_rep12_VALID.csv
+results/qos_multislice_final/slicing_sla_moderate_rep12_manifest.json
+results/qos_slicing/path_metrics.csv
+results/qos_slicing/qos_slice_metrics.csv
+results/run_20260916_150942/adaptive_no_sdn/decision_log.json
+results/run_20260916_150942/adaptive_no_sdn/latency_log.csv
+results/run_20260916_150942/adaptive_no_sdn/power_log.csv
+results/run_20260916_150942/baseline_sdn_iot/decision_log.json
+results/run_20260916_150942/baseline_sdn_iot/latency_log.csv
+results/run_20260916_150942/baseline_sdn_iot/power_log.csv
+results/run_20260916_150942/final_csv/qos_metrics.csv
+results/run_20260916_150942/local_only/decision_log.json
+results/run_20260916_150942/local_only/latency_log.csv
+results/run_20260916_150942/local_only/power_log.csv
+results/run_20260916_150942/nsson_full/decision_log.json
+results/run_20260916_150942/nsson_full/latency_log.csv
+results/run_20260916_150942/nsson_full/power_log.csv
+results/run_20260916_150942/offload_only/decision_log.json
+results/run_20260916_150942/offload_only/latency_log.csv
+results/run_20260916_150942/offload_only/power_log.csv
+revision_audit/energy_decision_aware_adaptive_no_sdn.csv
+revision_audit/energy_decision_aware_local_only.csv
+revision_audit/energy_decision_aware_nsson_full.csv
+revision_audit/energy_decision_aware_offload_only.csv
+revision_audit/energy_decision_aware_summary.csv
+revision_audit/energy_recomputed_adaptive_no_sdn.csv
+revision_audit/energy_recomputed_local_only.csv
+revision_audit/energy_recomputed_nsson_full.csv
+revision_audit/energy_recomputed_offload_only.csv
+revision_audit/energy_summary_correct.csv
+revision_audit/gpu_idle_20261102_150152_572466/idle_power.csv
+revision_audit/main_offload_summary.csv
+revision_causal_20261102_110047_TfyZ9O/network_causal.py
+revision_causal_20261102_110047_TfyZ9O/repetition_1/client_feedback_summary.json
+revision_causal_20261102_110047_TfyZ9O/repetition_1/summary.json
+revision_causal_20261102_110047_TfyZ9O/repetition_2/client_feedback_summary.json
+revision_causal_20261102_110047_TfyZ9O/repetition_2/summary.json
+revision_causal_20261102_110047_TfyZ9O/repetition_3/client_feedback_summary.json
+revision_causal_20261102_110047_TfyZ9O/repetition_3/summary.json
+revision_energy_audit_20261102_104221_dXdAaO/audit.py
+revision_energy_audit_20261102_104221_dXdAaO/audit_summary.json
+revision_energy_audit_20261102_104221_dXdAaO/conditional_power_ratio_sensitivity.csv
+revision_energy_audit_20261102_104221_dXdAaO/energy_duration_basis.csv
+revision_energy_audit_20261102_104221_dXdAaO/energy_model.py
+revision_energy_audit_20261102_105931_3Jk2YC/audit.py
+revision_energy_audit_20261102_105931_3Jk2YC/audit_summary.json
+revision_energy_audit_20261102_105931_3Jk2YC/conditional_power_ratio_sensitivity.csv
+revision_energy_audit_20261102_105931_3Jk2YC/energy_duration_basis.csv
+revision_energy_audit_20261102_105931_3Jk2YC/energy_model.py
+revision_gpu_measured_20261102_155552_682993/gpu_power.csv
+revision_gpu_measured_20261102_163103_532250/gpu_block_energy_summary_20261102_171025_615423.csv
+revision_gpu_measured_20261102_163103_532250/gpu_model_energy_descriptive_summary.csv
+revision_gpu_measured_20261102_163103_532250/gpu_power.csv
+revision_models_20261102_085404_QzL8in/evaluate_real_models.py
+revision_models_20261102_085404_QzL8in/summary.json
+revision_models_20261102_085404_QzL8in/timing_summary.csv
+revision_network_20261102_093547_55OiCB/network_smoke.py
+revision_network_fix_20261102_095839_eDgjaD/network_smoke.py
+revision_network_launchfix_20261102_102201_5KrIyz/network_smoke.py
+revision_network_launchfix_20261102_102201_5KrIyz/summary.json
+revision_runs_300cycle/adaptive_no_sdn/decision_log.json
+revision_runs_300cycle/adaptive_no_sdn/latency_log.csv
+revision_runs_300cycle/adaptive_no_sdn/power_log.csv
+revision_runs_300cycle/local_only/decision_log.json
+revision_runs_300cycle/local_only/latency_log.csv
+revision_runs_300cycle/local_only/power_log.csv
+revision_runs_300cycle/nsson_full/decision_log.json
+revision_runs_300cycle/nsson_full/latency_log.csv
+revision_runs_300cycle/nsson_full/power_log.csv
+revision_runs_300cycle/offload_only/decision_log.json
+revision_runs_300cycle/offload_only/latency_log.csv
+revision_runs_300cycle/offload_only/power_log.csv
+revision_runs_300cycle/summary_300cycle.csv
+revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py
+revision_sdn_association_20261102_113725_XsYD4j/summary.json
+revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py
+run_300cycle_offload.py
+scripts/aggregate_qos_results.py
+scripts/nsson_controller.py
+scripts/nsson_four_dimensions_plots.py
+scripts/nsson_ieee_four_extensions.py
+scripts/nsson_ieee_qos_panel.py
+scripts/nsson_simulate.py
+scripts/run_nsson_experiments_experimental.py
+scripts/scripts/nsson_controller.py
+scripts/scripts/nsson_simulate.py
+simrunner.py
+
+AVAILABLE DATA FILES
+         765 bytes  revision_gpu_measured_20261102_163103_532250/gpu_model_energy_descriptive_summary.csv
+        2753 bytes  revision_gpu_measured_20261102_163103_532250/gpu_block_energy_summary_20261102_171025_615423.csv
+      103539 bytes  revision_gpu_measured_20261102_163103_532250/gpu_power.csv
+      103540 bytes  revision_gpu_measured_20261102_155552_682993/gpu_power.csv
+       12520 bytes  revision_audit/gpu_idle_20261102_150152_572466/idle_power.csv
+         722 bytes  revision_runs_300cycle/summary_300cycle.csv
+       30990 bytes  revision_runs_300cycle/nsson_full/power_log.csv
+       16085 bytes  revision_runs_300cycle/nsson_full/latency_log.csv
+       51413 bytes  revision_runs_300cycle/nsson_full/decision_log.json
+       32557 bytes  revision_runs_300cycle/adaptive_no_sdn/power_log.csv
+       17585 bytes  revision_runs_300cycle/adaptive_no_sdn/latency_log.csv
+       52923 bytes  revision_runs_300cycle/adaptive_no_sdn/decision_log.json
+       35152 bytes  revision_runs_300cycle/offload_only/power_log.csv
+       14355 bytes  revision_runs_300cycle/offload_only/latency_log.csv
+       52486 bytes  revision_runs_300cycle/offload_only/decision_log.json
+       30052 bytes  revision_runs_300cycle/local_only/power_log.csv
+       16755 bytes  revision_runs_300cycle/local_only/latency_log.csv
+       51277 bytes  revision_runs_300cycle/local_only/decision_log.json
+        2337 bytes  revision_audit/energy_decision_aware_nsson_full.csv
+         766 bytes  revision_audit/energy_decision_aware_summary.csv
+        2398 bytes  revision_audit/energy_decision_aware_adaptive_no_sdn.csv
+        2263 bytes  revision_audit/energy_decision_aware_offload_only.csv
+        2356 bytes  revision_audit/energy_decision_aware_local_only.csv
+         760 bytes  revision_audit/energy_summary_correct.csv
+        3292 bytes  revision_audit/energy_recomputed_nsson_full.csv
+        3351 bytes  revision_audit/energy_recomputed_adaptive_no_sdn.csv
+        3302 bytes  revision_audit/energy_recomputed_offload_only.csv
+        3299 bytes  revision_audit/energy_recomputed_local_only.csv
+        1757 bytes  revision_audit/main_offload_summary.csv
+        1726 bytes  revision_sdn_association_20261102_113725_XsYD4j/summary.json
+        1571 bytes  revision_causal_20261102_110047_TfyZ9O/repetition_3/summary.json
+        2840 bytes  revision_causal_20261102_110047_TfyZ9O/repetition_3/client_feedback_summary.json
+        1571 bytes  revision_causal_20261102_110047_TfyZ9O/repetition_2/summary.json
+        2869 bytes  revision_causal_20261102_110047_TfyZ9O/repetition_2/client_feedback_summary.json
+        1578 bytes  revision_causal_20261102_110047_TfyZ9O/repetition_1/summary.json
+        2874 bytes  revision_causal_20261102_110047_TfyZ9O/repetition_1/client_feedback_summary.json
+        2951 bytes  revision_energy_audit_20261102_105931_3Jk2YC/audit_summary.json
+        2532 bytes  revision_energy_audit_20261102_105931_3Jk2YC/conditional_power_ratio_sensitivity.csv
+       15718 bytes  revision_energy_audit_20261102_105931_3Jk2YC/energy_duration_basis.csv
+        2951 bytes  revision_energy_audit_20261102_104221_dXdAaO/audit_summary.json
+        2532 bytes  revision_energy_audit_20261102_104221_dXdAaO/conditional_power_ratio_sensitivity.csv
+       15718 bytes  revision_energy_audit_20261102_104221_dXdAaO/energy_duration_basis.csv
+        1169 bytes  revision_network_launchfix_20261102_102201_5KrIyz/summary.json
+        2873 bytes  revision_models_20261102_085404_QzL8in/summary.json
+         675 bytes  revision_models_20261102_085404_QzL8in/timing_summary.csv
+         499 bytes  results/qos_multislice_final/qos_multislice_final_sla_summary.csv
+        2621 bytes  results/qos_multislice_final/qos_multislice_final_comparative_summary.csv
+        1579 bytes  results/qos_multislice_final/qos_multislice_final_summary.csv
+         437 bytes  results/qos_multislice_final/slicing_sla_heavy_rep13_manifest.json
+        1410 bytes  results/qos_multislice_final/slicing_sla_heavy_rep13_VALID.csv
+        1410 bytes  logs/qos_multislice_raw/multislice_slicing_sla_heavy_rep13.csv
+     2264707 bytes  logs/qos_multislice_raw/ryu_multislice_flows.jsonl
+         428 bytes  results/qos_multislice_final/priority_only_heavy_rep13_manifest.json
+        1419 bytes  results/qos_multislice_final/priority_only_heavy_rep13_VALID.csv
+        1419 bytes  logs/qos_multislice_raw/multislice_priority_only_heavy_rep13.csv
+     1717817 bytes  logs/ryuflowlog.jsonl
+         438 bytes  results/qos_multislice_final/baseline_sdn_iot_heavy_rep13_manifest.json
+        1427 bytes  results/qos_multislice_final/baseline_sdn_iot_heavy_rep13_VALID.csv
+        1427 bytes  logs/qos_multislice_raw/multislice_baseline_sdn_iot_heavy_rep13.csv
+         440 bytes  results/qos_multislice_final/slicing_sla_moderate_rep12_manifest.json
+        1418 bytes  results/qos_multislice_final/slicing_sla_moderate_rep12_VALID.csv
+        1418 bytes  logs/qos_multislice_raw/multislice_slicing_sla_moderate_rep12.csv
+         431 bytes  results/qos_multislice_final/priority_only_moderate_rep12_manifest.json
+        1421 bytes  results/qos_multislice_final/priority_only_moderate_rep12_VALID.csv
+        1421 bytes  logs/qos_multislice_raw/multislice_priority_only_moderate_rep12.csv
+         441 bytes  results/qos_multislice_final/baseline_sdn_iot_moderate_rep12_manifest.json
+        1431 bytes  results/qos_multislice_final/baseline_sdn_iot_moderate_rep12_VALID.csv
+        1431 bytes  logs/qos_multislice_raw/multislice_baseline_sdn_iot_moderate_rep12.csv
+         437 bytes  results/qos_multislice_final/slicing_sla_light_rep11_manifest.json
+        1406 bytes  results/qos_multislice_final/slicing_sla_light_rep11_VALID.csv
+        1406 bytes  logs/qos_multislice_raw/multislice_slicing_sla_light_rep11.csv
+         428 bytes  results/qos_multislice_final/priority_only_light_rep11_manifest.json
+        1412 bytes  results/qos_multislice_final/priority_only_light_rep11_VALID.csv
+        1412 bytes  logs/qos_multislice_raw/multislice_priority_only_light_rep11.csv
+         438 bytes  results/qos_multislice_final/baseline_sdn_iot_light_rep11_manifest.json
+        1420 bytes  results/qos_multislice_final/baseline_sdn_iot_light_rep11_VALID.csv
+        1420 bytes  logs/qos_multislice_raw/multislice_baseline_sdn_iot_light_rep11.csv
+        1422 bytes  results/qos_multislice_clean/multislice_priority_only_moderate_rep12_VALID.csv
+        1431 bytes  results/qos_multislice_clean/multislice_baseline_sdn_iot_moderate_rep12_VALID.csv
+        1407 bytes  results/qos_multislice_clean/multislice_slicing_sla_light_rep11_VALID.csv
+        1411 bytes  results/qos_multislice_clean/multislice_priority_only_light_rep11_VALID.csv
+        1419 bytes  results/qos_multislice_clean/multislice_baseline_sdn_iot_light_rep11_VALID.csv
+        1410 bytes  logs/qos_multislice_raw/multislice_priority_only_light_rep8.csv
+        1418 bytes  results/qos_multislice_clean/multislice_baseline_sdn_iot_light_rep8_VALID.csv
+        1418 bytes  logs/qos_multislice_raw/multislice_baseline_sdn_iot_light_rep8.csv
+         554 bytes  results/qos_multislice_clean/multislice_slicing_sla_light_rep7_VALID.json
+        1403 bytes  results/qos_multislice_clean/multislice_slicing_sla_light_rep7_VALID.csv
+        1403 bytes  logs/qos_multislice_raw/multislice_slicing_sla_light_rep7.csv
+        1443 bytes  backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep6_INVALID_udp_ack.csv
+        1441 bytes  backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep5_INVALID_udp_probe.csv
+        1441 bytes  backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep4_INVALID_udp_probe.csv
+        1440 bytes  backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep3_INVALID_udp_healthcare_industrial.csv
+        1457 bytes  backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep2_NO_RYU_INVALID.csv
+        1440 bytes  backups/invalid_or_mixed_runs/multislice_slicing_sla_light_rep1_INVALID_20260916_223833.csv
+        4510 bytes  results/qos_multislice_clean/multislice_baseline_sdn_iot_light_valid.csv
+        1440 bytes  logs/qos_multislice_raw/multislice_slicing_sla_light_rep1_INVALID.csv
+        1415 bytes  logs/qos_multislice_raw/multislice_priority_only_light_rep1.csv
+        5364 bytes  backups/invalid_or_mixed_runs/multislice_baseline_sdn_iot_light_rep1_mixed_20260916_223158.csv
+        5364 bytes  logs/qos_multislice_raw/multislice_baseline_sdn_iot_light_rep1.csv
+        8039 bytes  logs/qos_slicing/reroute_events.csv
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_10.json
+       68781 bytes  results/qos_slicing/path_metrics.csv
+       68781 bytes  results/qos_slicing/qos_slice_metrics.csv
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_10.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_10.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_9.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_9.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_9.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_8.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_8.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_8.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_7.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_7.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_7.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_6.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_6.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_6.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_5.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_5.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_5.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_4.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_4.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_4.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_3.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_3.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_3.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_2.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_2.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_2.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_industrial_1.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_healthcare_1.json
+         578 bytes  logs/qos_slicing/route_adaptive_heavy_autonomous_1.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_10.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_10.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_10.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_9.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_9.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_9.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_8.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_8.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_8.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_7.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_7.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_7.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_6.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_6.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_6.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_5.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_5.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_5.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_4.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_4.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_4.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_3.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_3.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_3.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_2.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_2.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_2.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_industrial_1.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_healthcare_1.json
+         592 bytes  logs/qos_slicing/route_adaptive_moderate_autonomous_1.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_10.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_10.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_10.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_9.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_9.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_9.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_8.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_8.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_8.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_7.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_7.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_7.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_6.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_6.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_6.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_5.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_5.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_5.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_4.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_4.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_4.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_3.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_3.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_3.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_2.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_2.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_2.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_industrial_1.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_healthcare_1.json
+         592 bytes  logs/qos_slicing/route_adaptive_light_autonomous_1.json
+        1445 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep801.csv
+        1576 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep701.csv
+        1530 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep601.csv
+        1575 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep501.csv
+        1461 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep401.csv
+        1333 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_heavy_rep301.csv
+        1342 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_moderate_rep301.csv
+        1330 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep301.csv
+        1247 bytes  backups/qos_multislice/diagnostic_pilots_20260916_202837/multislice_slicing_sla_light_rep201.csv
+        1319 bytes  backups/qos_multislice/concurrent_icmp_saturated_pilot_20260916_195529/multislice_slicing_sla_heavy_rep1.csv
+        1328 bytes  backups/qos_multislice/concurrent_icmp_saturated_pilot_20260916_195529/multislice_slicing_sla_moderate_rep1.csv
+        1316 bytes  backups/qos_multislice/concurrent_icmp_saturated_pilot_20260916_195529/multislice_slicing_sla_light_rep1.csv
+        1222 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/multislice_slicing_sla_heavy_rep101.csv
+        1222 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/multislice_slicing_sla_heavy_rep101.csv
+        1222 bytes  backups/qos_multislice/serial_probe_pilot_20260916_194854/multislice_slicing_sla_heavy_rep101.csv
+      470399 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/ryu_multislice_flows.jsonl
+      470399 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/ryu_multislice_flows.jsonl
+        1225 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/multislice_slicing_sla_moderate_rep101.csv
+        1225 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/multislice_slicing_sla_moderate_rep101.csv
+        1225 bytes  backups/qos_multislice/serial_probe_pilot_20260916_194854/multislice_slicing_sla_moderate_rep101.csv
+        1195 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194935/qos_multislice_raw/multislice_slicing_sla_light_rep101.csv
+        1195 bytes  backups/qos_multislice/before_concurrent_multisource_20260916_194907/qos_multislice_raw/multislice_slicing_sla_light_rep101.csv
+        1195 bytes  backups/qos_multislice/serial_probe_pilot_20260916_194854/multislice_slicing_sla_light_rep101.csv
+        1198 bytes  backups/qos_multislice/first_flow_bias_pilots/multislice_slicing_sla_heavy_rep1.csv
+        1204 bytes  backups/qos_multislice/first_flow_bias_pilots/multislice_slicing_sla_moderate_rep1.csv
+       68983 bytes  backups/qos_multislice/validated_slicing_light_rep1_20260916_193352/ryu_multislice_flows.jsonl
+        1167 bytes  backups/qos_multislice/validated_slicing_light_rep1_20260916_193352/multislice_slicing_sla_light_rep1.csv
+        1167 bytes  backups/qos_multislice/first_flow_bias_pilots/multislice_slicing_sla_light_rep1.csv
+         405 bytes  logs/qos_raw/qos_nsson_full_light_rep12.csv
+       11236 bytes  backups/qos_multislice/before_multislice_20260916_192111/qos_all_runs_balanced_complete.csv
+        2294 bytes  backups/qos_binary_priority_final_20260916_192012/qos_summary_clean_final.csv
+       11236 bytes  backups/qos_binary_priority_final_20260916_192012/qos_all_runs_balanced_complete.csv
+       11236 bytes  logs/qos_aggregated/qos_all_runs_balanced_complete.csv
+       11408 bytes  logs/qos_aggregated/qos_all_runs_quality_checked.csv
+        2294 bytes  logs/qos_aggregated/qos_summary_clean_final.csv
+       10573 bytes  logs/qos_aggregated/qos_all_runs_clean_final.csv
+         413 bytes  logs/qos_raw/qos_nsson_full_heavy_rep11.csv
+          75 bytes  logs/qos_aggregated/qos_missing_throughput_rows.csv
+       10406 bytes  logs/qos_aggregated/qos_all_runs_clean.csv
+        1924 bytes  logs/qos_aggregated/qos_summary_after_rep10.csv
+         413 bytes  logs/qos_raw/qos_nsson_full_heavy_rep10.csv
+         408 bytes  logs/qos_raw/qos_nsson_full_heavy_rep9.csv
+         412 bytes  logs/qos_raw/qos_nsson_full_heavy_rep8.csv
+         412 bytes  logs/qos_raw/qos_nsson_full_heavy_rep7.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_heavy_rep6.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_moderate_rep10.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_moderate_rep9.csv
+         410 bytes  logs/qos_raw/qos_nsson_full_moderate_rep8.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_moderate_rep7.csv
+         410 bytes  logs/qos_raw/qos_nsson_full_moderate_rep6.csv
+         405 bytes  logs/qos_raw/qos_nsson_full_light_rep10.csv
+         404 bytes  logs/qos_raw/qos_nsson_full_light_rep9.csv
+         406 bytes  logs/qos_raw/qos_nsson_full_light_rep8.csv
+         405 bytes  logs/qos_raw/qos_nsson_full_light_rep7.csv
+         516 bytes  logs/qos_raw/qos_nsson_full_light_rep6.csv
+         419 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep10.csv
+         416 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep9.csv
+         415 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep8.csv
+         415 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep7.csv
+         416 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep6.csv
+         416 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep10.csv
+         415 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep9.csv
+         416 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep8.csv
+         417 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep7.csv
+         417 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep6.csv
+         411 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep10.csv
+         411 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep9.csv
+         411 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep8.csv
+         409 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep7.csv
+         412 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep6.csv
+         405 bytes  backups/qos_validated_run_20260916_185608/qos_nsson_full_light_rep6.csv
+        6410 bytes  logs/qos_aggregated/qos_stats_by_condition.json
+        2299 bytes  logs/qos_aggregated/qos_stats_by_condition.csv
+        3977 bytes  logs/qos_aggregated/qos_all_runs.csv
+         418 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep5.csv
+         417 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep5.csv
+         410 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep5.csv
+         418 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep4.csv
+         414 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep4.csv
+         410 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep4.csv
+         415 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep3.csv
+         417 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep3.csv
+         409 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep3.csv
+         415 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep2.csv
+         414 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep2.csv
+         410 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep2.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_heavy_rep5.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_moderate_rep5.csv
+         403 bytes  logs/qos_raw/qos_nsson_full_light_rep5.csv
+         409 bytes  logs/qos_raw/qos_nsson_full_heavy_rep4.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_moderate_rep4.csv
+         405 bytes  logs/qos_raw/qos_nsson_full_light_rep4.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_heavy_rep3.csv
+         410 bytes  logs/qos_raw/qos_nsson_full_moderate_rep3.csv
+         403 bytes  logs/qos_raw/qos_nsson_full_light_rep3.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_heavy_rep2.csv
+         411 bytes  logs/qos_raw/qos_nsson_full_moderate_rep2.csv
+         403 bytes  logs/qos_raw/qos_nsson_full_light_rep2.csv
+         417 bytes  logs/qos_raw/qos_baseline_sdn_iot_heavy_rep1.csv
+         416 bytes  logs/qos_raw/qos_baseline_sdn_iot_moderate_rep1.csv
+         409 bytes  logs/qos_raw/qos_nsson_full_heavy_rep1.csv
+         409 bytes  logs/qos_raw/qos_nsson_full_moderate_rep1.csv
+         403 bytes  logs/qos_raw/qos_nsson_full_light_rep1.csv
+         406 bytes  logs/qos_debug/qos_nsson_full_light_rep1_mixed_controller.csv
+         410 bytes  logs/controller_runs/baseline_qos_light_rep1_metrics_20260916_162150.csv
+        5558 bytes  logs/controller_runs/baseline_qos_light_rep1_20260916_162150.jsonl
+         410 bytes  logs/qos_raw/qos_baseline_sdn_iot_light_rep1.csv
+         141 bytes  logs/controller_runs/nsson_qos_2nodes_clean_trace_20260916_161336.csv
+        1422 bytes  logs/controller_runs/nsson_qos_2nodes_clean_20260916_161336.jsonl
+         141 bytes  logs/controller_runs/nsson_qos_2nodes_node_trace_20260916_160758.csv
+        2361 bytes  logs/controller_runs/nsson_qos_2nodes_icmp_tcp8090_20260916_160750.jsonl
+        1307 bytes  logs/controller_runs/ryuflowlog_before_nsson_20260916_155520.jsonl
+        5600 bytes  results/integration_test_placeholder/run_20260916_150942/final_csv/qos_metrics.csv
+        5600 bytes  results/run_20260916_150942/final_csv/qos_metrics.csv
+        5600 bytes  qos_metrics.csv
+        1940 bytes  offload/nsson_full/decision_log.json
+        1509 bytes  offload/nsson_full/power_log.csv
+        1224 bytes  offload/nsson_full/latency_log.csv
+        1509 bytes  results/integration_test_placeholder/run_20260916_150942/nsson_full/power_log.csv
+        1509 bytes  results/run_20260916_150942/nsson_full/power_log.csv
+        1224 bytes  results/integration_test_placeholder/run_20260916_150942/nsson_full/latency_log.csv
+        1224 bytes  results/run_20260916_150942/nsson_full/latency_log.csv
+        1940 bytes  results/integration_test_placeholder/run_20260916_150942/nsson_full/decision_log.json
+        1940 bytes  results/run_20260916_150942/nsson_full/decision_log.json
+        1509 bytes  logs/offloadpowerlog.csv
+        1224 bytes  logs/offloadlatencylog.csv
+        1940 bytes  logs/offloaddecisionlog.json
+        1999 bytes  offload/baseline_sdn_iot/decision_log.json
+        1570 bytes  offload/baseline_sdn_iot/power_log.csv
+        1293 bytes  offload/baseline_sdn_iot/latency_log.csv
+        1570 bytes  results/integration_test_placeholder/run_20260916_150942/baseline_sdn_iot/power_log.csv
+        1570 bytes  results/run_20260916_150942/baseline_sdn_iot/power_log.csv
+        1293 bytes  results/integration_test_placeholder/run_20260916_150942/baseline_sdn_iot/latency_log.csv
+        1293 bytes  results/run_20260916_150942/baseline_sdn_iot/latency_log.csv
+        1999 bytes  results/integration_test_placeholder/run_20260916_150942/baseline_sdn_iot/decision_log.json
+        1999 bytes  results/run_20260916_150942/baseline_sdn_iot/decision_log.json
+        1989 bytes  offload/adaptive_no_sdn/decision_log.json
+        1558 bytes  offload/adaptive_no_sdn/power_log.csv
+        1285 bytes  offload/adaptive_no_sdn/latency_log.csv
+        1558 bytes  results/integration_test_placeholder/run_20260916_150942/adaptive_no_sdn/power_log.csv
+        1558 bytes  results/run_20260916_150942/adaptive_no_sdn/power_log.csv
+        1285 bytes  results/integration_test_placeholder/run_20260916_150942/adaptive_no_sdn/latency_log.csv
+        1285 bytes  results/run_20260916_150942/adaptive_no_sdn/latency_log.csv
+        1989 bytes  results/integration_test_placeholder/run_20260916_150942/adaptive_no_sdn/decision_log.json
+        1989 bytes  results/run_20260916_150942/adaptive_no_sdn/decision_log.json
+        1978 bytes  offload/offload_only/decision_log.json
+        1521 bytes  offload/offload_only/power_log.csv
+        1248 bytes  offload/offload_only/latency_log.csv
+        1521 bytes  results/integration_test_placeholder/run_20260916_150942/offload_only/power_log.csv
+        1521 bytes  results/run_20260916_150942/offload_only/power_log.csv
+        1248 bytes  results/integration_test_placeholder/run_20260916_150942/offload_only/latency_log.csv
+        1248 bytes  results/run_20260916_150942/offload_only/latency_log.csv
+        1978 bytes  results/integration_test_placeholder/run_20260916_150942/offload_only/decision_log.json
+        1978 bytes  results/run_20260916_150942/offload_only/decision_log.json
+        1938 bytes  offload/local_only/decision_log.json
+        1509 bytes  offload/local_only/power_log.csv
+        1226 bytes  offload/local_only/latency_log.csv
+        1509 bytes  results/integration_test_placeholder/run_20260916_150942/local_only/power_log.csv
+        1509 bytes  results/run_20260916_150942/local_only/power_log.csv
+        1226 bytes  results/integration_test_placeholder/run_20260916_150942/local_only/latency_log.csv
+        1226 bytes  results/run_20260916_150942/local_only/latency_log.csv
+        1938 bytes  results/integration_test_placeholder/run_20260916_150942/local_only/decision_log.json
+        1938 bytes  results/run_20260916_150942/local_only/decision_log.json
+        1512 bytes  logs/logs/offloadpowerlog.csv
+        1227 bytes  logs/logs/offloadlatencylog.csv
+        1936 bytes  logs/logs/offloaddecisionlog.json
+       39912 bytes  offload/power_log.csv
+       32222 bytes  offload/latency_log.csv
+       52905 bytes  offload/decision_log.json
+
+MANUSCRIPT AUDIT LOCATIONS
+15: %\newcolumntype{C}{>{\centering\arraybackslash}m{1.5cm}}
+50: offloading, threshold feedback, and programmable network control.
+57: and causal application of threshold updates. Under the decision
+58: rule $C(s)<\theta(t)$, a higher threshold increases offloading for
+62: experimentally validated. Separately, sampled NVIDIA RTX 2000 Ada
+97: The Software-defined Networking separates the control plane from the data plane, allowing programmable and real-time network management. Within the NSSON framework, SDN is intended to provide observability and controllability: a controller may correlate telemetry with network events and install differentiated forwarding rules. The evaluated multislice experiments demonstrate slice-based priority and queue differentiation, while the audited inference experiment used static OpenFlow forwarding and did not establish telemetry-driven flow installation. Without such differentiation, offload and background traffic share default forwarding behavior and may compete in congested queues. The analytical model characterizes this potential penalty; it does not by itself establish an end-to-end measured benefit \cite{kreutz2014software,mckeown2008openflow,gude2008nox,siddiqui2022toward,jazaeri2021edge,lo2023sdn,ray2025internet}.
+106: \item  \textbf{NSSON integrates neuromorphic split computing with SDN-based traffic steering for AIoT offloading:} by connecting inference telemetry, execution placement, and programmable network control. A CNN and an LIF-based SNN process samples and produce confidence scores; a split-computing engine applies the threshold $\theta(t)$ to select local or remote execution. Decisions and timing information are written to a shared telemetry bus. The evaluated multislice experiments demonstrate slice-based OpenFlow prioritization and queue differentiation using a Ryu controller. The audited inference experiment, however, used static OpenFlow forwarding and did not establish that an individual inference decision triggered a controller-installed flow. Inference-aware flow association therefore remains a proposed capability requiring dedicated validation. The framework still realizes an SMCC-oriented co-design by separating sensing, computation, telemetry memory, and communication control. 
+107: \item  \textbf{The feedback-driven offloading policy jointly considers latency and estimated power through a mathematically defined threshold update law:} that controls where inference runs. After each cycle, NSSON logs the end-to-end latency $L_{\text{e2e}}$ and total modeled power $P_{\text{total}}$ into \texttt{latency\_log.csv} and \texttt{power\_log.csv}, and the feedback module takes the last $N$ entries to compute sliding-window averages $\bar{L}$ and $\bar{P}$. These averages are then used in the update rule $\theta(t) = \mathrm{clip}\!\left(\theta_0 - \alpha_L \bar{L} - \alpha_P \bar{P}, 0.30, 0.90\right)$, so that large recent latency or modeled energy lowers $\theta(t)$, thereby favoring local execution and reducing the offload ratio. Conversely, when recent latency and modeled energy decrease, $\theta(t)$ rises toward its base value, increasing the offload ratio. When recent latency and power are small, the subtraction term shrinks, $\theta(t)$ moves back toward its base value $\theta_0$, and more samples are executed locally, reducing network usage and transfer energy. Because the offload decision $D(s,t)$ compares confidence $C(s)$ against the current $\theta(t)$, every update of the threshold immediately changes the placement of subsequent inferences. The empirical offload ratio $\phi_{\text{offload}}$ and local ratio $\phi_{\text{local}}$ derived from these decisions are used to study how different feedback settings move the system across latency–energy–QoS trade-offs. Experiments show that this closed-loop policy achieves substantial reductions in average latency and power versus always-local execution while maintaining stable threshold dynamics, illustrating a novel, jointly latency–power-aware way of adapting inference placement in AIoT systems.
+145: The primary challenge in Split Computing is determining which partition to choose and how to adaptively set the partition point in real time. Existing approaches typically use the DNN layer position, data-size thresholds, or confidence thresholds. NSSON uses model confidence as the primary trigger, using a feedback loop that dynamically adjusts the threshold based on the current power and latency, the split decision making is responsive to runtime system state rather than a specific static configuration \cite{tian2026survey,zhu2023pushing,fan2025latency}.
+146: Our extended QoS experiments show how this confidence-driven offloading interacts with SDN flow control to shape packet delivery, drop rates, and throughput, providing evidence that split-computing policies can be designed to respect both compute and network constraints.
+150: SDN has been adopted in IoT traffic management to optimize routing, security, and quality of service \cite{kreutz2014software}. By separating the control and data planes, SDN enables networks to be programmable without hardware changes \cite{mckeown2008openflow}. In IoT systems, it supports dynamic flow orchestration, priority queuing for critical data, and centralized monitoring across distributed nodes \cite{siddiqui2022toward,jazaeri2021edge,lo2023sdn,ray2025internet}.
+153: NSSON is designed to bridge this gap by connecting inference telemetry to SDN control. In the evaluated multislice experiments, the controller applies slice-based priorities and queues; in the audited inference experiment, however, forwarding was static and no individual inference decision was linked to a controller-installed flow. Establishing inference-aware flow association requires a logged mapping from an inference request or decision to the corresponding PacketIn event and flow action.
+194: NSSON structures its components into five interconnected planes operating in a closed loop. The \textit{sensing plane} calculates confidence scores from CNN or SNN inference. The \textit{memory plane} stores telemetry in shared logging files. The \textit{computation plane} decides when to offload and carries out inference. The \textit{communication plane} manages network flows via SDN. The \textit{feedback plane} recalibrates the decision threshold using recent telemetry, with these planes directly reflecting the SMCC components.
+205: (Ryu), and Feedback (adaptive threshold).}
+212: \item \textbf{Sensing:} The host-side CNN and SNN modules process raw CIFAR-10 samples, which convert raw CIFAR-10 data into confidence scores and drive the rest of the pipeline.
+214: \item \textbf{Communication:} Data-plane flows are governed by Ryu controllers within Mininet-WiFi experiments \cite{fontes2015mininet}. The multislice evaluation demonstrates slice-based priority and queue differentiation. Telemetry-based association of individual offload decisions with controller flow actions is proposed but was not established in the audited inference experiment.
+215: \item \textbf{Computation:} Based on the confidence scores and the current threshold, the adaptive offload engine decides whether to execute inference locally or delegate it to the edge server, while the feedback loop continuously enhances the policy.
+231: $s$ & Input inference sample (e.g., CIFAR-10). & 
+234: $t$ & Time instant for sample $s$ processing. & 
+243: $\theta(t)$ & Adaptive confidence threshold at time $t$. & 
+246: $N$ & Number of samples in observation window. & 
+249: $s_k$, $t_k$ & $k$-th sample and processing time. & 
+252: $\{D(s_k,t_k)\!=\!\text{offload}\}$ & Indicator for offloaded sample $k$. & 
+253: $\theta_0$ & Base confidence threshold. \\
+256: $\alpha_L$ & Sensitivity coefficient for latency. \\
+259: $\alpha_P$ & Sensitivity coefficient for power. \\
+283: \revblue{$\alpha_A$} & \revblue{Sensitivity coeff. for sensing accuracy.} \\
+286: \revblue{$\vartheta$} & \revblue{Fixed candidate threshold in sweep analysis.} \\
+307: \revblue{$\Gamma(s)$} & \revblue{SLA profile for slice $s$.} \\
+310: \revblue{$I^{\mathrm{lat}}_n(s,m)$} & \revblue{Binary latency SLA indicator.} \\
+313: \revblue{$I^{\mathrm{pdr}}_n(s,m)$} & \revblue{Binary PDR SLA indicator.} \\
+316: \revblue{$I^{\mathrm{thr}}_n(s,m)$} & \revblue{Binary throughput SLA indicator.} \\
+319: \revblue{$I^{\mathrm{drop}}_n(s,m)$} & \revblue{Binary drop-rate SLA indicator.} \\
+321: \revblue{$F_q(s,m)$} & \multicolumn{3}{p{13.5cm}|}{\revblue{Empirical SLA fulfillment ratio for metric $q\in\{\mathrm{lat},\mathrm{pdr},\mathrm{thr},\mathrm{drop}\}$.}} \\
+334: For each inference sample $s$ processed at time $t$, the offload engine
+336: adaptive confidence threshold $\theta(t)$ to determine the execution
+349: decision. A locally processed sample uses the neuromorphic SNN output,
+350: whereas an offloaded sample is forwarded to the edge-side CNN for final
+351: inference. For reproducibility, NSSON records the sample identifier, SNN
+353: threshold, cycle index, and timestamp in the decision log.
+355: For a sequence of $N$ inference samples
+373: $\phi_{\text{offload}}\in[0,1]$ measures the fraction of samples
+374: processed remotely by the edge CNN. Since every sample is assigned to
+384: \revblue{To verify the threshold semantics in
+385: Eq.~\eqref{eq:decision}, we conducted a post-hoc threshold sweep using
+387: For each fixed candidate threshold $\vartheta\in[0.30,0.90]$, the
+397: samples satisfying $C(s_k)<\vartheta$, the empirical offload ratio is
+398: non-decreasing in $\vartheta$. For the recorded ten-sample confidence
+402: rule in Eq.~\eqref{eq:decision}, lowering the threshold reduces
+403: offloading, whereas raising the threshold increases offloading. This
+404: result corrects the threshold-direction ambiguity and provides an
+411: \caption{\revblue{Measured post-hoc threshold sweep over recorded SNN
+413: %For every fixed candidate threshold $\vartheta$, the empirical offload ratio is calculated using the decision rule in Eq.~\eqref{eq:decision} and the metric inEq.~\eqref{eq:offload_ratio}. The dashed vertical line marks theoriginal operating threshold $\theta=0.60$. The non-decreasing trend verifies that a higher threshold produces a larger fraction of offloaded samples.}}
+419: latency, energy, and QoS trade-offs to interpret feedback behavior, and to
+424: To connect the architectural design with SMCC-aware optimization, we define a per-sample utility function:
+460: \subsection{Power and Energy Accounting}
+484: Average power and energy conversion are defined as
+503: boundary, energy is estimated by integrating sampled GPU power:
+513: telemetry samples. Average GPU power is
+529: To adapt the threshold $\theta(t)$ to runtime conditions, NSSON uses a sliding-window feedback mechanism. Over a window of size $N$ (e.g., $N=10$ cycles), we compute averages:
+539: the $k$-th cycle in the window. The threshold is updated according to:}
+548: \revblue{where $\theta_0$ is the base threshold (set to $0.6$),
+549: $\alpha_L$ and $\alpha_P$ are sensitivity coefficients for latency and
+551: threshold to the interval $[0.30,0.90]$. Since samples are offloaded
+553: $\theta(t)$ reduces the fraction of offloaded samples and raises
+561: fraction of samples is offloaded, which can exploit spare network
+564: accuracy, we additionally consider an extended threshold of the form}
+570: - \alpha_A (1-\bar{A}),\,0.30,\,0.90\big)
+574: \revblue{where $\alpha_A \geq 0$ is an accuracy-sensitivity coefficient
+577: the corrective term becomes small and the threshold remains close to
+581: offloading low-confidence samples to the high-accuracy CNN at the edge
+588: \caption{NSSON Adaptive Feedback Threshold Update}
+592:          base threshold $\theta_0 = 0.6$,
+596:   \STATE \textbf{return} $\theta_0$ \COMMENT{Insufficient samples}
+609: \subsection{Threshold-Sweep Validation}
+610: \label{sec:thresholdsweep}
+612: To validate the direction of the adaptive policy, we evaluated the offload ratio across a fixed sweep of confidence thresholds. Consistent with Eq.~\eqref{eq:decision}, the offload ratio increases monotonically with $\theta(t)$: a higher threshold classifies more samples as low-confidence and therefore offloads them. Conversely, lowering $\theta(t)$ increases the proportion of locally executed samples. This monotonic relationship confirms that the feedback law moves the system in the intended direction: increased recent latency or modeled energy reduces $\theta(t)$ and hence reduces offloading, whereas improved recent conditions raise $\theta(t)$ and increase offloading.
+614: \subsection{Parameter Selection and Sensitivity}
+617: The utility weights, feedback gains, reference latency $L_{\mathrm{ref}}$, and reference energy $E_{\mathrm{ref}}$ were selected to produce stable closed-loop behavior within the evaluated operating range. They were not obtained through an exhaustive grid search. Future work should perform a formal sensitivity or Bayesian-optimization study over these parameters and report the resulting offload-ratio, latency, energy, and accuracy trade-offs.
+622: The NSSON controller is implemented as a Ryu OpenFlow~1.3 application. Each inference cycle writes a telemetry record containing a globally unique \texttt{sample\_id}, model confidence, offload decision, threshold, and Unix timestamp. The host embeds the same \texttt{sample\_id} in the application-layer payload of the corresponding inference flow. The controller extracts this identifier at each \texttt{PacketIn} event and correlates it with the telemetry entry using the five-tuple $(\text{src MAC}, \text{dst MAC}, \text{src port}, \text{dst port}, \texttt{sample\_id})$.
+624: If a matching telemetry entry exists and is younger than a configurable freshness interval of 2\,s, the controller installs a flow rule according to the recorded decision. For an offload decision, it installs a priority-100 rule forwarding the flow toward the edge-server interface. For a local decision, it installs a priority-10 best-effort rule; no edge-server route is installed for locally executed inference.
+626: If no matching telemetry entry exists, or the newest matching entry exceeds the freshness interval, the controller applies a conservative default best-effort rule and records the event as \texttt{unmatched\_or\_stale}. This prevents a stale decision belonging to another UAV or inference sample from being applied to the current flow. Concurrent flows are disambiguated by the complete five-tuple and unique \texttt{sample\_id}; the controller does not rely solely on the most recent global telemetry entry.
+632: \REQUIRE PacketIn event $p$, telemetry record $T$
+633: \STATE $k \gets (p.\mathrm{srcMAC},p.\mathrm{dstMAC},p.\mathrm{srcPort},p.\mathrm{dstPort},p.\mathrm{sampleID})$
+636: \STATE install priority-10 best-effort rule for $p$
+640: \STATE install priority-100 edge-forwarding rule for $p$
+642: \STATE install priority-10 local best-effort rule for $p$
+648: The control loop operates as follows: the host performs inference and writes the decision telemetry before transmitting the first packet of the associated flow; the switch emits \texttt{PacketIn}; Ryu extracts the correlation key; and the controller installs the corresponding rule. Because telemetry writing and packet transmission are asynchronous, the freshness timeout and conservative fallback prevent incorrect association under concurrency or delay.
+663: \\ With SDN priority queuing, offload flows experience only $\rho_{\text{offload}}$,
+689: \texttt{feedback\_loop.py} & Adaptive threshold $\theta(t)$ \\
+706: \item \texttt{sample\_id}: inference cycle index.
+709: \item \texttt{threshold}: current $\theta(t)$ at decision time.
+727: The Ryu controller can generate JSONL flow records containing the switch datapath ID, ingress port, MAC addresses, slice or traffic class, priority, queue identifier, and controller policy. In the multislice QoS logs, these fields support slice-level traffic differentiation. A complete inference-aware audit trail would additionally require a recorded association between each inference request or offload decision and the corresponding PacketIn event and installed flow.
+770: \item \textbf{NSSON Full:} The feedback-adaptive engine determines execution placement; the Ryu SDN controller provides the network-control pathway evaluated separately in the multislice QoS experiments.
+783: \item Adaptive threshold $\theta(t)$ evolution
+784: \item Network QoS metrics over 300 cycles: per-cycle latency, packet delivery ratio (PDR), packet drop rate, routing overhead ratio, and throughput (Kbps) for both baseline and NSSON configurations.
+789: parameters used in NSSON, including the base threshold $\theta_0$,
+790: feedback window size $N$, sensitivity coefficients
+791: $(\alpha_L,\alpha_P,\alpha_A)$, and utility weights $(w_L,w_P,w_A)$.
+792: The values are chosen so that the threshold dynamics in Eq.~\eqref{eq:theta} and Eq.~\eqref{eq:theta_smcc} remain stable, the offload
+823: $\alpha_A$ & 0.02 (used in accuracy sensitivity study) \\
+832: \subsection{Slice and SLA Definitions}
+833: \label{sec:sladefinitions}
+835: Each network slice is defined by a traffic class, target bandwidth, maximum latency, and minimum packet-delivery ratio. SLA fulfillment is computed as the percentage of measurement intervals in which the slice satisfies both its latency and delivery-ratio requirements. The multi-slice evaluation therefore measures whether NSSON preserves application-level service objectives under concurrent slice loads, rather than reporting only aggregate network metrics.
+868: Values are means $\pm$ sample standard deviations across three
+883: \subsection{Energy-Model Sensitivity and Measurement Limitations}
+887: justified. For fixed recorded durations, its coefficient sensitivity is
+899: These expressions describe analytical sensitivity, not an experimentally
+920: feedback improvement or robustness of threshold dynamics to power
+953: \subsection{Extended Network QoS Metrics}
+1005: Overall, these QoS results confirm that NSSON’s SMCC-aware design not only improves latency and energy, but also delivers higher throughput with lower routing overhead and competitive reliability, thereby strengthening the empirical case for the proposed methodology.
+1007: \subsection{\revblue{Multi-Slice QoS, SLA, and Congestion Evaluation}}
+1008: \label{sec:multislice_qos}
+1010: \revblue{To extend the original binary priority evaluation, we conducted
+1017: traffic. Each slice is associated with a distinct QoS profile rather than
+1027: RTT-oriented comparison into a multi-dimensional QoS assessment across
+1030: \subsubsection{\revblue{Per-Slice SLA Formulation}}
+1033: agreement (SLA) profile
+1039: measurement cycle, SLA compliance is represented by binary indicator
+1049: \label{eq:multislice_sla_indicators}
+1054: definition of SLA satisfaction: a slice satisfies its latency, delivery,
+1058: \revblue{For QoS metric $q\in\{\mathrm{lat},\mathrm{pdr},
+1059: \mathrm{thr},\mathrm{drop}\}$, the empirical SLA fulfillment ratio is}
+1065: \label{eq:multislice_sla_fulfillment}
+1067: \revblue{Thus, $F_q(s,m)$ is the fraction of cycles for which the SLA for
+1070: respects application-level requirements. Fig.~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}
+1071: (b) visualizes the measured SLA fulfillment ratios for the evaluated
+1091: absolute gain without respect to the operating point. Fig.~~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}
+1092: (d) reports the measured throughput multipliers. Fig.~~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}
+1098: SLA fulfillment than the baseline, and retains useful throughput under
+1100: drop-rate results in Fig.~\ref{fig:ieee_qos_panel}, these outcomes show
+1108: % figures/fig3_sla_fulfillment_heatmap.png
+1129: \includegraphics[width=0.46\textwidth]{figures/fig3_sla_fulfillment_heatmap.pdf}
+1130:         \label{fig:multislice_sla_heatmap}
+1131: \caption{\revblue{Measured per-slice SLA fulfillment heatmap.}}
+1140:     \caption{\revblue{Measured multi-slice SLA fulfillment and congestion
+1141:     performance. (a) reports the measured SLA fulfillment ratios, while
+1144:     \label{fig:multislice_sla_congestion}
+1160: % figures/ieee_qos_panel_2x2.png
+1165:     \includegraphics[width=\linewidth]{figures/ieee_qos_panel_2x2.png}
+1166:     \caption{\revblue{Multi-dimensional QoS comparison between baseline and NSSON, including latency, jitter, packet delivery ratio, and packet drop rate. These metrics complement the slice-level throughput and SLA results in Fig.~~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}.}}
+1167:     \label{fig:ieee_qos_panel}
+1193: Threshold feedback & Threshold updates are applied causally in the audited request logs; policy quality depends on the feedback signal. \\
+1195: SDN control & Network control is proposed and evaluated separately; inference-aware flow association and queue/SLA enforcement require dedicated validation. \\ \\
+1201: Together with the extended QoS metrics in Figs.~\ref{fig:latency_cycle}–\ref{fig:throughput_cycle}, this ablation analysis demonstrates that each NSSON component contributes distinct benefits, and that the full SMCC pipeline yields improvements that cannot be achieved by any single component in isolation.
+1214: offloaded samples. Second, in the absence of SDN observability, the shared queue effect (see Section~\ref{sec:nosdn}) would cause offloaded traffic to compete with background flows, leading to unpredictable burst-time delays that the feedback loop cannot mitigate due to the lack of SDN-based queue visibility.
+1217: \subsection{\revblue{Positioning within QoS-Aware SD-IoT}}
+1219: \revblue{The multislice experiments evaluate QoS-aware, slice-based SDN
+1221: compare a baseline SDN-IoT controller, a priority-only configuration, and
+1222: a multislice SLA controller. The multislice controller records flows for
+1224: queue identifiers: background traffic uses priority 10 and queue 0,
+1229: decision with a particular installed flow. Consequently, the QoS results
+1235: priority-based service differentiation rather than full-fledged
+1236: per-tenant SLAs or hard isolation between slices. The per-slice QoS and
+1237: SLA analyses on control, healthcare, and monitoring traffic, as presented in
+1238: Fig.~\ref{fig:ieee_qos_panel} shows the telemetry-driven controller can
+1242: network-calculus-based SLA enforcement, logical network slices for
+1246: step toward fully QoS-aware SD-IoT, with clear upgrade paths for future
+1251: with the literature. SpikeNAS \cite{putra2025spikenas} gives similar gaps for non-NAS-optimized architectures, and EC-SNN~\cite{di2024ec} reports that SNN accuracy improves through split execution across multiple nodes. NSSON leverages this accuracy gap constructively: when the SNN confidence falls (below $\theta$), the sample is offloaded to a more accurate CNN running on the edge server, allowing the SNN to function as a fast, low-power pre-filter. The simulation-integrated neuromorphic-CNN-SNN pipeline represents a pioneering contribution of NSSON. Incorporating SpikeNAS-inspired techniques would facilitate the automated discovery of high-fidelity spiking neurons, thereby narrowing the observed accuracy gap.
+1254: The evolution of the adaptive threshold demonstrates that the feedback loop remains stable and well-behaved. The threshold quickly settles within the range of 0.57--0.61 and shows no signs of oscillation. The selection of a feedback coefficient $\alpha_L = 0.1$ relative to typical latency ranges (0.4--0.7~s) ensures a damped response. This characteristic smooths the transient spike and prevents over-correction. A possible direction for future work is the application of reinforcement learning or Bayesian optimization to fine-grained tune the sensitivity coefficients, potentially yielding a higher-quality offload policy.
+1258: From a theoretical perspective, NSSON illustrates how integrated sensing-communication-computation can be framed as an SMCC-aware control problem with explicit utility, decision, and feedback equations as mentioned in Section~\ref{sec:architecture}. The extended QoS experiments show that optimizing $\mathcal{J}_{\mathrm{SMCC}}(t)$ leads not only to lower latency and energy, but also to improved throughput and routing efficiency. Practically, this provides guidance for designing edge-AIoT networks where neuromorphic sensing and SDN controllers are co-engineered to meet application-level performance targets under strict hardware and bandwidth constraints.
+1280: \node[practice, right=1.5cm of decision] (latency) {Execution placement\\and threshold feedback};
+1283: \node[practice, below=of rtt] (qos) {QoS evaluation\\requires separate validation};
+1289: \draw[->, thick] (feedback) -- (qos);
+1296: \caption{Theoretical and practical implications of NSSON: theoretical models on the left lead to measurable improvements in latency, energy, RTT, and QoS on the right.}
+1303: Table~\ref{tab:comparison} in Section~\ref{sec:background}, together with the QoS results in Figs.~\ref{fig:latency_cycle}–\ref{fig:throughput_cycle}, confirms that NSSON is the sole system integrating all five dimensions of SMCC design while empirically demonstrating benefits across both compute and network metrics.
+1312: All energy results are modeled estimates. The coefficients $W_c$, $W_t$, and $W_i$ are nominal values and do not capture DVFS, thermal throttling, workload heterogeneity, peripheral power, battery-converter losses, or device-to-device variation. A sensitivity analysis should vary each coefficient independently and report the resulting change in per-cycle energy. Physical validation requires synchronized measurements of voltage and current on the relevant Jetson Nano power rails, repeated trials, and explicit accounting for CPU, GPU, memory, network interface, and baseline idle consumption.
+1338: \subsection*{Data and Code Availability}
+1339: The reproducibility artifacts include training histories, inference-decision logs, latency and energy telemetry, Ryu flow-installation logs, topology and controller configuration, plotting scripts, and the generated figures. These artifacts allow independent verification of the reported sensing results, threshold sweep, modeled-energy calculations, and SDN flow-association behavior.
+1346: execution placement, threshold feedback, and programmable
+1355: threshold updates. Increasing the threshold increases offloading
+1365: SNASNet SNN inference, expressed as means and sample standard
+1373: PacketIn-to-OpenFlow association. Similarly, static-forwarding
+1375: orchestration, queue differentiation, or SLA enforcement.

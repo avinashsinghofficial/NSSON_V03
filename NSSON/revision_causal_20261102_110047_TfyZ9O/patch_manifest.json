@@ -1,0 +1,9 @@
+{
+  "source": "/home/avi/NSSON/revision_network_launchfix_20261102_102201_5KrIyz/network_smoke.py",
+  "source_sha256": "da5d67266c7af14451d3db8412147cb1fd4ddfce95df519ab084a2027bef14ff",
+  "patched_script": "/home/avi/NSSON/revision_causal_20261102_110047_TfyZ9O/network_causal.py",
+  "patched_sha256": "7819afa4f4bd92fccf6b1ff2021dc344c3b6b75872cc2c60888e8266fdd4e44a",
+  "energy_feedback": "disabled",
+  "accuracy_feedback": "explicit ground-truth oracle only",
+  "scope": "Real causal-feedback network experiment. Not a complete NSSON SDN/QoS validation."
+}

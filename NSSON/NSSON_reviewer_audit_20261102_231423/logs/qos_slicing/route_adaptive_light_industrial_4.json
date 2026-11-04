@@ -1,0 +1,26 @@
+{
+  "slice": "industrial",
+  "current_path": "path_A",
+  "selected_path": "path_A",
+  "reroute": 0,
+  "reason": "current_path_sla_violation",
+  "selected_score": 0.26249999999999996,
+  "selected_metrics": {
+    "path_id": "path_A",
+    "rtt_avg_ms": NaN,
+    "loss_percent": 100.0,
+    "snr_db": 30.0,
+    "throughput_mbps": NaN,
+    "available_bandwidth_mbps": NaN
+  },
+  "candidate_paths": {
+    "path_A": {
+      "path_id": "path_A",
+      "rtt_avg_ms": NaN,
+      "loss_percent": 100.0,
+      "snr_db": 30.0,
+      "throughput_mbps": NaN,
+      "available_bandwidth_mbps": NaN
+    }
+  }
+}

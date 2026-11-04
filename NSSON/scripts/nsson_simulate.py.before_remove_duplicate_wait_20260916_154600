@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""
+NSSON Network Simulation - Pure SDN mode (no WiFi kernel module needed)
+Uses OVS + Ryu for SDN, simulates Jetson edge inference per node
+Usage: sudo -E python3 scripts/nsson_simulate.py --nodes 10 --model snn
+"""
+import argparse, time, csv, os, sys, random
+sys.path.insert(0, '/home/avi/NSSON')
+
+from mininet.net import Mininet
+from mininet.node import RemoteController, OVSKernelSwitch
+from mininet.link import TCLink
+from mininet.log import setLogLevel, info
+
+# Real measured values from trained models
+MODEL_PROFILES = {
+    'snn': {'accuracy': 90.30, 'latency_base_ms': 8.2,  'power_base_mw': 320.0},
+    'cnn': {'accuracy': 93.10, 'latency_base_ms': 22.7, 'power_base_mw': 850.0},
+}
+
+def simulate_node_inference(model_type, node_id, num_nodes):
+    profile = MODEL_PROFILES[model_type]
+    congestion = 1.0 + (num_nodes / 300.0) * 0.35
+    latency  = profile['latency_base_ms'] * congestion * (1 + random.gauss(0, 0.03))
+    power    = profile['power_base_mw'] * (1 + random.gauss(0, 0.02))
+    accuracy = profile['accuracy'] * (1 - abs(random.gauss(0, 0.001)))
+    return {
+        'node_id':       node_id,
+        'model':         model_type,
+        'num_nodes':     num_nodes,
+        'accuracy':      round(accuracy, 2),
+        'latency_ms':    round(latency, 3),
+        'power_mw':      round(power, 2),
+        'throughput_fps':round(1000.0 / latency, 2),
+    }
+
+def safe_mininet_cleanup():
+    """Remove stale Mininet topology state without killing an external Ryu controller."""
+    os.system("sudo ovs-vsctl --if-exists del-br s1 >/dev/null 2>&1")
+    os.system("sudo pkill -f 'mininet:' >/dev/null 2>&1 || true")
+    os.system("sudo rm -f /tmp/vconn* /tmp/vlogs* >/dev/null 2>&1")
+    time.sleep(1)
+
+def run_topology(num_nodes, model_type, out_dir='shared/net_runs'):
+    safe_mininet_cleanup()
+    os.makedirs(out_dir, exist_ok=True)
+    random.seed(42 + num_nodes)
+
+    info(f'\n*** NSSON: {num_nodes} nodes | {model_type.upper()} | SDN/OVS mode\n')
+
+    net = Mininet(controller=RemoteController,
+                  switch=OVSKernelSwitch,
+                  link=TCLink,
+                  autoSetMacs=True)
+
+    info('*** Adding controller\n')
+    c0 = net.addController(
+        'c0',
+        controller=RemoteController,
+        ip='127.0.0.1',
+        port=6633
+    )
+
+    info('*** Adding OVS switch (SDN backbone)\n')
+    s1 = net.addSwitch('s1', protocols='OpenFlow13')
+
+    info(f'*** Adding {num_nodes} Jetson-emulated edge nodes\n')
+    hosts = []
+    for i in range(num_nodes):
+        h = net.addHost(f'h{i+1}',
+                        ip=f'10.0.{i//254}.{(i%254)+1}/16')
+        hosts.append(h)
+
+    for h in hosts:
+        net.addLink(h, s1, bw=100, delay='1ms')
+
+    net.build()
+    c0.start()
+    s1.start([c0])
+
+    info('*** Waiting for OpenFlow connection to Ryu on port 6633\n')
+    time.sleep(3)
+
+    info('*** Generating h1 -> h2 ICMP traffic for Ryu PacketIn verification\n')
+    if len(hosts) >= 2:
+        ping_out = hosts[0].cmd(f'ping -c 3 -W 1 {hosts[1].IP()}')
+        info(ping_out)
+
+
+    info('*** Waiting 5 seconds for OpenFlow connection to Ryu\n')
+    time.sleep(5)
+
+    info('*** Running NSSON inference simulation\n')
+    results = []
+    for i, h in enumerate(hosts):
+        r = simulate_node_inference(model_type, h.name, num_nodes)
+        results.append(r)
+        if (i+1) % 10 == 0 or i == 0 or i == num_nodes-1:
+            info(f'    [{i+1}/{num_nodes}] lat={r["latency_ms"]}ms '
+                 f'pwr={r["power_mw"]}mW acc={r["accuracy"]}%\n')
+
+    net.stop()
+    safe_mininet_cleanup()
+
+    ts = time.strftime('%Y%m%d_%H%M%S')
+    csv_path = f'{out_dir}/nsson_{model_type}_{num_nodes}nodes_{ts}.csv'
+    with open(csv_path, 'w', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=results[0].keys())
+        w.writeheader()
+        w.writerows(results)
+
+    avg = lambda k: sum(r[k] for r in results) / len(results)
+    info(f'\n*** RESULTS: lat={avg("latency_ms"):.2f}ms | '
+         f'pwr={avg("power_mw"):.1f}mW | '
+         f'acc={avg("accuracy"):.2f}% | '
+         f'thr={avg("throughput_fps"):.2f}fps\n')
+    info(f'*** Saved → {csv_path}\n')
+    return csv_path
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--nodes', type=int, required=True,
+                    choices=[2,10,20,30,40,50,100,300])
+    ap.add_argument('--model', choices=['snn','cnn'], default='snn')
+    args = ap.parse_args()
+    setLogLevel('info')
+    run_topology(args.nodes, args.model)

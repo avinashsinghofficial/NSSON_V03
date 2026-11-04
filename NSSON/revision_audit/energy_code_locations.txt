@@ -1,0 +1,19 @@
+./recompute_energy_correct.py:19:    power_file = BASE / mode / "power_log.csv"
+./recompute_energy_correct.py:39:        "cycle", "data_mb", "compute_sec", "idle_sec",
+./recompute_energy_correct.py:47:    df["energy_compute_J"] = W_C * df["compute_sec"]
+./recompute_energy_correct.py:59:    df["original_logged_energy_J"] = df["energy_j"]
+./latencytracker.py:32:            "compute_sec": Lcompute,
+./powermodel.py:18:        Lcompute = row["compute_sec"]
+./powermodel.py:32:            "compute_sec": Lcompute,
+./powermodel.py:34:            "compute_power_w": Pcompute,
+./powermodel.py:35:            "transfer_power_w": Ptransfer,
+./powermodel.py:36:            "idle_power_w": Pidle,
+./powermodel.py:38:            "energy_j": E,
+./qos/qos_metrics_builder.py:13:POWER_LOG = os.path.join(NSSON_ROOT, "offload", "power_log.csv")
+./generate_qos_data.py:33:        "power": os.path.join(base, "power_log.csv"),
+./generate_qos_data.py:45:    # per paper: sense_sec, compute_sec, transfer_sec, idle_sec, total_sec
+./generate_qos_data.py:48:        "compute_sec": "compute_sec",
+./generate_qos_data.py:55:        "compute_sec": "compute_sec",
+./generate_qos_data.py:57:        "compute_power_w": "compute_power_w",
+./generate_qos_data.py:58:        "transfer_power_w": "transfer_power_w",
+./generate_qos_data.py:59:        "idle_power_w": "idle_power_w",

@@ -1,0 +1,13 @@
+{
+  "model": "snn",
+  "architecture": "nsson",
+  "profile": "default",
+  "nodes": 300,
+  "cycles": 1200,
+  "accuracy": 90.0498,
+  "avg_latency_ms": 24.8509,
+  "avg_power_mw": 76.5371,
+  "avg_throughput_fps": 50.5912,
+  "avg_rtt_ms": 28.05,
+  "offload_ratio": 0.6792
+}

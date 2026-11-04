@@ -1,0 +1,24 @@
+
+# Python / venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+.venv/
+.venv_*/
+venv/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Data / results (adjust as needed)
+*.pt
+*.pth
+*.tar
+*.tar.gz
+*.zip
+results/
+data/raw/
+models/

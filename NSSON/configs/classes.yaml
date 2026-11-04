@@ -1,0 +1,5 @@
+proposal_classes:
+  - person
+verifier_classes:
+  - benign
+  - dangerous

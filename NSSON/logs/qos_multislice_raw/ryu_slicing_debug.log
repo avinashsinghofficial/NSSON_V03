@@ -1,0 +1,6 @@
+1 RLock(s) were not greened, to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+loading app /home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py
+loading app ryu.controller.ofp_handler
+instantiating app /home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py of NSSONMultiSliceSLAController
+NSSON multi-slice SLA controller started; TCP map={8090: 'autonomous', 8091: 'healthcare', 8092: 'industrial'}; UDP map={9090: 'autonomous', 9091: 'healthcare', 9092: 'industrial', 5001: 'background'}
+instantiating app ryu.controller.ofp_handler of OFPHandler

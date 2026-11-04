@@ -1,0 +1,12 @@
+ultralytics
+flask
+requests
+onnxruntime
+psutil
+pyyaml
+python-dotenv
+opencv-python
+numpy
+pillow
+torch
+pytest

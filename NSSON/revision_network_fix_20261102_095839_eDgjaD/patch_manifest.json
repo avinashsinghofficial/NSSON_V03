@@ -1,0 +1,13 @@
+{
+  "original_script": "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py",
+  "original_sha256": "23a47ce1b94ab27045efac60908c6e90a559b424e964fbc22731c160c8b8c9fe",
+  "patched_script": "/home/avi/NSSON/revision_network_fix_20261102_095839_eDgjaD/network_smoke.py",
+  "patched_sha256": "9bd5dca92c0be455ca9d96fe130a940dac3b124e56e27f58e311d9e11205b9d7",
+  "changes": [
+    "Replace runuser with setpriv credential switching.",
+    "Verify worker namespace against its Mininet host namespace.",
+    "Verify worker owns the expected IPv4 address.",
+    "Test address binding before loading models.",
+    "Preserve inference policies and network settings."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "bridge": "nrb4df28s",
+  "controller": null,
+  "forwarding": "Static OpenFlow 1.3 baseline",
+  "client": "10.231.77.1",
+  "server": "10.231.77.2",
+  "each_link_configured_mbps": 20,
+  "each_link_configured_delay": "2ms",
+  "warning": "Configured emulation settings are not measured latency or bandwidth guarantees."
+}

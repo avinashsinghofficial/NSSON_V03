@@ -1,0 +1,6 @@
+Keep the queue campaign and real-inference experiment separate.
+No integrated inference-aware controller performance claim is established.
+Run-level SD is not a confidence interval.
+Repeated image evaluations are not additional unique test images.
+Label-oracle feedback is not a deployable policy.
+No hardware energy benefit is established by these experiments.

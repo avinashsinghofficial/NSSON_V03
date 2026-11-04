@@ -1,0 +1,70 @@
+=== ICMP PING ===
+PING 10.20.0.2 (10.20.0.2) 56(84) bytes of data.
+64 bytes from 10.20.0.2: icmp_seq=1 ttl=64 time=14.2 ms
+64 bytes from 10.20.0.2: icmp_seq=2 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=3 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=4 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=5 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=6 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=7 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=8 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=9 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=10 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=11 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=12 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=13 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=14 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=15 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=16 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=17 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=18 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=19 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=20 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=21 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=22 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=23 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=24 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=25 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=26 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=27 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=28 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=29 ttl=64 time=10.1 ms
+64 bytes from 10.20.0.2: icmp_seq=30 ttl=64 time=10.1 ms
+
+--- 10.20.0.2 ping statistics ---
+30 packets transmitted, 30 received, 0% packet loss, time 5815ms
+rtt min/avg/max/mdev = 10.075/10.245/14.190/0.732 ms
+
+=== TCP IPERF 8090 ===
+------------------------------------------------------------
+Client connecting to 10.20.0.2, TCP port 8090
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.1 port 60830 connected with 10.20.0.2 port 8090
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 1.0000-2.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 2.0000-3.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 3.0000-4.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 4.0000-5.0000 sec  2.12 MBytes  17.8 Mbits/sec
+[  1] 0.0000-5.2116 sec  5.75 MBytes  9.26 Mbits/sec
+
+=== UDP IPERF BACKGROUND ===
+------------------------------------------------------------
+Client connecting to 10.20.0.12, UDP port 5001
+Sending 1470 byte datagrams, IPG target: 934.60 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.11 port 48465 connected with 10.20.0.12 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  1.50 MBytes  12.6 Mbits/sec
+[  1] 1.0000-2.0000 sec  1.50 MBytes  12.6 Mbits/sec
+[  1] 2.0000-3.0000 sec  1.50 MBytes  12.6 Mbits/sec
+[  1] 3.0000-4.0000 sec  1.50 MBytes  12.6 Mbits/sec
+[  1] 4.0000-5.0000 sec  1.50 MBytes  12.6 Mbits/sec
+[  1] 0.0000-5.0011 sec  7.50 MBytes  12.6 Mbits/sec
+[  1] Sent 5354 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-4.9977 sec  7.50 MBytes  12.6 Mbits/sec   0.000 ms 0/5353 (0%)
+[  1] 0.0000-4.9977 sec  3 datagrams received out-of-order

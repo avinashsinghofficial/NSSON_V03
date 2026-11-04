@@ -1,0 +1,14 @@
+{
+  "role": "client",
+  "pid": 32345,
+  "uid": 1000,
+  "actual_namespace": "net:[4026533254]",
+  "expected_namespace": "net:[4026533254]",
+  "expected_ip": "10.241.77.1",
+  "addresses": [
+    "10.241.77.1",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "ip_present": true
+}

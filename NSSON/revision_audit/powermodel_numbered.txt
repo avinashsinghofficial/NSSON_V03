@@ -1,0 +1,51 @@
+     1	import os
+     2	import pandas as pd
+     3	
+     4	NSSON_ROOT = "/home/avi/NSSON_V02"
+     5	LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+     6	POWER_LOG = os.path.join(NSSON_ROOT, "logs", "offloadpowerlog.csv")
+     7	
+     8	Wc = 5.0
+     9	Wt = 0.5
+    10	Wi = 1.5
+    11	
+    12	def compute_power(mb_per_cycle=0.1, mode="adaptive_no_sdn"):
+    13	    lat_df = pd.read_csv(LATENCY_LOG)
+    14	    lat_df = lat_df[lat_df["mode"] == mode].copy()
+    15	    rows = []
+    16	    for _, row in lat_df.iterrows():
+    17	        cycle = row["cycle"]
+    18	        Lcompute = row["compute_sec"]
+    19	        Ltransfer = row["transfer_sec"]
+    20	        Lidle = row["idle_sec"]
+    21	        Le2e = row["total_sec"]
+    22	
+    23	        Pcompute = Wc * (Lcompute / Le2e) if Le2e > 0 else 0.0
+    24	        Ptransfer = Wt * mb_per_cycle
+    25	        Pidle = Wi * (Lidle / Le2e) if Le2e > 0 else 0.0
+    26	        Ptotal = Pcompute + Ptransfer + Pidle
+    27	        E = Ptotal * Le2e
+    28	
+    29	        rows.append({
+    30	            "cycle": cycle,
+    31	            "data_mb": mb_per_cycle,
+    32	            "compute_sec": Lcompute,
+    33	            "idle_sec": Lidle,
+    34	            "compute_power_w": Pcompute,
+    35	            "transfer_power_w": Ptransfer,
+    36	            "idle_power_w": Pidle,
+    37	            "total_power_wh": Ptotal * (Le2e / 3600.0),
+    38	            "energy_j": E,
+    39	            "mode": mode,
+    40	        })
+    41	
+    42	    pd.DataFrame(rows).to_csv(POWER_LOG, index=False)
+    43	    print("Power log written to", POWER_LOG)
+    44	
+    45	if __name__ == "__main__":
+    46	    import argparse
+    47	    p = argparse.ArgumentParser()
+    48	    p.add_argument("--mode", required=True,
+    49	                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+    50	    args = p.parse_args()
+    51	    compute_power(mb_per_cycle=0.1, mode=args.mode)

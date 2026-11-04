@@ -1,0 +1,120 @@
+experiment:
+  name: nsson_qos_slicing_adaptive_routing
+  cycles_per_load: 10
+  ping_samples_per_cycle: 20
+  iperf_seconds_per_cycle: 5
+  reroute_window_cycles: 3
+  reroute_cooldown_seconds: 5
+  project_root: /home/avi/NSSON_V02
+  results_root: /home/avi/NSSON_V02/results/qos_slicing
+  logs_root: /home/avi/NSSON_V02/logs/qos_slicing
+
+loads:
+  light:
+    background_rate_mbps: 2
+  moderate:
+    background_rate_mbps: 12
+  heavy:
+    background_rate_mbps: 19
+
+modes:
+  baseline:
+    description: Baseline SDN-IoT without NSSON priority, slicing, or adaptive routing
+    enable_priority: false
+    enable_slicing: false
+    enable_adaptive_routing: false
+
+  priority:
+    description: NSSON binary priority for inference traffic versus background traffic
+    enable_priority: true
+    enable_slicing: false
+    enable_adaptive_routing: false
+
+  slicing:
+    description: NSSON with separate logical slices and per-slice SLA policies
+    enable_priority: true
+    enable_slicing: true
+    enable_adaptive_routing: false
+
+  adaptive:
+    description: NSSON with slices, per-slice SLAs, and SLA-triggered adaptive routing
+    enable_priority: true
+    enable_slicing: true
+    enable_adaptive_routing: true
+
+slices:
+  autonomous:
+    description: Autonomous-driving or collision-avoidance inference
+    app_class: safety_critical
+    traffic_port: 8090
+    dscp: 46
+    priority: 400
+    queue_id: 1
+    sla:
+      latency_ms_max: 25.0
+      jitter_ms_max: 5.0
+      loss_percent_max: 1.0
+      pdr_min: 0.99
+      throughput_mbps_min: 8.0
+
+  healthcare:
+    description: Healthcare emergency alert or diagnostic inference
+    app_class: mission_critical
+    traffic_port: 8091
+    dscp: 34
+    priority: 300
+    queue_id: 2
+    sla:
+      latency_ms_max: 40.0
+      jitter_ms_max: 8.0
+      loss_percent_max: 1.0
+      pdr_min: 0.99
+      throughput_mbps_min: 6.0
+
+  industrial:
+    description: Industrial monitoring and predictive-maintenance inference
+    app_class: periodic_monitoring
+    traffic_port: 8092
+    dscp: 18
+    priority: 200
+    queue_id: 3
+    sla:
+      latency_ms_max: 60.0
+      jitter_ms_max: 15.0
+      loss_percent_max: 3.0
+      pdr_min: 0.97
+      throughput_mbps_min: 3.0
+
+  background:
+    description: Best-effort background traffic
+    app_class: best_effort
+    traffic_port: 8099
+    dscp: 0
+    priority: 10
+    queue_id: 0
+    sla:
+      latency_ms_max: 1000.0
+      jitter_ms_max: 1000.0
+      loss_percent_max: 100.0
+      pdr_min: 0.0
+      throughput_mbps_min: 0.0
+
+paths:
+  path_A:
+    description: Primary low-latency candidate path
+    out_port: 1
+
+  path_B:
+    description: Backup reliability-oriented candidate path
+    out_port: 2
+
+routing:
+  weights:
+    latency: 0.45
+    loss: 0.25
+    snr: 0.15
+    bandwidth: 0.15
+
+  minimum_snr_db: 10.0
+  minimum_available_bandwidth_mbps: 2.0
+  fallback_policy: minimum_latency

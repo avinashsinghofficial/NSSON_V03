@@ -1,0 +1,468 @@
+{
+  "mode": "baseline",
+  "scope": "Static-network pilot, not inference-aware NSSON",
+  "parent_limit_mbps": 20,
+  "requested_background_mbps": 19,
+  "actual_background_sender_mbps": 18.9994565399247,
+  "timestamps": {
+    "background_launch": 1793646876.1857796,
+    "autonomous_launch": 1793646879.1891284,
+    "healthcare_launch": 1793646879.190634,
+    "industrial_launch": 1793646879.1914976,
+    "probe_window_launch": 1793646881.193781,
+    "probe_autonomous_launch": 1793646881.1937928,
+    "probe_healthcare_launch": 1793646881.1950326,
+    "probe_industrial_launch": 1793646881.2022274,
+    "snapshot": 1793646888.2124176
+  },
+  "receiver_results": {
+    "autonomous": {
+      "bytes": 889824,
+      "seconds": 23.476161,
+      "mbps": 0.3032264091220025,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "sender": {
+              "socket": 7,
+              "start": 0,
+              "end": 23.476161,
+              "seconds": 23.476161,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "sender": false
+            },
+            "receiver": {
+              "socket": 7,
+              "start": 0,
+              "end": 23.476161,
+              "seconds": 23.476161,
+              "bytes": 889824,
+              "bits_per_second": 303226.4091220025,
+              "sender": false
+            }
+          }
+        ],
+        "sum_sent": {
+          "start": 0,
+          "end": 23.476161,
+          "seconds": 23.476161,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "sender": false
+        },
+        "sum_received": {
+          "start": 0,
+          "end": 23.476161,
+          "seconds": 23.476161,
+          "bytes": 889824,
+          "bits_per_second": 303226.4091220025,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 0.01791568708001272,
+          "host_user": 0,
+          "host_system": 0.01791568708001272,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        },
+        "receiver_tcp_congestion": "cubic"
+      }
+    },
+    "healthcare": {
+      "bytes": 4456448,
+      "seconds": 19.166761,
+      "mbps": 1.860073488681786,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "sender": {
+              "socket": 7,
+              "start": 0,
+              "end": 19.166829,
+              "seconds": 19.166829,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "sender": false
+            },
+            "receiver": {
+              "socket": 7,
+              "start": 0,
+              "end": 19.166829,
+              "seconds": 19.166829,
+              "bytes": 4456448,
+              "bits_per_second": 1860066.8895204314,
+              "sender": false
+            }
+          }
+        ],
+        "sum_sent": {
+          "start": 0,
+          "end": 19.166829,
+          "seconds": 19.166829,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "sender": false
+        },
+        "sum_received": {
+          "start": 0,
+          "end": 19.166829,
+          "seconds": 19.166829,
+          "bytes": 4456448,
+          "bits_per_second": 1860066.8895204314,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 0.0317299722219883,
+          "host_user": 0.005061327999661776,
+          "host_system": 0.02668153385220682,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        },
+        "receiver_tcp_congestion": "cubic"
+      }
+    },
+    "industrial": {
+      "bytes": 584296,
+      "seconds": 23.648558,
+      "mbps": 0.1976597473723345,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "sender": {
+              "socket": 7,
+              "start": 0,
+              "end": 23.648558,
+              "seconds": 23.648558,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "sender": false
+            },
+            "receiver": {
+              "socket": 7,
+              "start": 0,
+              "end": 23.648558,
+              "seconds": 23.648558,
+              "bytes": 584296,
+              "bits_per_second": 197659.7473723345,
+              "sender": false
+            }
+          }
+        ],
+        "sum_sent": {
+          "start": 0,
+          "end": 23.648558,
+          "seconds": 23.648558,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "sender": false
+        },
+        "sum_received": {
+          "start": 0,
+          "end": 23.648558,
+          "seconds": 23.648558,
+          "bytes": 584296,
+          "bits_per_second": 197659.7473723345,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 0.015300931530222852,
+          "host_user": 0.003844147384682784,
+          "host_system": 0.011463989670159906,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        },
+        "receiver_tcp_congestion": "cubic"
+      }
+    },
+    "background": {
+      "bytes": 57705600,
+      "seconds": 26.633272,
+      "mbps": 17.33338660003923,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "udp": {
+              "socket": 7,
+              "start": 0,
+              "end": 26.633272,
+              "seconds": 26.633272,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "jitter_ms": 0.49522143954412723,
+              "lost_packets": 3369,
+              "packets": 51457,
+              "lost_percent": 0,
+              "out_of_order": 0,
+              "sender": false
+            }
+          }
+        ],
+        "sum": {
+          "start": 0,
+          "end": 26.633272,
+          "seconds": 26.633272,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "jitter_ms": 0.49522143954412723,
+          "lost_packets": 3369,
+          "packets": 51457,
+          "lost_percent": 6.547214178828925,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 2.060389247444558,
+          "host_user": 0.20505112614808155,
+          "host_system": 1.8553417264008425,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        }
+      }
+    }
+  },
+  "probe_results": {
+    "autonomous": {
+      "bytes": 115200,
+      "seconds": 10.637407,
+      "mbps": 0.08663765521052265,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "udp": {
+              "socket": 7,
+              "start": 0,
+              "end": 10.637407,
+              "seconds": 10.637407,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "jitter_ms": 0.9318144536030758,
+              "lost_packets": 9,
+              "packets": 105,
+              "lost_percent": 0,
+              "out_of_order": 0,
+              "sender": false
+            }
+          }
+        ],
+        "sum": {
+          "start": 0,
+          "end": 10.637407,
+          "seconds": 10.637407,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "jitter_ms": 0.9318144536030758,
+          "lost_packets": 9,
+          "packets": 105,
+          "lost_percent": 8.57142857142857,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 0.028565477611337927,
+          "host_user": 0,
+          "host_system": 0.028565477611337927,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        }
+      }
+    },
+    "healthcare": {
+      "bytes": 108000,
+      "seconds": 10.638431,
+      "mbps": 0.08121498367569428,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "udp": {
+              "socket": 7,
+              "start": 0,
+              "end": 10.638431,
+              "seconds": 10.638431,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "jitter_ms": 0.627200430600107,
+              "lost_packets": 15,
+              "packets": 105,
+              "lost_percent": 0,
+              "out_of_order": 0,
+              "sender": false
+            }
+          }
+        ],
+        "sum": {
+          "start": 0,
+          "end": 10.638431,
+          "seconds": 10.638431,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "jitter_ms": 0.627200430600107,
+          "lost_packets": 15,
+          "packets": 105,
+          "lost_percent": 14.285714285714286,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 0.027873454718441847,
+          "host_user": 0.0015164051966546782,
+          "host_system": 0.026357049521787166,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        }
+      }
+    },
+    "industrial": {
+      "bytes": 78000,
+      "seconds": 10.637877,
+      "mbps": 0.05865832064048118,
+      "zero_byte_intervals": 0,
+      "interval_boundary_discrepancies_s": [],
+      "final_report": {
+        "streams": [
+          {
+            "udp": {
+              "socket": 7,
+              "start": 0,
+              "end": 10.637877,
+              "seconds": 10.637877,
+              "bytes": 0,
+              "bits_per_second": 0,
+              "jitter_ms": 0.4238080901022947,
+              "lost_packets": 39,
+              "packets": 104,
+              "lost_percent": 0,
+              "out_of_order": 0,
+              "sender": false
+            }
+          }
+        ],
+        "sum": {
+          "start": 0,
+          "end": 10.637877,
+          "seconds": 10.637877,
+          "bytes": 0,
+          "bits_per_second": 0,
+          "jitter_ms": 0.4238080901022947,
+          "lost_packets": 39,
+          "packets": 104,
+          "lost_percent": 37.5,
+          "sender": false
+        },
+        "cpu_utilization_percent": {
+          "host_total": 0.022545990929031836,
+          "host_user": 0.0083678458343402,
+          "host_system": 0.014193368586203476,
+          "remote_total": 0,
+          "remote_user": 0,
+          "remote_system": 0
+        }
+      }
+    }
+  },
+  "probe_settings": {
+    "requested_rate_per_probe_bps": 100000,
+    "payload_bytes": 1200,
+    "duration_seconds": 10,
+    "scope": "Concurrent UDP probes; not inference requests"
+  },
+  "buffer_policy": {
+    "unit": "bytes",
+    "aggregate_leaf_limit": 1500000,
+    "leaf_limits": {
+      "1:1": 1500000
+    },
+    "installed_qdiscs": [
+      {
+        "kind": "htb",
+        "handle": "1:",
+        "root": true,
+        "refcnt": 37,
+        "options": {
+          "r2q": 10,
+          "default": "0x1",
+          "direct_packets_stat": 0,
+          "direct_qlen": 1000
+        }
+      },
+      {
+        "kind": "bfifo",
+        "handle": "64:",
+        "parent": "1:1",
+        "options": {
+          "limit": 1500000
+        }
+      }
+    ],
+    "scope": "Equal aggregate leaf-qdisc byte capacity, not equal per-class delay or a shared memory pool"
+  },
+  "measurement_window": {
+    "requested_duration_s": 6,
+    "start": {
+      "background_ingress": {
+        "device": "pac2dc1-eth4",
+        "counter": "rx_bytes",
+        "bytes": 14571500,
+        "monotonic_s": 88971.65304987351,
+        "read_duration_s": 0.0003153149882564321,
+        "unix_s": 1793646882.2049525
+      },
+      "bottleneck_egress": {
+        "device": "pac2dc1-eth5",
+        "counter": "tx_bytes",
+        "bytes": 14624010,
+        "monotonic_s": 88971.653323143,
+        "read_duration_s": 8.844801050145179e-05,
+        "unix_s": 1793646882.2051086
+      }
+    },
+    "end": {
+      "background_ingress": {
+        "device": "pac2dc1-eth4",
+        "counter": "rx_bytes",
+        "bytes": 29337708,
+        "monotonic_s": 88977.6597410255,
+        "read_duration_s": 0.0002724009973462671,
+        "unix_s": 1793646888.211622
+      },
+      "bottleneck_egress": {
+        "device": "pac2dc1-eth5",
+        "counter": "tx_bytes",
+        "bytes": 29576834,
+        "monotonic_s": 88977.659996563,
+        "read_duration_s": 0.0001085379917640239,
+        "unix_s": 1793646888.2117927
+      }
+    },
+    "rates": {
+      "background_ingress": {
+        "bytes": 14766208,
+        "seconds": 6.0066911519970745,
+        "mbps": 19.66634558208055
+      },
+      "bottleneck_egress": {
+        "bytes": 14952824,
+        "seconds": 6.0066734200081555,
+        "mbps": 19.914948530669008
+      }
+    },
+    "scope": "Interface counter rates over a common target window. Not synchronized application-layer TCP goodput."
+  },
+  "buffering_note": "Equal aggregate bfifo leaf capacity: 1500000 bytes. Shared: one leaf; static: four 375000-byte leaves. Bandwidth allocation and queue partitioning both differ.",
+  "note": "Per-flow measurement windows differ; do not treat their sum as synchronized aggregate goodput."
+}

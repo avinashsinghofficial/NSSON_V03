@@ -1,0 +1,9 @@
+,,rtt_avg_ms,rtt_avg_ms,rtt_avg_ms,rtt_avg_ms,rtt_avg_ms,rtt_jitter_mdev_ms,rtt_jitter_mdev_ms,rtt_jitter_mdev_ms,rtt_jitter_mdev_ms,rtt_jitter_mdev_ms,ping_loss_pct,ping_loss_pct,ping_loss_pct,ping_loss_pct,ping_loss_pct,control_tcp_throughput_mbps,control_tcp_throughput_mbps,control_tcp_throughput_mbps,control_tcp_throughput_mbps,control_tcp_throughput_mbps,background_udp_jitter_ms,background_udp_jitter_ms,background_udp_jitter_ms,background_udp_jitter_ms,background_udp_jitter_ms,background_udp_loss_pct,background_udp_loss_pct,background_udp_loss_pct,background_udp_loss_pct,background_udp_loss_pct
+,,count,mean,std,min,max,count,mean,std,min,max,count,mean,std,min,max,count,mean,std,min,max,count,mean,std,min,max,count,mean,std,min,max
+mode,load,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+baseline_sdn_iot,heavy,10,25.2099,0.200395,24.952,25.524,10,0.7389,0.598103,0.12,1.624,10,56.33334,6.37315,46.6667,63.3333,10,9.544,6.983704,3.01,19.0,10,0.1483,0.383275,0.017,1.239,10,2.16,0.05164,2.1,2.2
+baseline_sdn_iot,light,10,10.2926,0.185043,10.146,10.8,10,0.8066,0.951478,0.053,3.412,10,0.0,0.0,0.0,0.0,10,17.44,0.05164,17.4,17.5,10,0.0008,0.001549,0.0,0.005,10,0.0,0.0,0.0,0.0
+baseline_sdn_iot,moderate,10,10.2224,0.066955,10.105,10.357,10,0.6515,0.346478,0.01,1.306,10,0.0,0.0,0.0,0.0,10,9.129,0.113181,8.93,9.26,10,0.0018,0.002394,0.0,0.007,10,0.0,0.0,0.0,0.0
+nsson_full,heavy,10,25.2989,0.151132,25.176,25.579,10,0.9604,0.44444,0.606,1.72,10,56.66668,9.296241,43.3333,66.6667,9,5.951111,5.405625,1.09,18.9,10,0.0272,0.003553,0.02,0.031,10,2.17,0.048305,2.1,2.2
+nsson_full,light,11,10.246455,0.028001,10.215,10.305,11,0.613364,0.131238,0.45,0.816,11,0.0,0.0,0.0,0.0,11,17.409091,0.083121,17.2,17.5,11,0.001636,0.003139,0.0,0.01,11,0.0,0.0,0.0,0.0
+nsson_full,moderate,10,10.2071,0.047002,10.097,10.255,10,0.6003,0.227436,0.008,0.802,10,0.0,0.0,0.0,0.0,10,9.083,0.097758,8.96,9.26,10,0.002,0.002211,0.0,0.007,10,0.0,0.0,0.0,0.0

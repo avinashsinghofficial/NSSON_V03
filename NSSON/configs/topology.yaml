@@ -1,0 +1,6 @@
+switches: 1
+aps: 1
+jetson_nodes: 1
+workstations: 1
+remote_verifiers: 1
+controller: ryu

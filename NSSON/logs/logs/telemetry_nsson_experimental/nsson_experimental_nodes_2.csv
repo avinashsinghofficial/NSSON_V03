@@ -1,0 +1,3 @@
+nodes,aps,switches,model_used,execution_site,latency_ms,power_mw,energy_mj,accuracy
+2,1,1,cnn,local,12.934434693306684,1000.0,12.934434693306684,0.9571
+2,1,1,snn,local,126.15372193977237,800.0,100.9229775518179,0.9021434294871795

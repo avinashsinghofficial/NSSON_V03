@@ -1,0 +1,2637 @@
+
+================================================================================
+BEGIN FILE: revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py
+================================================================================
+import argparse
+import faulthandler
+faulthandler.enable(all_threads=True)
+import csv
+import hashlib
+import json
+import os
+import pwd
+import shutil
+import signal
+import socket
+import statistics
+import struct
+import subprocess
+import sys
+import time
+import traceback
+import uuid
+from pathlib import Path
+
+ROOT = Path("/home/avi/NSSON")
+PYTHON = ROOT / ".venv_nsson_gpu/bin/python3"
+SCRIPT = Path(__file__).resolve()
+
+CLIENT_IP = "10.231.77.1"
+SERVER_IP = "10.231.77.2"
+SERVER_PORT = 8090
+REQUESTS_PER_POLICY = 20
+THETA = 0.60
+
+POLICIES = (
+    "local_cnn",
+    "local_snn",
+    "remote_cnn",
+    "adaptive_fixed",
+)
+
+
+def write_json(path, value):
+    Path(path).write_text(
+        json.dumps(value, indent=2, default=str) + "\n"
+    )
+
+
+def read_exact(sock, length):
+    parts = []
+    remaining = length
+    while remaining:
+        data = sock.recv(remaining)
+        if not data:
+            raise EOFError("Connection closed before frame completed")
+        parts.append(data)
+        remaining -= len(data)
+    return b"".join(parts)
+
+
+def send_json(sock, value):
+    payload = json.dumps(value).encode("utf-8")
+    if len(payload) > 65536:
+        raise ValueError("JSON frame too large")
+    sock.sendall(struct.pack("!I", len(payload)) + payload)
+
+
+def receive_json(sock):
+    length = struct.unpack("!I", read_exact(sock, 4))[0]
+    if length < 2 or length > 65536:
+        raise ValueError(f"Invalid JSON frame length: {length}")
+    value = json.loads(read_exact(sock, length))
+    if not isinstance(value, dict):
+        raise ValueError("Expected JSON object")
+    return value
+
+
+def tensor_environment():
+    sys.path.insert(0, str(ROOT))
+
+    print("STAGE: before NumPy import", flush=True)
+    import numpy as np
+    print("STAGE: NumPy import completed", flush=True)
+
+    print("STAGE: before PyTorch import", flush=True)
+    import torch
+    print(
+        f"STAGE: PyTorch import completed; version={torch.__version__}",
+        flush=True,
+    )
+
+    print("STAGE: before torch.manual_seed", flush=True)
+    torch.manual_seed(20261102)
+    print("STAGE: torch.manual_seed completed", flush=True)
+
+    np.random.seed(20261102)
+    torch.backends.cudnn.benchmark = False
+
+    print("STAGE: before CUDA availability check", flush=True)
+    cuda_available = torch.cuda.is_available()
+    print(
+        f"STAGE: CUDA availability check completed: {cuda_available}",
+        flush=True,
+    )
+
+    device = torch.device(
+        "cuda:0" if cuda_available else "cpu"
+    )
+    print(f"STAGE: tensor environment ready: {device}", flush=True)
+    return np, torch, device
+
+
+def synchronize(torch, device):
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
+
+
+def cnn_components(device):
+    from models.cifar10_cnn import (
+        load_cnn_checkpoint,
+        get_cifar10_test_loader,
+    )
+
+    model, _ = load_cnn_checkpoint(
+        ckpt_path=str(
+            ROOT / "models/cnn_baseline/checkpoints/"
+            "resnet18_cifar10_best.pth"
+        ),
+        device=device,
+    )
+    transform = get_cifar10_test_loader(
+        data_root=str(ROOT / "data/cifar10"),
+        batch_size=1,
+    ).dataset.transform
+    return model.eval(), transform
+
+
+def snn_components(device):
+    saved_argv = sys.argv[:]
+    sys.argv = [sys.argv[0]]
+    try:
+        import snn.snn_snasnet.eval_snasnet_cifar10 as api
+        model, config, _ = api.load_snn_checkpoint(device=device)
+    finally:
+        sys.argv = saved_argv
+
+    from spikingjelly.clock_driven import functional
+
+    _, transform = api.data_transforms(config)
+
+    def reset():
+        functional.reset_net(model)
+        model.neuron_init()
+
+    return model.eval(), transform, reset
+
+
+def infer(torch, device, model, transform, image, reset=None):
+    if reset is not None:
+        reset()
+
+    batch = transform(image).unsqueeze(0).to(device)
+    scores = model(batch)
+    confidence, prediction = torch.softmax(
+        scores.float(), dim=1
+    ).max(dim=1)
+
+    prediction = int(prediction.item())
+    confidence = float(confidence.item())
+    synchronize(torch, device)
+
+    if tuple(scores.shape) != (1, 10):
+        raise ValueError(f"Unexpected scores: {tuple(scores.shape)}")
+    if not torch.isfinite(scores).all().item():
+        raise ValueError("Non-finite model output")
+
+    return prediction, confidence
+
+
+
+def verify_worker_network(args, expected_ip):
+    namespace = os.readlink("/proc/self/ns/net")
+    expected_namespace = os.environ.get("NSSON_EXPECTED_NETNS")
+
+    result = subprocess.run(
+        ["ip", "-j", "-4", "address", "show"],
+        text=True,
+        capture_output=True,
+        timeout=10,
+    )
+
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"Cannot inspect worker addresses: {result.stderr}"
+        )
+
+    interfaces = json.loads(result.stdout)
+    addresses = sorted({
+        address["local"]
+        for interface in interfaces
+        for address in interface.get("addr_info", [])
+        if address.get("family") == "inet"
+        and "local" in address
+    })
+
+    audit = {
+        "role": args.role,
+        "pid": os.getpid(),
+        "uid": os.getuid(),
+        "gid": os.getgid(),
+        "actual_network_namespace": namespace,
+        "expected_network_namespace": expected_namespace,
+        "expected_ip": expected_ip,
+        "observed_ipv4_addresses": addresses,
+        "namespace_matches": namespace == expected_namespace,
+        "expected_ip_present": expected_ip in addresses,
+    }
+
+    audit_path = (
+        Path(args.out) / f"{args.role}_namespace.json"
+    )
+    write_json(audit_path, audit)
+    print(json.dumps(audit, indent=2), flush=True)
+
+    if os.getuid() == 0:
+        raise RuntimeError(
+            "Worker unexpectedly retained root credentials"
+        )
+
+    if not expected_namespace:
+        raise RuntimeError("Missing expected namespace identity")
+
+    if namespace != expected_namespace:
+        raise RuntimeError(
+            "Worker is in the wrong network namespace. "
+            "Stopped before model loading."
+        )
+
+    if expected_ip not in addresses:
+        raise RuntimeError(
+            f"Worker does not own {expected_ip}. "
+            "Stopped before model loading."
+        )
+
+    # Test address availability without occupying the inference port.
+    with socket.socket(
+        socket.AF_INET, socket.SOCK_STREAM
+    ) as probe:
+        probe.bind((expected_ip, 0))
+        audit["temporary_bind_test_passed"] = True
+        audit["temporary_bound_address"] = list(
+            probe.getsockname()
+        )
+
+    write_json(audit_path, audit)
+    print(
+        f"{args.role.upper()} namespace and address checks passed",
+        flush=True,
+    )
+
+def run_server(args):
+    verify_worker_network(args, SERVER_IP)
+    _, torch, device = tensor_environment()
+    from PIL import Image
+
+    print("STAGE: before CNN loading", flush=True)
+    model, transform = cnn_components(device)
+    print("STAGE: CNN loading completed", flush=True)
+
+    print("STAGE: before server warm-up", flush=True)
+    with torch.no_grad():
+        warm_image = Image.new("RGB", (32, 32))
+        for _ in range(10):
+            infer(torch, device, model, transform, warm_image)
+
+    print("STAGE: server warm-up completed", flush=True)
+    out = Path(args.out)
+    fields = [
+        "run_id", "session_id", "request_id", "sample_id",
+        "client_ip", "client_port", "server_ip", "server_port",
+        "image_sha256", "prediction",
+        "confidence_uncalibrated", "server_inference_sec",
+    ]
+
+    seen = set()
+
+    with (out / "server_requests.csv").open("w", newline="") as log:
+        writer = csv.DictWriter(log, fieldnames=fields)
+        writer.writeheader()
+        log.flush()
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as listener:
+            listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            print(
+                f"STAGE: before bind {SERVER_IP}:{SERVER_PORT}; "
+                f"netns={os.readlink(chr(47) + 'proc/self/ns/net')}",
+                flush=True,
+            )
+            listener.bind((SERVER_IP, SERVER_PORT))
+            print("STAGE: server bind completed", flush=True)
+            listener.listen(8)
+
+            write_json(out / "server_ready.json", {
+                "server_ip": SERVER_IP,
+                "server_port": SERVER_PORT,
+                "device": str(device),
+                "scope": "Workstation CNN inside Mininet server namespace",
+            })
+
+            print("SERVER READY", flush=True)
+
+            while True:
+                connection, peer = listener.accept()
+
+                with connection:
+                    connection.settimeout(60)
+                    while True:
+                        try:
+                            header = receive_json(connection)
+                        except EOFError:
+                            break
+
+                        for key in (
+                            "run_id", "session_id",
+                            "request_id", "sample_id",
+                            "payload_bytes", "image_sha256",
+                        ):
+                            if key not in header:
+                                raise ValueError(f"Missing field: {key}")
+
+                        if header["run_id"] != out.name:
+                            raise ValueError("Wrong run identity")
+                        if header["payload_bytes"] != 3072:
+                            raise ValueError("Expected one raw RGB 32x32 image")
+
+                        payload = read_exact(connection, 3072)
+                        digest = hashlib.sha256(payload).hexdigest()
+                        if digest != header["image_sha256"]:
+                            raise ValueError("Payload checksum mismatch")
+
+                        identity = (
+                            header["run_id"],
+                            header["session_id"],
+                            header["request_id"],
+                        )
+                        if identity in seen:
+                            raise ValueError("Duplicate request identity")
+                        seen.add(identity)
+
+                        image = Image.frombytes("RGB", (32, 32), payload)
+
+                        synchronize(torch, device)
+                        start = time.perf_counter_ns()
+                        with torch.no_grad():
+                            prediction, confidence = infer(
+                                torch, device, model, transform, image
+                            )
+                        end = time.perf_counter_ns()
+
+                        response = {
+                            "run_id": header["run_id"],
+                            "session_id": header["session_id"],
+                            "request_id": header["request_id"],
+                            "sample_id": int(header["sample_id"]),
+                            "image_sha256": digest,
+                            "prediction": prediction,
+                            "confidence_uncalibrated": confidence,
+                            "server_inference_sec": (end - start) / 1e9,
+                            "client_ip": peer[0],
+                            "client_port": peer[1],
+                            "server_ip": SERVER_IP,
+                            "server_port": SERVER_PORT,
+                        }
+
+                        writer.writerow(response)
+                        log.flush()
+                        send_json(connection, response)
+
+
+def run_client(args):
+    verify_worker_network(args, CLIENT_IP)
+    np, torch, device = tensor_environment()
+    import torchvision
+
+    out = Path(args.out)
+    cnn, cnn_transform = cnn_components(device)
+    snn, snn_transform, reset_snn = snn_components(device)
+
+    dataset = torchvision.datasets.CIFAR10(
+        root=str(ROOT / "data/cifar10"),
+        train=False,
+        download=False,
+        transform=None,
+    )
+
+    ids = np.random.default_rng(20261102).permutation(
+        len(dataset)
+    )[:REQUESTS_PER_POLICY].tolist()
+
+    samples = {}
+    for sample_id in ids:
+        image, label = dataset[sample_id]
+        payload = image.tobytes()
+        if len(payload) != 3072:
+            raise ValueError("Unexpected raw image size")
+        samples[sample_id] = (
+            image, int(label), payload,
+            hashlib.sha256(payload).hexdigest(),
+        )
+
+    # Warm-up both local model paths outside recorded requests.
+    with torch.no_grad():
+        for sample_id in ids[:10]:
+            image = samples[sample_id][0]
+            infer(torch, device, cnn, cnn_transform, image)
+            infer(
+                torch, device, snn, snn_transform, image,
+                reset=reset_snn,
+            )
+
+    fields = [
+        "run_id", "policy", "sample_id", "label",
+        "decision", "threshold", "snn_confidence_uncalibrated",
+        "final_prediction", "correct",
+        "local_phase_sec", "remote_rpc_sec",
+        "request_sec", "residual_overhead_sec",
+        "session_id", "request_id",
+        "client_ip", "client_port", "server_ip", "server_port",
+        "image_sha256", "server_inference_sec",
+    ]
+
+    write_json(out / "client_configuration.json", {
+        "policies": POLICIES,
+        "requests_per_policy": REQUESTS_PER_POLICY,
+        "sample_ids": ids,
+        "threshold": THETA,
+        "device": str(device),
+        "scope": (
+            "Two network namespaces on the same workstation. "
+            "Shared physical CPU/GPU resources. No Jetson measurements."
+        ),
+        "timing_scope": (
+            "Original image retrieval and raw-payload preparation excluded. "
+            "Local phase includes preprocessing, reset where applicable, "
+            "inference, and prediction extraction. Remote RPC includes "
+            "connection establishment, transport, server execution, and response."
+        ),
+        "limitations": [
+            "Smoke test, not a final repeated benchmark.",
+            "Static OpenFlow forwarding; no Ryu association or QoS queues.",
+            "Fixed threshold; no adaptive feedback.",
+            "No energy model applied.",
+        ],
+    })
+
+    with (out / "client_requests.csv").open("w", newline="") as log:
+        writer = csv.DictWriter(log, fieldnames=fields)
+        writer.writeheader()
+
+        for policy in POLICIES:
+            session_id = str(uuid.uuid4())
+            connection = None
+
+            print(f"CLIENT POLICY: {policy}", flush=True)
+
+            try:
+                with torch.no_grad():
+                    for sequence, sample_id in enumerate(ids):
+                        image, label, payload, digest = samples[sample_id]
+
+                        local_sec = 0.0
+                        rpc_sec = 0.0
+                        snn_confidence = ""
+                        response = None
+
+                        synchronize(torch, device)
+                        start = time.perf_counter_ns()
+
+                        if policy == "local_cnn":
+                            phase_start = time.perf_counter_ns()
+                            prediction, _ = infer(
+                                torch, device,
+                                cnn, cnn_transform, image,
+                            )
+                            local_sec = (
+                                time.perf_counter_ns() - phase_start
+                            ) / 1e9
+                            offload = False
+
+                        elif policy in ("local_snn", "adaptive_fixed"):
+                            phase_start = time.perf_counter_ns()
+                            prediction, snn_confidence = infer(
+                                torch, device,
+                                snn, snn_transform, image,
+                                reset=reset_snn,
+                            )
+                            local_sec = (
+                                time.perf_counter_ns() - phase_start
+                            ) / 1e9
+                            offload = (
+                                policy == "adaptive_fixed"
+                                and snn_confidence < THETA
+                            )
+
+                        else:
+                            # Explicit offload-only: not theta=1.
+                            offload = True
+
+                        request_id = f"{policy}:{sequence}:{sample_id}"
+
+                        if offload:
+                            rpc_start = time.perf_counter_ns()
+
+                            if connection is None:
+                                connection = socket.create_connection(
+                                    (SERVER_IP, SERVER_PORT),
+                                    timeout=60,
+                                )
+                                connection.settimeout(60)
+
+                            header = {
+                                "run_id": out.name,
+                                "session_id": session_id,
+                                "request_id": request_id,
+                                "sample_id": sample_id,
+                                "payload_bytes": len(payload),
+                                "image_sha256": digest,
+                            }
+
+                            send_json(connection, header)
+                            connection.sendall(payload)
+                            response = receive_json(connection)
+
+                            for key in (
+                                "run_id", "session_id", "request_id",
+                                "sample_id", "image_sha256",
+                            ):
+                                if response.get(key) != header[key]:
+                                    raise RuntimeError(
+                                        f"Response association mismatch: {key}"
+                                    )
+
+                            local_address = connection.getsockname()
+                            if (
+                                response["client_ip"] != local_address[0]
+                                or response["client_port"] != local_address[1]
+                            ):
+                                raise RuntimeError(
+                                    "Client/server transport tuple mismatch"
+                                )
+
+                            prediction = int(response["prediction"])
+                            rpc_sec = (
+                                time.perf_counter_ns() - rpc_start
+                            ) / 1e9
+
+                        total_sec = (
+                            time.perf_counter_ns() - start
+                        ) / 1e9
+
+                        row = {
+                            "run_id": out.name,
+                            "policy": policy,
+                            "sample_id": sample_id,
+                            "label": label,
+                            "decision": "offload" if offload else "local",
+                            "threshold": (
+                                THETA if policy == "adaptive_fixed" else ""
+                            ),
+                            "snn_confidence_uncalibrated": snn_confidence,
+                            "final_prediction": prediction,
+                            "correct": int(prediction == label),
+                            "local_phase_sec": local_sec,
+                            "remote_rpc_sec": rpc_sec,
+                            "request_sec": total_sec,
+                            "residual_overhead_sec": (
+                                total_sec - local_sec - rpc_sec
+                            ),
+                            "session_id": (
+                                session_id if offload else ""
+                            ),
+                            "request_id": (
+                                request_id if offload else ""
+                            ),
+                            "client_ip": (
+                                response["client_ip"] if offload else ""
+                            ),
+                            "client_port": (
+                                response["client_port"] if offload else ""
+                            ),
+                            "server_ip": (
+                                response["server_ip"] if offload else ""
+                            ),
+                            "server_port": (
+                                response["server_port"] if offload else ""
+                            ),
+                            "image_sha256": digest,
+                            "server_inference_sec": (
+                                response["server_inference_sec"]
+                                if offload else ""
+                            ),
+                        }
+
+                        writer.writerow(row)
+                        log.flush()
+
+            finally:
+                if connection is not None:
+                    connection.close()
+
+    print("CLIENT COMPLETED", flush=True)
+
+
+def run_topology(args):
+    if os.geteuid() != 0:
+        raise RuntimeError("Topology creation requires sudo")
+
+    from mininet.net import Mininet
+    from mininet.node import OVSSwitch
+    from mininet.link import TCLink
+    from mininet.log import setLogLevel
+
+    setLogLevel("info")
+
+    out = Path(args.out).resolve()
+    owner = pwd.getpwnam(args.user)
+    setpriv = shutil.which("setpriv")
+
+    if setpriv is None:
+        raise RuntimeError("setpriv is unavailable")
+
+    suffix = uuid.uuid4().hex[:6]
+    bridge = "nr" + suffix + "s"
+    client_name = "nr" + suffix + "c"
+    server_name = "nr" + suffix + "r"
+
+    def command(argv):
+        result = subprocess.run(
+            argv, text=True, capture_output=True, timeout=20
+        )
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"Command failed: {argv}\n"
+                f"{result.stdout}\n{result.stderr}"
+            )
+        return result.stdout
+
+    if subprocess.run(
+        ["ovs-vsctl", "br-exists", bridge],
+        capture_output=True,
+    ).returncode == 0:
+        raise RuntimeError(f"Refusing to reuse bridge: {bridge}")
+
+    def user_command(role):
+        if role not in ("server", "client"):
+            raise ValueError(f"Unexpected worker role: {role}")
+
+        endpoint = server if role == "server" else client
+        expected_namespace = os.readlink(
+            f"/proc/{endpoint.pid}/ns/net"
+        )
+
+        return [
+            setpriv,
+            "--reuid", str(owner.pw_uid),
+            "--regid", str(owner.pw_gid),
+            "--init-groups",
+            "env",
+            f"HOME={owner.pw_dir}",
+            f"USER={args.user}",
+            f"LOGNAME={args.user}",
+            f"PYTHONPATH={ROOT}",
+            f"NSSON_EXPECTED_NETNS={expected_namespace}",
+            "PYTHONUNBUFFERED=1",
+            "PYTHONFAULTHANDLER=1",
+            "MPLBACKEND=Agg",
+            str(PYTHON), "-u", str(SCRIPT),
+            "--role", role,
+            "--out", str(out),
+        ]
+
+    def save_owned(name, text):
+        path = out / name
+        path.write_text(text)
+        os.chown(path, owner.pw_uid, owner.pw_gid)
+
+    network = None
+    processes = []
+    log_handles = []
+
+    try:
+        network = Mininet(
+            controller=None,
+            switch=OVSSwitch,
+            link=TCLink,
+            build=False,
+            autoSetMacs=True,
+        )
+
+        client = network.addHost(
+            client_name, ip=CLIENT_IP + "/24"
+        )
+        server = network.addHost(
+            server_name, ip=SERVER_IP + "/24"
+        )
+        switch = network.addSwitch(
+            bridge,
+            protocols="OpenFlow13",
+            failMode="secure",
+        )
+
+        network.addLink(
+            client, switch,
+            port1=0, port2=1,
+            bw=20, delay="2ms",
+        )
+        network.addLink(
+            server, switch,
+            port1=0, port2=2,
+            bw=20, delay="2ms",
+        )
+
+        network.build()
+        network.start()
+
+        controllers = command([
+            "ovs-vsctl", "get-controller", bridge
+        ]).strip()
+        if controllers:
+            raise RuntimeError(
+                f"Unexpected controller on isolated bridge: {controllers}"
+            )
+
+        # Explicit, static bidirectional baseline.
+        # These are NOT QoS queue-selection rules.
+        for rule in (
+            "priority=10,in_port=1,actions=output:2",
+            "priority=10,in_port=2,actions=output:1",
+        ):
+            command([
+                "ovs-ofctl", "-O", "OpenFlow13",
+                "add-flow", bridge, rule,
+            ])
+
+        save_owned("flows_before.txt", command([
+            "ovs-ofctl", "-O", "OpenFlow13",
+            "dump-flows", bridge,
+        ]))
+
+        ping = client.cmd(
+            f"ping -c 2 -W 3 {SERVER_IP}"
+        )
+        print(ping, flush=True)
+        save_owned("connectivity.txt", ping)
+
+        if " 0% packet loss" not in ping:
+            raise RuntimeError("Isolated network connectivity failed")
+
+        save_owned(
+            "network_configuration.json",
+            json.dumps({
+                "bridge": bridge,
+                "controller": None,
+                "forwarding": "Static OpenFlow 1.3 baseline",
+                "client": CLIENT_IP,
+                "server": SERVER_IP,
+                "each_link_configured_mbps": 20,
+                "each_link_configured_delay": "2ms",
+                "warning": (
+                    "Configured emulation settings are not measured "
+                    "latency or bandwidth guarantees."
+                ),
+            }, indent=2) + "\n",
+        )
+
+        server_log = (out / "server_console.log").open("w")
+        log_handles.append(server_log)
+        os.chown(
+            out / "server_console.log",
+            owner.pw_uid, owner.pw_gid,
+        )
+
+        server_process = server.popen(
+            user_command("server"),
+            stdout=server_log,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+        processes.append(server_process)
+
+        deadline = time.monotonic() + 180
+        while not (out / "server_ready.json").is_file():
+            server_returncode = server_process.poll()
+            if server_returncode is not None:
+                if server_returncode < 0:
+                    try:
+                        explanation = signal.Signals(
+                            -server_returncode
+                        ).name
+                    except ValueError:
+                        explanation = (
+                            f"signal {-server_returncode}"
+                        )
+                else:
+                    explanation = (
+                        f"ordinary exit status {server_returncode}"
+                    )
+
+                save_owned(
+                    "server_exit.json",
+                    json.dumps({
+                        "pid": server_process.pid,
+                        "returncode": server_returncode,
+                        "interpretation": explanation,
+                    }, indent=2) + "\n",
+                )
+
+                raise RuntimeError(
+                    f"Server exited: returncode={server_returncode}; "
+                    f"{explanation}. Inspect server_console.log."
+                )
+            if time.monotonic() > deadline:
+                raise TimeoutError(
+                    "Server startup timeout. Inspect server_console.log"
+                )
+            time.sleep(0.5)
+
+        client_log = (out / "client_console.log").open("w")
+        log_handles.append(client_log)
+        os.chown(
+            out / "client_console.log",
+            owner.pw_uid, owner.pw_gid,
+        )
+
+        client_process = client.popen(
+            user_command("client"),
+            stdout=client_log,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+        processes.append(client_process)
+
+        try:
+            returncode = client_process.wait(timeout=900)
+        except subprocess.TimeoutExpired:
+            raise TimeoutError(
+                "Client timeout. Inspect client_console.log"
+            )
+
+        if returncode != 0:
+            save_owned(
+                "client_exit.json",
+                json.dumps({
+                    "pid": client_process.pid,
+                    "returncode": returncode,
+                }, indent=2) + "\n",
+            )
+            raise RuntimeError(
+                f"Client failed: returncode={returncode}. "
+                "Inspect client_console.log."
+            )
+
+        save_owned("flows_after.txt", command([
+            "ovs-ofctl", "-O", "OpenFlow13",
+            "dump-flows", bridge,
+        ]))
+        save_owned("ports_after.txt", command([
+            "ovs-ofctl", "-O", "OpenFlow13",
+            "dump-ports", bridge,
+        ]))
+
+        with (out / "client_requests.csv").open() as f:
+            rows = list(csv.DictReader(f))
+
+        with (out / "server_requests.csv").open() as f:
+            server_rows = list(csv.DictReader(f))
+
+        if len(rows) != REQUESTS_PER_POLICY * len(POLICIES):
+            raise RuntimeError("Incomplete client request log")
+
+        expected = [
+            row for row in rows
+            if row["decision"] == "offload"
+        ]
+
+        def identity(row):
+            return (
+                row["run_id"],
+                row["session_id"],
+                row["request_id"],
+            )
+
+        actual = {identity(row): row for row in server_rows}
+
+        if len(actual) != len(server_rows):
+            raise RuntimeError("Duplicate server identities")
+        if len(actual) != len(expected):
+            raise RuntimeError("Client/server request-count mismatch")
+
+        for row in expected:
+            observed = actual.get(identity(row))
+            if observed is None:
+                raise RuntimeError("Missing server request")
+            for key in (
+                "sample_id", "image_sha256",
+                "client_ip", "client_port",
+                "server_ip", "server_port",
+            ):
+                if row[key] != observed[key]:
+                    raise RuntimeError(
+                        f"Cross-log association mismatch: {key}"
+                    )
+            if row["final_prediction"] != observed["prediction"]:
+                raise RuntimeError("Prediction association mismatch")
+
+        summary = {
+            "status": "completed",
+            "results_directory": str(out),
+            "total_client_requests": len(rows),
+            "matched_remote_requests": len(expected),
+            "observed_identity_mismatches": 0,
+            "policies": {},
+            "limitations": [
+                "Smoke test only; 20 requests per policy.",
+                "Same workstation and shared physical GPU resources.",
+                "Static OpenFlow forwarding, not Ryu inference registration.",
+                "No queue differentiation, SLA enforcement, or adaptive routing.",
+                "Fixed threshold; no feedback update.",
+                "No Jetson energy or hardware measurements.",
+                "Timing excludes original image acquisition.",
+            ],
+        }
+
+        for policy in POLICIES:
+            selected = [r for r in rows if r["policy"] == policy]
+            summary["policies"][policy] = {
+                "requests": len(selected),
+                "offloaded": sum(
+                    r["decision"] == "offload" for r in selected
+                ),
+                "correct": sum(int(r["correct"]) for r in selected),
+                "mean_request_ms": 1000 * statistics.mean(
+                    float(r["request_sec"]) for r in selected
+                ),
+            }
+
+        save_owned(
+            "summary.json",
+            json.dumps(summary, indent=2) + "\n",
+        )
+        print(json.dumps(summary, indent=2), flush=True)
+
+    finally:
+        # Stop only worker process groups created by this script.
+        for process in reversed(processes):
+            if process.poll() is None:
+                try:
+                    os.killpg(process.pid, signal.SIGTERM)
+                    process.wait(timeout=5)
+                except ProcessLookupError:
+                    pass
+                except subprocess.TimeoutExpired:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                    process.wait(timeout=5)
+
+        for handle in log_handles:
+            handle.close()
+
+        if network is not None:
+            network.stop()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--role", choices=("topology", "server", "client"),
+        required=True,
+    )
+    parser.add_argument("--out", required=True)
+    parser.add_argument("--user")
+    args = parser.parse_args()
+
+    if args.role == "topology":
+        if not args.user:
+            raise ValueError("--user is required for topology")
+        run_topology(args)
+    elif args.role == "server":
+        run_server(args)
+    else:
+        run_client(args)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception:
+        traceback.print_exc()
+        sys.exit(1)
+
+END FILE: revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py
+
+================================================================================
+BEGIN FILE: run_300cycle_offload.py
+================================================================================
+from pathlib import Path
+import json
+import time
+import numpy as np
+import pandas as pd
+
+ROOT = Path("/home/avi/NSSON")
+OUT_ROOT = ROOT / "revision_runs_300cycle"
+OUT_ROOT.mkdir(exist_ok=True)
+
+CYCLES = 300
+SEED = 42
+CNN_ACC = 0.9484
+SNN_ACC = 0.7766
+BASE_THETA = 0.60
+
+W_C = 5.0    # W, local inference power
+W_I = 1.5    # W, sensing/idle power
+W_T = 0.5    # J/MB, uplink transfer energy
+DATA_MB = 0.1
+
+TRANSFER_NO_SDN = 0.01071  # s, from measured 10.71 ms RTT
+TRANSFER_SDN = 0.00736     # s, from measured 7.36 ms RTT
+
+MODES = {
+    "local_only": {"policy": "local", "sdn": False},
+    "offload_only": {"policy": "offload", "sdn": False},
+    "adaptive_no_sdn": {"policy": "adaptive", "sdn": False},
+    "nsson_full": {"policy": "adaptive", "sdn": True},
+}
+
+def generate_confidences(rng):
+    snn_correct = rng.random() < SNN_ACC
+    conf_snn = 0.6 + 0.4 * rng.random() if snn_correct else 0.2 + 0.4 * rng.random()
+    cnn_correct = rng.random() < CNN_ACC
+    conf_cnn = 0.7 + 0.3 * rng.random() if cnn_correct else 0.3 + 0.4 * rng.random()
+    return float(conf_snn), float(conf_cnn)
+
+summary = []
+
+for mode, cfg in MODES.items():
+    mode_dir = OUT_ROOT / mode
+    mode_dir.mkdir(parents=True, exist_ok=True)
+
+    rng = np.random.default_rng(SEED)
+    decisions, latency_rows, power_rows = [], [], []
+
+    for cycle in range(CYCLES):
+        label = int(rng.integers(0, 10))
+        conf_snn, conf_cnn = generate_confidences(rng)
+
+        if cfg["policy"] == "local":
+            decision = "local"
+            theta = 0.0
+        elif cfg["policy"] == "offload":
+            decision = "offload"
+            theta = 1.0
+        else:
+            theta = BASE_THETA
+            decision = "offload" if conf_snn < theta else "local"
+
+        sense_sec = 0.010
+        idle_sec = 0.005
+
+        if decision == "local":
+            compute_sec = 0.020
+            transfer_sec = 0.0
+        else:
+            compute_sec = 0.0
+            transfer_sec = TRANSFER_SDN if cfg["sdn"] else TRANSFER_NO_SDN
+
+        total_sec = sense_sec + compute_sec + transfer_sec + idle_sec
+
+        energy_compute_J = W_C * compute_sec
+        energy_sensing_idle_J = W_I * (sense_sec + idle_sec)
+        energy_transfer_J = W_T * DATA_MB if decision == "offload" else 0.0
+        energy_device_J = energy_compute_J + energy_sensing_idle_J + energy_transfer_J
+
+        decisions.append({
+            "sampleid": cycle,
+            "label": label,
+            "conf_snn": conf_snn,
+            "conf_cnn": conf_cnn,
+            "decision": decision,
+            "theta": theta,
+            "timestamp": time.time(),
+            "cycle": cycle,
+            "mode": mode,
+        })
+
+        latency_rows.append({
+            "cycle": cycle,
+            "sense_sec": sense_sec,
+            "compute_sec": compute_sec,
+            "transfer_sec": transfer_sec,
+            "idle_sec": idle_sec,
+            "total_sec": total_sec,
+            "mode": mode,
+        })
+
+        power_rows.append({
+            "cycle": cycle,
+            "data_mb": DATA_MB,
+            "compute_sec": compute_sec,
+            "idle_sec": idle_sec,
+            "energy_compute_J": energy_compute_J,
+            "energy_sensing_idle_J": energy_sensing_idle_J,
+            "energy_transfer_J": energy_transfer_J,
+            "energy_device_J": energy_device_J,
+            "energy_device_Wh": energy_device_J / 3600.0,
+            "average_device_power_W": energy_device_J / total_sec,
+            "decision": decision,
+            "mode": mode,
+        })
+
+    pd.DataFrame(decisions).to_json(
+        mode_dir / "decision_log.json", orient="records", lines=True
+    )
+    pd.DataFrame(latency_rows).to_csv(mode_dir / "latency_log.csv", index=False)
+    pd.DataFrame(power_rows).to_csv(mode_dir / "power_log.csv", index=False)
+
+    pdf = pd.DataFrame(power_rows)
+    ldf = pd.DataFrame(latency_rows)
+    offload_ratio = float((pdf["decision"] == "offload").mean())
+
+    summary.append({
+        "mode": mode,
+        "cycles": CYCLES,
+        "offload_ratio": offload_ratio,
+        "mean_latency_ms": 1000 * ldf["total_sec"].mean(),
+        "mean_energy_device_J": pdf["energy_device_J"].mean(),
+        "mean_energy_device_Wh": pdf["energy_device_Wh"].mean(),
+        "total_energy_device_J": pdf["energy_device_J"].sum(),
+        "total_energy_device_Wh": pdf["energy_device_Wh"].sum(),
+        "mean_average_device_power_W": pdf["average_device_power_W"].mean(),
+    })
+
+summary_df = pd.DataFrame(summary)
+summary_df.to_csv(OUT_ROOT / "summary_300cycle.csv", index=False)
+
+local_energy = summary_df.loc[
+    summary_df["mode"] == "local_only", "mean_energy_device_J"
+].iloc[0]
+local_latency = summary_df.loc[
+    summary_df["mode"] == "local_only", "mean_latency_ms"
+].iloc[0]
+
+for mode in summary_df["mode"]:
+    row = summary_df[summary_df["mode"] == mode].iloc[0]
+    energy_saving = 100 * (1 - row["mean_energy_device_J"] / local_energy)
+    latency_change = 100 * (row["mean_latency_ms"] / local_latency - 1)
+    print(
+        f"{mode:16s} | cycles={row['cycles']} | "
+        f"offload={row['offload_ratio']:.4f} | "
+        f"latency={row['mean_latency_ms']:.4f} ms ({latency_change:+.2f}%) | "
+        f"energy={row['mean_energy_device_J']:.6f} J/cycle | "
+        f"Wh={row['mean_energy_device_Wh']:.10f} | "
+        f"power={row['mean_average_device_power_W']:.4f} W | "
+        f"energy_saving={energy_saving:.2f}%"
+    )
+
+print("\nSummary CSV:")
+print(OUT_ROOT / "summary_300cycle.csv")
+
+END FILE: run_300cycle_offload.py
+
+================================================================================
+BEGIN FILE: scripts/aggregate_qos_results.py
+================================================================================
+#!/usr/bin/env python3
+"""Aggregate QoS experiment CSVs and compute per-condition statistics."""
+
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import json
+
+ROOT = Path("/home/avi/NSSON_V02")
+RAW_DIR = ROOT / "logs" / "qos_raw"
+OUT_DIR = ROOT / "logs" / "qos_aggregated"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+def load_all_qos_csvs():
+    rows = []
+    for path in RAW_DIR.glob("qos_*.csv"):
+        df = pd.read_csv(path)
+        for _, row in df.iterrows():
+            rows.append(row.to_dict())
+    if not rows:
+        raise SystemExit("No qos_*.csv files found in logs/qos_raw")
+    return pd.DataFrame(rows)
+
+def add_controller_label(df):
+    def label(mode):
+        if mode.startswith("nsson"):
+            return "nsson"
+        if mode.startswith("baseline"):
+            return "baseline"
+        return "unknown"
+    df = df.copy()
+    df["controller"] = df["mode"].apply(label)
+    return df
+
+def compute_stats(df):
+    metrics = [
+        "rtt_avg_ms",
+        "rtt_jitter_mdev_ms",
+        "ping_loss_pct",
+        "control_tcp_throughput_mbps",
+        "background_udp_throughput_mbps",
+        "background_udp_jitter_ms",
+        "background_udp_loss_pct",
+    ]
+    out = []
+    for (controller, load), g in df.groupby(["controller", "load"]):
+        n = len(g)
+        row = {
+            "controller": controller,
+            "load": load,
+            "n_reps": n,
+        }
+        for m in metrics:
+            vals = g[m].dropna().to_numpy()
+            if len(vals) == 0:
+                row[f"{m}_mean"] = np.nan
+                row[f"{m}_std"] = np.nan
+                row[f"{m}_ci95"] = np.nan
+                continue
+            mean = float(vals.mean())
+            std = float(vals.std(ddof=1)) if len(vals) > 1 else 0.0
+            # 95% CI for mean: mean ± t * s/√n
+            if n > 1:
+                t = 2.776  # approx for n=4; will refine below
+                if n >= 5:
+                    t = 2.571
+                if n >= 10:
+                    t = 2.262
+                ci = t * std / np.sqrt(n)
+            else:
+                ci = 0.0
+            row[f"{m}_mean"] = mean
+            row[f"{m}_std"] = std
+            row[f"{m}_ci95"] = ci
+        out.append(row)
+    return pd.DataFrame(out)
+
+def main():
+    df = load_all_qos_csvs()
+    df = add_controller_label(df)
+
+    # Save merged long-form CSV
+    merged_path = OUT_DIR / "qos_all_runs.csv"
+    df.to_csv(merged_path, index=False)
+
+    stats = compute_stats(df)
+    stats_path = OUT_DIR / "qos_stats_by_condition.csv"
+    stats.to_csv(stats_path, index=False)
+
+    # Also save JSON for easy plotting
+    json_path = OUT_DIR / "qos_stats_by_condition.json"
+    with open(json_path, "w") as f:
+        json.dump(stats.to_dict(orient="records"), f, indent=2)
+
+    print("Aggregated CSV:", merged_path)
+    print("Stats CSV:", stats_path)
+    print("Stats JSON:", json_path)
+    print("\nPer-condition summary (means):")
+    display_cols = [
+        "controller", "load", "n_reps",
+        "rtt_avg_ms_mean", "control_tcp_throughput_mbps_mean",
+        "ping_loss_pct_mean", "background_udp_loss_pct_mean",
+    ]
+    print(stats[display_cols].to_string(index=False))
+
+if __name__ == "__main__":
+    main()
+
+END FILE: scripts/aggregate_qos_results.py
+
+================================================================================
+BEGIN FILE: scripts/nsson_controller.py
+================================================================================
+from ryu.base import app_manager
+from ryu.controller import ofp_event
+from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
+from ryu.ofproto import ofproto_v1_3
+from ryu.lib.packet import packet, ethernet
+
+class NSSONController(app_manager.RyuApp):
+    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
+
+    def __init__(self, *args, **kwargs):
+        super(NSSOMController, self).__init__(*args, **kwargs)
+        self.mac_to_port = {}
+
+    @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
+    def switch_features_handler(self, ev):
+        dp = ev.msg.datapath
+        ofp = dp.ofproto
+        parser = dp.ofproto_parser
+        match = parser.OFPMatch()
+        actions = [parser.OFPActionOutput(ofp.OFPP_CONTROLLER, ofp.OFPCML_NO_BUFFER)]
+        self.add_flow(dp, 0, match, actions)
+
+    def add_flow(self, dp, priority, match, actions):
+        ofp = dp.ofproto
+        parser = dp.ofproto_parser
+        inst = [parser.OFPInstructionActions(ofp.OFPIT_APPLY_ACTIONS, actions)]
+        mod = parser.OFPFlowMod(datapath=dp, priority=priority,
+                                match=match, instructions=inst)
+        dp.send_msg(mod)
+
+    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+    def packet_in_handler(self, ev):
+        msg = ev.msg
+        dp = msg.datapath
+        ofp = dp.ofproto
+        parser = dp.ofproto_parser
+        in_port = msg.match['in_port']
+        pkt = packet.Packet(msg.data)
+        eth = pkt.get_protocols(ethernet.ethernet)[0]
+        dst = eth.dst
+        src = eth.src
+        dpid = dp.id
+        self.mac_to_port.setdefault(dpid, {})
+        self.mac_to_port[dpid][src] = in_port
+        out_port = self.mac_to_port[dpid].get(dst, ofp.OFPP_FLOOD)
+        actions = [parser.OFPActionOutput(out_port)]
+        if out_port != ofp.OFPP_FLOOD:
+            match = parser.OFPMatch(in_port=in_port, eth_dst=dst)
+            self.add_flow(dp, 1, match, actions)
+        out = parser.OFPPacketOut(datapath=dp, buffer_id=msg.buffer_id,
+                                  in_port=in_port, actions=actions,
+                                  data=msg.data)
+        dp.send_msg(out)
+
+END FILE: scripts/nsson_controller.py
+
+================================================================================
+BEGIN FILE: scripts/nsson_four_dimensions_plots.py
+================================================================================
+# nsson_four_dimensions_plots.py
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# -------------------------
+# CONFIGURATION
+# -------------------------
+
+# Your existing aggregated QoS CSV
+QOS_CSV = "/home/avi/NSSON_V02/logs/qos_aggregated/qos_all_runs_quality_checked.csv"
+
+# Output directory for figures
+OUT_DIR = "/home/avi/NSSON_V02/figures"
+os.makedirs(OUT_DIR, exist_ok=True)
+
+# SLA thresholds for offload traffic (tune if needed)
+SLA_LATENCY_MAX = 30.0      # ms (rtt_avg_ms)
+SLA_LOSS_MAX = 5.0          # % (ping_loss_pct)
+SLA_THROUGHPUT_MIN = 5.0    # Mbps (control_tcp_throughput_mbps)
+
+# Hypothetical slice bandwidth SLAs (Mbps)
+SLICE_BW_SLAS = {
+    "autonomous": (8.0, 15.0),
+    "healthcare": (6.0, 10.0),
+    "industrial": (3.0, 6.0),
+}
+
+# -------------------------
+# LOAD DATA
+# -------------------------
+
+if not os.path.exists(QOS_CSV):
+    raise FileNotFoundError(f"QoS CSV not found at: {QOS_CSV}")
+
+df = pd.read_csv(QOS_CSV)
+
+# Expected columns (from your file):
+# mode, load, rtt_avg_ms, rtt_jitter_mdev_ms, ping_loss_pct,
+# control_tcp_throughput_mbps, background_udp_throughput_mbps,
+# background_udp_jitter_ms, background_udp_loss_pct, ...
+
+# Define NSSON vs baseline by mode string
+# Adjust these patterns if your modes differ slightly.
+baseline_mask = df["mode"].str.contains("baseline", case=False, na=False)
+nsson_mask = ~baseline_mask
+
+offload = df[nsson_mask].copy()      # treat NSSON rows as "offload"
+background = df[baseline_mask].copy()  # baseline as "background"
+
+if offload.empty or background.empty:
+    raise ValueError(
+        "Both NSSON and baseline rows must be present.\n"
+        f"Modes found: {df['mode'].unique()}"
+    )
+
+# -------------------------
+# 1. MULTI-DIMENSIONAL QoS RADAR CHART
+# -------------------------
+
+def normalize_series_bad(s):
+    mx = s.max()
+    if mx == 0:
+        return s * 0.0
+    return s / mx
+
+def normalize_series_good(s):
+    mx = s.max()
+    if mx == 0:
+        return s * 0.0
+    return s / mx
+
+# Use metrics that exist in your CSV:
+# - latency: rtt_avg_ms
+# - jitter: rtt_jitter_mdev_ms (or background_udp_jitter_ms)
+# - loss: ping_loss_pct (convert to fraction)
+# - throughput: control_tcp_throughput_mbps
+# - PDR: 1 - ping_loss_pct/100
+
+offload["loss_frac"] = offload["ping_loss_pct"] / 100.0
+background["loss_frac"] = background["ping_loss_pct"] / 100.0
+offload["pdr"] = 1.0 - offload["loss_frac"]
+background["pdr"] = 1.0 - background["loss_frac"]
+
+agg_off = {
+    "latency": offload["rtt_avg_ms"].mean(),
+    "jitter": offload["rtt_jitter_mdev_ms"].mean(),
+    "loss": offload["loss_frac"].mean(),
+    "throughput": offload["control_tcp_throughput_mbps"].mean(),
+    "pdr": offload["pdr"].mean(),
+}
+
+agg_bg = {
+    "latency": background["rtt_avg_ms"].mean(),
+    "jitter": background["rtt_jitter_mdev_ms"].mean(),
+    "loss": background["loss_frac"].mean(),
+    "throughput": background["control_tcp_throughput_mbps"].mean(),
+    "pdr": background["pdr"].mean(),
+}
+
+all_vals = pd.DataFrame({
+    "offload": agg_off,
+    "background": agg_bg,
+}).T
+
+norm = pd.DataFrame()
+norm["latency"] = normalize_series_bad(all_vals["latency"])
+norm["jitter"] = normalize_series_bad(all_vals["jitter"])
+norm["loss"] = normalize_series_bad(all_vals["loss"])
+norm["throughput"] = normalize_series_good(all_vals["throughput"])
+norm["pdr"] = normalize_series_good(all_vals["pdr"])
+
+categories = list(norm.columns)
+N = len(categories)
+angles = [n / float(N) * 2 * np.pi for n in range(N)]
+angles += angles[:1]
+
+fig, ax = plt.subplots(figsize=(5, 5), subplot_kw=dict(polar=True))
+
+for label, color in zip(norm.index, ["red", "blue"]):
+    values = norm.loc[label].values.tolist()
+    values += values[:1]
+    ax.plot(angles, values, 'o-', linewidth=2, label=label, color=color)
+    ax.fill(angles, values, alpha=0.15, color=color)
+
+ax.set_theta_offset(np.pi / 2)
+ax.set_theta_direction(-1)
+ax.set_thetagrids(np.degrees(angles[:-1]))
+ax.set_rgrids([0.2, 0.4, 0.6, 0.8, 1.0])
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(categories, fontsize=9)
+ax.set_ylim(0, 1)
+ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.1))
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "nsson_qos_radar.pdf"))
+plt.close()
+
+# -------------------------
+# 2. SLA FULFILLMENT RATIO
+# -------------------------
+
+# SLA: latency <= SLA_LATENCY_MAX, loss <= SLA_LOSS_MAX (%), throughput >= SLA_THROUGHPUT_MIN
+offload["sla_met"] = (
+    (offload["rtt_avg_ms"] <= SLA_LATENCY_MAX) &
+    (offload["ping_loss_pct"] <= SLA_LOSS_MAX) &
+    (offload["control_tcp_throughput_mbps"] >= SLA_THROUGHPUT_MIN)
+).astype(int)
+
+# Group by load if available
+if "load" in offload.columns:
+    load_order = ["light", "medium", "heavy"]
+    sfr_by_load = offload.groupby("load")["sla_met"].mean().reindex(load_order)
+else:
+    sfr_by_load = pd.Series({"overall": offload["sla_met"].mean()})
+
+fig, ax = plt.subplots(figsize=(5, 3))
+ax.bar(sfr_by_load.index, sfr_by_load.values, color="green")
+ax.set_ylabel("SLA Fulfillment Ratio")
+ax.set_title("NSSON Offload SLA Fulfillment")
+ax.set_ylim(0, 1.05)
+for i, v in enumerate(sfr_by_load.values):
+    ax.text(i, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=9)
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "nsson_sla_fulfillment.pdf"))
+plt.close()
+
+# -------------------------
+# 3. NETWORK SLICING: THROUGHPUT + BW-SLA BANDS (CONCEPTUAL)
+# -------------------------
+
+# Map current classes to hypothetical slices:
+# - NSSON (offload) → autonomous
+# - Baseline (background) → split between healthcare and industrial
+throughput_autonomous = offload["control_tcp_throughput_mbps"].mean()
+throughput_bg = background["control_tcp_throughput_mbps"].mean()
+
+throughput_healthcare = throughput_bg * 0.6
+throughput_industrial = throughput_bg * 0.4
+
+slice_throughput = {
+    "autonomous": throughput_autonomous,
+    "healthcare": throughput_healthcare,
+    "industrial": throughput_industrial,
+}
+
+slices = list(slice_throughput.keys())
+values = [slice_throughput[s] for s in slices]
+mins = [SLICE_BW_SLAS[s][0] for s in slices]
+maxs = [SLICE_BW_SLAS[s][1] for s in slices]
+
+fig, ax = plt.subplots(figsize=(6, 4))
+x = np.arange(len(slices))
+ax.bar(x, values, yerr=[np.array(values)-np.array(mins), np.array(maxs)-np.array(values)],
+       capsize=5, alpha=0.7, color="orange", label="Measured throughput")
+
+for i, s in enumerate(slices):
+    ax.axhline(mins[i], color="green", linestyle="--", linewidth=1)
+    ax.axhline(maxs[i], color="red", linestyle="--", linewidth=1)
+
+ax.set_xticks(x)
+ax.set_xticklabels(slices)
+ax.set_ylabel("Throughput (Mbps)")
+ax.set_title("Per-Slice Throughput with Bandwidth-SLA Bands (Conceptual)")
+ax.legend()
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "nsson_slice_throughput.pdf"))
+plt.close()
+
+# -------------------------
+# 4. ADAPTIVE ROUTING: RTT CDF WITH CONCEPTUAL ADAPTIVE CURVE
+# -------------------------
+
+rtt_samples = offload["rtt_avg_ms"].dropna().values
+
+if len(rtt_samples) == 0:
+    raise ValueError("No RTT samples found for offload traffic.")
+
+sorted_rtt = np.sort(rtt_samples)
+cdf_fixed = np.arange(1, len(sorted_rtt)+1) / len(sorted_rtt)
+
+# Conceptual adaptive gain: assume 3 ms lower RTT on average
+regret = 3.0
+rtt_adaptive = np.maximum(sorted_rtt - regret, 0.1)
+cdf_adaptive = cdf_fixed
+
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.plot(sorted_rtt, cdf_fixed, label="Fixed path (NSSON)", color="blue")
+ax.plot(rtt_adaptive, cdf_adaptive, label="Ideal adaptive path (conceptual)", color="red", linestyle="--")
+
+ax.set_xlabel("RTT (ms)")
+ax.set_ylabel("CDF")
+ax.set_title("RTT CDF: Fixed vs. Ideal Adaptive Routing")
+ax.legend()
+ax.grid(True, linestyle="--", alpha=0.3)
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "nsson_adaptive_routing_cdf.pdf"))
+plt.close()
+
+print("All four figures generated in:", OUT_DIR)
+
+END FILE: scripts/nsson_four_dimensions_plots.py
+
+================================================================================
+BEGIN FILE: scripts/nsson_ieee_four_extensions.py
+================================================================================
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+plt.rcParams.update({
+    "font.size": 9,
+    "axes.titlesize": 10,
+    "axes.labelsize": 9,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,
+    "legend.fontsize": 8,
+    "figure.figsize": (6.0, 4.0),
+    "figure.dpi": 300,
+})
+
+QOS_CSV = "/home/avi/NSSON_V02/logs/qos_aggregated/qos_all_runs_quality_checked.csv"
+OUT_DIR = "/home/avi/NSSON_V02/figures_ieee"
+os.makedirs(OUT_DIR, exist_ok=True)
+
+SLA_LATENCY_MAX = 30.0      # ms
+SLA_LOSS_MAX = 5.0          # %
+SLA_THROUGHPUT_MIN = 5.0    # Mbps
+
+SLICE_BW_SLAS = {
+    "autonomous": (8.0, 15.0),
+    "healthcare": (6.0, 10.0),
+    "industrial": (3.0, 6.0),
+}
+
+df = pd.read_csv(QOS_CSV)
+baseline_mask = df["mode"].str.contains("baseline", case=False, na=False)
+nsson_mask = ~baseline_mask
+offload = df[nsson_mask].copy()
+background = df[baseline_mask].copy()
+
+if offload.empty or background.empty:
+    raise ValueError("Both NSSON and baseline rows must be present.")
+
+offload["loss_frac"] = offload["ping_loss_pct"] / 100.0
+background["loss_frac"] = background["ping_loss_pct"] / 100.0
+offload["pdr"] = 1.0 - offload["loss_frac"]
+background["pdr"] = 1.0 - background["loss_frac"]
+
+# 1) Multi-dimensional QoS profile (grouped bar, not radar)
+metrics = ["rtt_avg_ms", "rtt_jitter_mdev_ms", "loss_frac", "control_tcp_throughput_mbps", "pdr"]
+labels = ["RTT (ms)", "Jitter (ms)", "Loss", "Throughput (Mbps)", "PDR"]
+vals_off = [offload[m].mean() for m in metrics]
+vals_bg = [background[m].mean() for m in metrics]
+
+x = np.arange(len(metrics))
+width = 0.35
+fig, ax = plt.subplots()
+ax.bar(x - width/2, vals_off, width, label="Offload (NSSON)", color="#1f77b4")
+ax.bar(x + width/2, vals_bg, width, label="Background (Baseline)", color="#d62728")
+ax.set_xticks(x)
+ax.set_xticklabels(labels, rotation=15)
+ax.set_ylabel("Normalized value (per metric scale)")
+ax.set_title("Multi-dimensional QoS Profile (Measured)")
+ax.legend()
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_qos_profile.png"), dpi=300)
+plt.close()
+
+# 2) SLA fulfillment ratio by load
+offload["sla_met"] = (
+    (offload["rtt_avg_ms"] <= SLA_LATENCY_MAX) &
+    (offload["ping_loss_pct"] <= SLA_LOSS_MAX) &
+    (offload["control_tcp_throughput_mbps"] >= SLA_THROUGHPUT_MIN)
+).astype(int)
+
+load_order = ["light", "medium", "heavy"]
+sfr = offload.groupby("load")["sla_met"].mean().reindex(load_order)
+
+fig, ax = plt.subplots()
+ax.bar(sfr.index, sfr.values, color="#2ca02c")
+ax.set_ylabel("SLA Fulfillment Ratio")
+ax.set_title("Offload SLA Compliance (Measured)")
+ax.set_ylim(0, 1.05)
+for i, v in enumerate(sfr.values):
+    ax.text(i, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=8)
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_sla_fulfillment.png"), dpi=300)
+plt.close()
+
+# 3) Network slicing (conceptual bands + measured autonomous)
+throughput_autonomous = offload["control_tcp_throughput_mbps"].mean()
+throughput_bg = background["control_tcp_throughput_mbps"].mean()
+throughput_healthcare = throughput_bg * 0.6
+throughput_industrial = throughput_bg * 0.4
+
+slice_throughput = {
+    "autonomous": throughput_autonomous,
+    "healthcare": throughput_healthcare,
+    "industrial": throughput_industrial,
+}
+slices = list(slice_throughput.keys())
+values = [slice_throughput[s] for s in slices]
+mins = [SLICE_BW_SLAS[s][0] for s in slices]
+maxs = [SLICE_BW_SLAS[s][1] for s in slices]
+
+fig, ax = plt.subplots()
+x = np.arange(len(slices))
+ax.bar(x, values, alpha=0.7, color="#ff7f0e", label="Measured/derived throughput")
+for i, s in enumerate(slices):
+    ax.axhline(mins[i], color="green", linestyle="--", linewidth=1)
+    ax.axhline(maxs[i], color="red", linestyle="--", linewidth=1)
+ax.set_xticks(x)
+ax.set_xticklabels(slices)
+ax.set_ylabel("Throughput (Mbps)")
+ax.set_title("Per-Slice Throughput with BW-SLA Bands (Conceptual)")
+ax.legend()
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_slice_throughput.png"), dpi=300)
+plt.close()
+
+# 4) Adaptive routing CDF (measured fixed + conceptual shift)
+rtt_samples = offload["rtt_avg_ms"].dropna().values
+if len(rtt_samples) == 0:
+    raise ValueError("No RTT samples found for offload traffic.")
+sorted_rtt = np.sort(rtt_samples)
+cdf_fixed = np.arange(1, len(sorted_rtt)+1) / len(sorted_rtt)
+regret = 3.0
+rtt_adaptive = np.maximum(sorted_rtt - regret, 0.1)
+cdf_adaptive = cdf_fixed
+
+fig, ax = plt.subplots()
+ax.plot(sorted_rtt, cdf_fixed, label="Fixed path (NSSON)", color="#1f77b4")
+ax.plot(rtt_adaptive, cdf_adaptive, label="Ideal adaptive (conceptual)", color="#d62728", linestyle="--")
+ax.set_xlabel("RTT (ms)")
+ax.set_ylabel("CDF")
+ax.set_title("RTT CDF: Fixed vs. Ideal Adaptive (Conceptual)")
+ax.legend()
+ax.grid(True, linestyle="--", alpha=0.3)
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_adaptive_routing_cdf.png"), dpi=300)
+plt.close()
+
+print("IEEE-style figures saved to:", OUT_DIR)
+
+END FILE: scripts/nsson_ieee_four_extensions.py
+
+================================================================================
+BEGIN FILE: scripts/nsson_ieee_qos_panel.py
+================================================================================
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# IEEE-like style
+plt.rcParams.update({
+    "font.size": 9,
+    "axes.titlesize": 10,
+    "axes.labelsize": 9,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,
+    "legend.fontsize": 8,
+    "figure.dpi": 300,
+})
+
+QOS_CSV = "/home/avi/NSSON_V02/logs/qos_aggregated/qos_all_runs_quality_checked.csv"
+OUT_DIR = "/home/avi/NSSON_V02/figures_ieee"
+os.makedirs(OUT_DIR, exist_ok=True)
+
+if not os.path.exists(QOS_CSV):
+    raise FileNotFoundError(f"QoS CSV not found at: {QOS_CSV}")
+
+df = pd.read_csv(QOS_CSV)
+print("Columns found:", list(df.columns))
+print("Modes found:", df["mode"].unique())
+print("Loads found:", df["load"].unique() if "load" in df.columns else None)
+
+# Define NSSON vs baseline by mode string
+baseline_mask = df["mode"].str.contains("baseline", case=False, na=False)
+nsson_mask = ~baseline_mask
+
+df_nsson = df[nsson_mask].copy()
+df_base = df[baseline_mask].copy()
+
+if df_nsson.empty or df_base.empty:
+    raise ValueError("Both NSSON and baseline rows must be present.")
+
+# Ensure load ordering if present
+load_order = ["light", "medium", "heavy"]
+if "load" in df.columns:
+    df_nsson["load"] = pd.Categorical(df_nsson["load"], categories=load_order, ordered=True)
+    df_base["load"] = pd.Categorical(df_base["load"], categories=load_order, ordered=True)
+
+# -------------------------
+# 1) 2x2 QoS panel: RTT, jitter, loss, throughput vs. load, per mode
+# -------------------------
+
+metrics = [
+    ("rtt_avg_ms", "Average RTT (ms)"),
+    ("rtt_jitter_mdev_ms", "RTT jitter (ms)"),
+    ("ping_loss_pct", "Ping loss (%)"),
+    ("control_tcp_throughput_mbps", "TCP throughput (Mbps)"),
+]
+
+fig, axes = plt.subplots(2, 2, figsize=(6.5, 5.0))
+axes = axes.ravel()
+
+for ax, (col, ylabel) in zip(axes, metrics):
+    # Group by mode and load
+    grp = df.groupby(["mode", "load"])[col].mean().unstack("load")
+    # Reorder columns if load exists
+    if all(l in grp.columns for l in load_order):
+        grp = grp[load_order]
+
+    # Plot as grouped bars
+    x = np.arange(len(grp.index))
+    width = 0.8 / len(grp.columns)
+    for i, load_name in enumerate(grp.columns):
+        vals = grp[load_name].values
+        ax.bar(x + i*width - 0.4, vals, width, label=str(load_name))
+
+    ax.set_xticks(x)
+    ax.set_xticklabels([str(m).replace("baseline_sdn_iot", "Baseline").replace("nsson", "NSSON")
+                        for m in grp.index], rotation=15)
+    ax.set_ylabel(ylabel)
+    ax.set_title(col.replace("_", " ").upper())
+    ax.grid(True, linestyle="--", alpha=0.25)
+    if ax == axes[0]:
+        ax.legend(title="Load", fontsize=7, title_fontsize=8)
+
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_qos_panel_2x2.png"), dpi=300)
+plt.close()
+
+# -------------------------
+# 2) SLA fulfillment ratio (measured compliance)
+# -------------------------
+
+# Define SLA thresholds (tune if needed)
+SLA_LATENCY_MAX = 30.0      # ms (rtt_avg_ms)
+SLA_LOSS_MAX = 5.0          # % (ping_loss_pct)
+SLA_THROUGHPUT_MIN = 5.0    # Mbps (control_tcp_throughput_mbps)
+
+n = df_nsson.copy()
+n["sla_met"] = (
+    (n["rtt_avg_ms"] <= SLA_LATENCY_MAX) &
+    (n["ping_loss_pct"] <= SLA_LOSS_MAX) &
+    (n["control_tcp_throughput_mbps"] >= SLA_THROUGHPUT_MIN)
+).astype(int)
+
+if "load" in n.columns:
+    sfr = n.groupby("load")["sla_met"].mean().reindex(load_order)
+else:
+    sfr = pd.Series({"overall": n["sla_met"].mean()})
+
+fig, ax = plt.subplots(figsize=(5, 3))
+ax.bar(sfr.index, sfr.values, color="#2ca02c")
+ax.set_ylabel("SLA Fulfillment Ratio")
+ax.set_title("Offload SLA Compliance (Measured)")
+ax.set_ylim(0, 1.05)
+for i, v in enumerate(sfr.values):
+    ax.text(i, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=8)
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_sla_fulfillment.png"), dpi=300)
+plt.close()
+
+# -------------------------
+# 3) Optional radar chart (summary of measured metrics)
+# -------------------------
+
+# Build aggregated metrics for NSSON vs baseline
+def agg_qos(df_part):
+    return {
+        "latency": df_part["rtt_avg_ms"].mean(),
+        "jitter": df_part["rtt_jitter_mdev_ms"].mean(),
+        "loss": df_part["ping_loss_pct"].mean(),
+        "throughput": df_part["control_tcp_throughput_mbps"].mean(),
+        "pdr": (1.0 - df_part["ping_loss_pct"]/100.0).mean(),
+    }
+
+agg_nsson = agg_qos(df_nsson)
+agg_base = agg_qos(df_base)
+
+all_vals = pd.DataFrame({
+    "NSSON": agg_nsson,
+    "Baseline": agg_base,
+}).T
+
+# Normalize to [0,1]
+def norm_bad(s):
+    mx = s.max()
+    return s / mx if mx != 0 else s * 0.0
+
+def norm_good(s):
+    mx = s.max()
+    return s / mx if mx != 0 else s * 0.0
+
+norm = pd.DataFrame()
+norm["latency"] = norm_bad(all_vals["latency"])
+norm["jitter"] = norm_bad(all_vals["jitter"])
+norm["loss"] = norm_bad(all_vals["loss"])
+norm["throughput"] = norm_good(all_vals["throughput"])
+norm["pdr"] = norm_good(all_vals["pdr"])
+
+categories = list(norm.columns)
+N = len(categories)
+angles = [n / float(N) * 2 * np.pi for n in range(N)]
+angles += angles[:1]
+
+fig, ax = plt.subplots(figsize=(4.5, 4.5), subplot_kw=dict(polar=True))
+for label, color in zip(norm.index, ["#1f77b4", "#d62728"]):
+    values = norm.loc[label].values.tolist()
+    values += values[:1]
+    ax.plot(angles, values, 'o-', linewidth=2, label=label, color=color)
+    ax.fill(angles, values, alpha=0.15, color=color)
+
+ax.set_theta_offset(np.pi / 2)
+ax.set_theta_direction(-1)
+ax.set_thetagrids(np.degrees(angles[:-1]))
+ax.set_rgrids([0.2, 0.4, 0.6, 0.8, 1.0])
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(categories, fontsize=8)
+ax.set_ylim(0, 1)
+ax.legend(loc="upper right", bbox_to_anchor=(1.25, 1.1), fontsize=8)
+plt.tight_layout()
+plt.savefig(os.path.join(OUT_DIR, "ieee_qos_radar.png"), dpi=300)
+plt.close()
+
+print("IEEE-style figures saved to:", OUT_DIR)
+
+END FILE: scripts/nsson_ieee_qos_panel.py
+
+================================================================================
+BEGIN FILE: scripts/nsson_simulate.py
+================================================================================
+#!/usr/bin/env python3
+"""
+NSSON Network Simulation - Pure SDN mode (no WiFi kernel module needed)
+Uses OVS + Ryu for SDN, simulates Jetson edge inference per node
+Usage: sudo -E python3 scripts/nsson_simulate.py --nodes 10 --model snn
+"""
+import argparse, time, csv, os, sys, random
+sys.path.insert(0, '/home/avi/NSSON')
+
+from mininet.net import Mininet
+from mininet.node import RemoteController, OVSKernelSwitch
+from mininet.link import TCLink
+from mininet.log import setLogLevel, info
+
+# Real measured values from trained models
+MODEL_PROFILES = {
+    'snn': {'accuracy': 90.30, 'latency_base_ms': 8.2,  'power_base_mw': 320.0},
+    'cnn': {'accuracy': 93.10, 'latency_base_ms': 22.7, 'power_base_mw': 850.0},
+}
+
+def simulate_node_inference(model_type, node_id, num_nodes):
+    profile = MODEL_PROFILES[model_type]
+    congestion = 1.0 + (num_nodes / 300.0) * 0.35
+    latency  = profile['latency_base_ms'] * congestion * (1 + random.gauss(0, 0.03))
+    power    = profile['power_base_mw'] * (1 + random.gauss(0, 0.02))
+    accuracy = profile['accuracy'] * (1 - abs(random.gauss(0, 0.001)))
+    return {
+        'node_id':       node_id,
+        'model':         model_type,
+        'num_nodes':     num_nodes,
+        'accuracy':      round(accuracy, 2),
+        'latency_ms':    round(latency, 3),
+        'power_mw':      round(power, 2),
+        'throughput_fps':round(1000.0 / latency, 2),
+    }
+
+def safe_mininet_cleanup():
+    """Remove stale Mininet topology state without killing an external Ryu controller."""
+    os.system("sudo ovs-vsctl --if-exists del-br s1 >/dev/null 2>&1")
+    os.system("sudo pkill -f 'mininet:' >/dev/null 2>&1 || true")
+    os.system("sudo rm -f /tmp/vconn* /tmp/vlogs* >/dev/null 2>&1")
+    time.sleep(1)
+
+def run_topology(num_nodes, model_type, out_dir='shared/net_runs'):
+    safe_mininet_cleanup()
+    os.makedirs(out_dir, exist_ok=True)
+    random.seed(42 + num_nodes)
+
+    info(f'\n*** NSSON: {num_nodes} nodes | {model_type.upper()} | SDN/OVS mode\n')
+
+    net = Mininet(controller=RemoteController,
+                  switch=OVSKernelSwitch,
+                  link=TCLink,
+                  autoSetMacs=True)
+
+    info('*** Adding controller\n')
+    c0 = net.addController(
+        'c0',
+        controller=RemoteController,
+        ip='127.0.0.1',
+        port=6633
+    )
+
+    info('*** Adding OVS switch (SDN backbone)\n')
+    s1 = net.addSwitch('s1', protocols='OpenFlow13')
+
+    info(f'*** Adding {num_nodes} Jetson-emulated edge nodes\n')
+    hosts = []
+    for i in range(num_nodes):
+        h = net.addHost(f'h{i+1}',
+                        ip=f'10.0.{i//254}.{(i%254)+1}/16')
+        hosts.append(h)
+
+    for h in hosts:
+        net.addLink(h, s1, bw=100, delay='1ms')
+
+    net.build()
+    c0.start()
+    s1.start([c0])
+
+    info('*** Waiting for OpenFlow connection to Ryu on port 6633\n')
+    time.sleep(3)
+
+    info('*** Generating h1 -> h2 ICMP traffic for Ryu PacketIn verification\n')
+    if len(hosts) >= 2:
+        ping_out = hosts[0].cmd(f'ping -c 3 -W 1 {hosts[1].IP()}')
+        info(ping_out)
+
+    info('*** Generating TCP/8090 offload-inference traffic for NSSON verification\n')
+    if len(hosts) >= 2:
+        hosts[1].cmd(
+            'python3 -m http.server 8090 '
+            '>/tmp/nsson_http_8090.log 2>&1 &'
+        )
+        time.sleep(1)
+
+        http_out = hosts[0].cmd(
+            f'curl --connect-timeout 3 -s '
+            f'http://{hosts[1].IP()}:8090/ '
+            '>/dev/null; echo "TCP/8090 inference flow sent"'
+        )
+        info(http_out)
+
+
+    info('*** Running NSSON inference simulation\n')
+    results = []
+    for i, h in enumerate(hosts):
+        r = simulate_node_inference(model_type, h.name, num_nodes)
+        results.append(r)
+        if (i+1) % 10 == 0 or i == 0 or i == num_nodes-1:
+            info(f'    [{i+1}/{num_nodes}] lat={r["latency_ms"]}ms '
+                 f'pwr={r["power_mw"]}mW acc={r["accuracy"]}%\n')
+
+    net.stop()
+    safe_mininet_cleanup()
+
+    ts = time.strftime('%Y%m%d_%H%M%S')
+    csv_path = f'{out_dir}/nsson_{model_type}_{num_nodes}nodes_{ts}.csv'
+    with open(csv_path, 'w', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=results[0].keys())
+        w.writeheader()
+        w.writerows(results)
+
+    avg = lambda k: sum(r[k] for r in results) / len(results)
+    info(f'\n*** RESULTS: lat={avg("latency_ms"):.2f}ms | '
+         f'pwr={avg("power_mw"):.1f}mW | '
+         f'acc={avg("accuracy"):.2f}% | '
+         f'thr={avg("throughput_fps"):.2f}fps\n')
+    info(f'*** Saved → {csv_path}\n')
+    return csv_path
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--nodes', type=int, required=True,
+                    choices=[2,10,20,30,40,50,100,300])
+    ap.add_argument('--model', choices=['snn','cnn'], default='snn')
+    args = ap.parse_args()
+    setLogLevel('info')
+    run_topology(args.nodes, args.model)
+
+END FILE: scripts/nsson_simulate.py
+
+================================================================================
+BEGIN FILE: scripts/run_nsson_experiments_experimental.py
+================================================================================
+#!/usr/bin/env python3
+import sys
+from pathlib import Path
+import csv
+
+# ---------------------------------------------------------
+# Project root and imports
+# ---------------------------------------------------------
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from models.cifar10_cnn import (
+    load_cnn_checkpoint,
+    get_cifar10_test_loader,
+    evaluate_cnn,
+)
+from snn.snn_snasnet.eval_snasnet_cifar10 import (
+    load_snn_checkpoint,
+    get_snn_test_loader,
+    evaluate_snn,
+)
+
+# Import the runner we just defined
+from jetson_emulation.jetson_emulation.jetson_runner import JetsonEmulatedRunner
+
+# ---------------------------------------------------------
+# Node configs and output directory (latest_experiment)
+# ---------------------------------------------------------
+NODE_CONFIGS = [
+    {"nodes": 2, "aps": 1, "switches": 1},
+    {"nodes": 10, "aps": 1, "switches": 1},
+    {"nodes": 20, "aps": 2, "switches": 1},
+    {"nodes": 30, "aps": 3, "switches": 2},
+    {"nodes": 40, "aps": 4, "switches": 2},
+    {"nodes": 50, "aps": 5, "switches": 3},
+    {"nodes": 100, "aps": 10, "switches": 5},
+    {"nodes": 300, "aps": 20, "switches": 10},
+]
+
+BASE_DIR = PROJECT_ROOT / "latest_experiment"
+LOG_DIR = BASE_DIR / "logs"
+TEL_DIR = LOG_DIR / "telemetry_nsson_experimental"
+
+TEL_DIR.mkdir(parents=True, exist_ok=True)
+
+# ---------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------
+def reset_snn_state(model):
+    for m in model.modules():
+        if hasattr(m, "reset"):
+            m.reset()
+
+# ---------------------------------------------------------
+# Single config run (Jetson + NSSON experimental)
+# ---------------------------------------------------------
+def run_single_config(cfg):
+    nodes = cfg["nodes"]
+    aps = cfg["aps"]
+    switches = cfg["switches"]
+
+    print(f"[NSSON experimental] nodes={nodes}, aps={aps}, switches={switches}")
+
+    # CNN
+    cnn_model, cnn_device = load_cnn_checkpoint()
+    cnn_loader = get_cifar10_test_loader()
+    cnn_acc = evaluate_cnn(cnn_model, cnn_loader, cnn_device)
+
+    # SNN
+    snn_model, snn_args, snn_device = load_snn_checkpoint()
+    snn_loader = get_snn_test_loader(snn_args)
+    snn_metrics = evaluate_snn(snn_model, snn_loader, snn_device)
+    snn_acc = snn_metrics["accuracy"]
+
+    # Jetson emulator runner
+    runner = JetsonEmulatedRunner(power_mode="5W")
+
+    # Use one batch from SNN loader for both models
+    batch, _ = next(iter(snn_loader))
+    batch_cnn = batch.to(cnn_device)
+    batch_snn = batch.to(snn_device)
+
+    reset_snn_state(snn_model)
+
+    cnn_hw = runner.run_inference(cnn_model, batch_cnn, mode="cnn")
+    snn_hw = runner.run_inference(snn_model, batch_snn, mode="snn")
+
+    out_path = TEL_DIR / f"nsson_experimental_nodes_{nodes}.csv"
+    with out_path.open("w", newline="") as f:
+        fieldnames = [
+            "nodes",
+            "aps",
+            "switches",
+            "model_used",
+            "execution_site",
+            "latency_ms",
+            "power_mw",
+            "energy_mj",
+            "accuracy",
+        ]
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+
+        # CNN row (local exec)
+        writer.writerow(
+            {
+                "nodes": nodes,
+                "aps": aps,
+                "switches": switches,
+                "model_used": "cnn",
+                "execution_site": "local",
+                "latency_ms": cnn_hw["latency_ms"],
+                "power_mw": cnn_hw["power_mw"],
+                "energy_mj": cnn_hw["energy_mj"],
+                "accuracy": cnn_acc,
+            }
+        )
+
+        # SNN row (local exec)
+        writer.writerow(
+            {
+                "nodes": nodes,
+                "aps": aps,
+                "switches": switches,
+                "model_used": "snn",
+                "execution_site": "local",
+                "latency_ms": snn_hw["latency_ms"],
+                "power_mw": snn_hw["power_mw"],
+                "energy_mj": snn_hw["energy_mj"],
+                "accuracy": snn_acc,
+            }
+        )
+
+    print(f"[NSSON experimental] written {out_path}")
+
+# ---------------------------------------------------------
+# Main
+# ---------------------------------------------------------
+def main():
+    for cfg in NODE_CONFIGS:
+        run_single_config(cfg)
+
+if __name__ == "__main__":
+    main()
+
+END FILE: scripts/run_nsson_experiments_experimental.py
+
+================================================================================
+BEGIN FILE: scripts/scripts/nsson_controller.py
+================================================================================
+from ryu.base import app_manager
+from ryu.controller import ofp_event
+from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
+from ryu.ofproto import ofproto_v1_3
+from ryu.lib.packet import packet, ethernet
+
+class NSSONController(app_manager.RyuApp):
+    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
+
+    def __init__(self, *args, **kwargs):
+        super(NSSOMController, self).__init__(*args, **kwargs)
+        self.mac_to_port = {}
+
+    @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
+    def switch_features_handler(self, ev):
+        dp = ev.msg.datapath
+        ofp = dp.ofproto
+        parser = dp.ofproto_parser
+        match = parser.OFPMatch()
+        actions = [parser.OFPActionOutput(ofp.OFPP_CONTROLLER, ofp.OFPCML_NO_BUFFER)]
+        self.add_flow(dp, 0, match, actions)
+
+    def add_flow(self, dp, priority, match, actions):
+        ofp = dp.ofproto
+        parser = dp.ofproto_parser
+        inst = [parser.OFPInstructionActions(ofp.OFPIT_APPLY_ACTIONS, actions)]
+        mod = parser.OFPFlowMod(datapath=dp, priority=priority,
+                                match=match, instructions=inst)
+        dp.send_msg(mod)
+
+    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+    def packet_in_handler(self, ev):
+        msg = ev.msg
+        dp = msg.datapath
+        ofp = dp.ofproto
+        parser = dp.ofproto_parser
+        in_port = msg.match['in_port']
+        pkt = packet.Packet(msg.data)
+        eth = pkt.get_protocols(ethernet.ethernet)[0]
+        dst = eth.dst
+        src = eth.src
+        dpid = dp.id
+        self.mac_to_port.setdefault(dpid, {})
+        self.mac_to_port[dpid][src] = in_port
+        out_port = self.mac_to_port[dpid].get(dst, ofp.OFPP_FLOOD)
+        actions = [parser.OFPActionOutput(out_port)]
+        if out_port != ofp.OFPP_FLOOD:
+            match = parser.OFPMatch(in_port=in_port, eth_dst=dst)
+            self.add_flow(dp, 1, match, actions)
+        out = parser.OFPPacketOut(datapath=dp, buffer_id=msg.buffer_id,
+                                  in_port=in_port, actions=actions,
+                                  data=msg.data)
+        dp.send_msg(out)
+
+END FILE: scripts/scripts/nsson_controller.py
+
+================================================================================
+BEGIN FILE: scripts/scripts/nsson_simulate.py
+================================================================================
+#!/usr/bin/env python3
+"""
+NSSON Network Simulation - Pure SDN mode (no WiFi kernel module needed)
+Uses OVS + Ryu for SDN, simulates Jetson edge inference per node
+Usage: sudo -E python3 scripts/nsson_simulate.py --nodes 10 --model snn
+"""
+import argparse, time, csv, os, sys, random
+sys.path.insert(0, '/home/avi/NSSON')
+
+from mininet.net import Mininet
+from mininet.node import Controller, OVSKernelSwitch
+from mininet.link import TCLink
+from mininet.log import setLogLevel, info
+from mininet.clean import cleanup
+
+# Real measured values from trained models
+MODEL_PROFILES = {
+    'snn': {'accuracy': 90.30, 'latency_base_ms': 8.2,  'power_base_mw': 320.0},
+    'cnn': {'accuracy': 93.10, 'latency_base_ms': 22.7, 'power_base_mw': 850.0},
+}
+
+def simulate_node_inference(model_type, node_id, num_nodes):
+    profile = MODEL_PROFILES[model_type]
+    congestion = 1.0 + (num_nodes / 300.0) * 0.35
+    latency  = profile['latency_base_ms'] * congestion * (1 + random.gauss(0, 0.03))
+    power    = profile['power_base_mw'] * (1 + random.gauss(0, 0.02))
+    accuracy = profile['accuracy'] * (1 - abs(random.gauss(0, 0.001)))
+    return {
+        'node_id':       node_id,
+        'model':         model_type,
+        'num_nodes':     num_nodes,
+        'accuracy':      round(accuracy, 2),
+        'latency_ms':    round(latency, 3),
+        'power_mw':      round(power, 2),
+        'throughput_fps':round(1000.0 / latency, 2),
+    }
+
+def run_topology(num_nodes, model_type, out_dir='shared/net_runs'):
+    cleanup()
+    os.makedirs(out_dir, exist_ok=True)
+    random.seed(42 + num_nodes)
+
+    info(f'\n*** NSSON: {num_nodes} nodes | {model_type.upper()} | SDN/OVS mode\n')
+
+    net = Mininet(controller=Controller,
+                  switch=OVSKernelSwitch,
+                  link=TCLink,
+                  autoSetMacs=True)
+
+    info('*** Adding controller\n')
+    c0 = net.addController('c0')
+
+    info('*** Adding OVS switch (SDN backbone)\n')
+    s1 = net.addSwitch('s1', protocols='OpenFlow13')
+
+    info(f'*** Adding {num_nodes} Jetson-emulated edge nodes\n')
+    hosts = []
+    for i in range(num_nodes):
+        h = net.addHost(f'h{i+1}',
+                        ip=f'10.0.{i//254}.{(i%254)+1}/16')
+        hosts.append(h)
+
+    for h in hosts:
+        net.addLink(h, s1, bw=100, delay='1ms')
+
+    net.build()
+    c0.start()
+    s1.start([c0])
+
+    info('*** Running NSSON inference simulation\n')
+    results = []
+    for i, h in enumerate(hosts):
+        r = simulate_node_inference(model_type, h.name, num_nodes)
+        results.append(r)
+        if (i+1) % 10 == 0 or i == 0 or i == num_nodes-1:
+            info(f'    [{i+1}/{num_nodes}] lat={r["latency_ms"]}ms '
+                 f'pwr={r["power_mw"]}mW acc={r["accuracy"]}%\n')
+
+    net.stop()
+    cleanup()
+
+    ts = time.strftime('%Y%m%d_%H%M%S')
+    csv_path = f'{out_dir}/nsson_{model_type}_{num_nodes}nodes_{ts}.csv'
+    with open(csv_path, 'w', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=results[0].keys())
+        w.writeheader()
+        w.writerows(results)
+
+    avg = lambda k: sum(r[k] for r in results) / len(results)
+    info(f'\n*** RESULTS: lat={avg("latency_ms"):.2f}ms | '
+         f'pwr={avg("power_mw"):.1f}mW | '
+         f'acc={avg("accuracy"):.2f}% | '
+         f'thr={avg("throughput_fps"):.2f}fps\n')
+    info(f'*** Saved → {csv_path}\n')
+    return csv_path
+
+if __name__ == '__main__':
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--nodes', type=int, required=True,
+                    choices=[2,10,20,30,40,50,100,300])
+    ap.add_argument('--model', choices=['snn','cnn'], default='snn')
+    args = ap.parse_args()
+    setLogLevel('info')
+    run_topology(args.nodes, args.model)
+
+END FILE: scripts/scripts/nsson_simulate.py
+
+================================================================================
+BEGIN FILE: simrunner.py
+================================================================================
+#!/usr/bin/env python3
+"""
+NSSON_V02 single-mode experiment runner.
+
+Runs exactly one scenario per invocation and leaves all generated raw telemetry
+directly in the requested --output-dir. No unnecessary copy step is performed.
+
+Modes:
+  local_only       : every sample is processed locally
+  offload_only     : every sample is offloaded
+  adaptive_no_sdn  : adaptive confidence policy; no SDN controller
+  baseline_sdn_iot : conventional/static SDN; no NSSON QoS policy
+  nsson_full       : adaptive NSSON policy plus QoS-aware SDN
+"""
+
+import argparse
+import inspect
+import os
+import sys
+
+ROOT = "/home/avi/NSSON_V02"
+
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
+VALID_MODES = (
+    "local_only",
+    "offload_only",
+    "adaptive_no_sdn",
+    "baseline_sdn_iot",
+    "nsson_full",
+)
+
+
+def call_supported(function, **kwargs):
+    """
+    Call an existing NSSON function using only keyword arguments accepted by
+    that function. This lets the runner work during incremental refactoring.
+    """
+    parameters = inspect.signature(function).parameters
+    accepted = {k: v for k, v in kwargs.items() if k in parameters}
+    return function(**accepted)
+
+
+def ensure_clean_log_dir(output_dir):
+    """
+    Remove only runtime telemetry files. Do not delete model checkpoints,
+    training histories, or unrelated log artifacts.
+    """
+    os.makedirs(output_dir, exist_ok=True)
+
+    runtime_files = (
+        "metrics.csv",
+        "offloaddecisionlog.json",
+        "decisionlog.json",
+        "offloadlatencylog.csv",
+        "latencylog.csv",
+        "offloadpowerlog.csv",
+        "powerlog.csv",
+        "thresholdlog.csv",
+        "ryuflowlog.jsonl",
+        "linkstats.csv",
+    )
+
+    for name in runtime_files:
+        path = os.path.join(output_dir, name)
+        if os.path.isfile(path):
+            os.remove(path)
+
+
+def report_output_logs(output_dir):
+    """
+    Report only the files actually written by offloadengine, latencytracker,
+    powermodel, feedbackloop, or the controller.
+    """
+    candidates = (
+        "offloaddecisionlog.json",
+        "decisionlog.json",
+        "offloadlatencylog.csv",
+        "latencylog.csv",
+        "offloadpowerlog.csv",
+        "powerlog.csv",
+        "thresholdlog.csv",
+        "ryuflowlog.jsonl",
+        "linkstats.csv",
+        "metrics.csv",
+    )
+
+    print("\n[OUTPUT] Runtime files:")
+    found = 0
+
+    for name in candidates:
+        path = os.path.join(output_dir, name)
+        if os.path.isfile(path):
+            size = os.path.getsize(path)
+            print(f"  [OK] {path} ({size} bytes)")
+            found += 1
+
+    if found == 0:
+        raise RuntimeError(
+            f"No telemetry logs were found in {output_dir}. "
+            "Check the hard-coded output paths in offloadengine.py, "
+            "latencytracker.py, and powermodel.py."
+        )
+
+
+def run_one_mode(mode, cycles, output_dir):
+    """
+    Execute exactly one mode. Existing modules may accept a subset of the
+    provided parameters; call_supported() retains only supported arguments.
+    """
+    ensure_clean_log_dir(output_dir)
+
+    try:
+        from offloadengine import run_offload
+        from latencytracker import measure_latency
+        from powermodel import compute_power
+    except ImportError as exc:
+        raise RuntimeError(
+            "Cannot import NSSON modules. Confirm these files exist:\n"
+            "  /home/avi/NSSON_V02/offloadengine.py\n"
+            "  /home/avi/NSSON_V02/latencytracker.py\n"
+            "  /home/avi/NSSON_V02/powermodel.py"
+        ) from exc
+
+    try:
+        from feedbackloop import update_threshold
+    except ImportError:
+        update_threshold = None
+
+    common = {
+        "cycles": cycles,
+        "mode": mode,
+        "output_dir": output_dir,
+    }
+
+    if mode == "local_only":
+        print("[MODE] local_only: all decisions must be local; theta = 0.0")
+        call_supported(
+            run_offload,
+            **common,
+            base_theta=0.0,
+            force_decision="local",
+            sdn_enabled=False,
+            qos_enabled=False,
+        )
+
+    elif mode == "offload_only":
+        print("[MODE] offload_only: all decisions must be offload; theta = 1.0")
+        call_supported(
+            run_offload,
+            **common,
+            base_theta=1.0,
+            force_decision="offload",
+            sdn_enabled=False,
+            qos_enabled=False,
+        )
+
+    elif mode == "adaptive_no_sdn":
+        print("[MODE] adaptive_no_sdn: confidence feedback; no SDN/QoS controller")
+        call_supported(
+            run_offload,
+            **common,
+            base_theta=0.60,
+            sdn_enabled=False,
+            qos_enabled=False,
+        )
+
+    elif mode == "baseline_sdn_iot":
+        print("[MODE] baseline_sdn_iot: conventional static/best-effort SDN")
+        call_supported(
+            run_offload,
+            **common,
+            base_theta=0.60,
+            sdn_enabled=True,
+            qos_enabled=False,
+        )
+
+    elif mode == "nsson_full":
+        print("[MODE] nsson_full: adaptive confidence policy plus QoS-aware SDN")
+        call_supported(
+            run_offload,
+            **common,
+            base_theta=0.60,
+            sdn_enabled=True,
+            qos_enabled=True,
+        )
+
+    call_supported(measure_latency, **common)
+    call_supported(compute_power, **common)
+
+    if mode in ("adaptive_no_sdn", "baseline_sdn_iot", "nsson_full"):
+        if update_threshold is None:
+            print("[WARN] feedbackloop.update_threshold is not importable.")
+        else:
+            call_supported(update_threshold, **common)
+
+    report_output_logs(output_dir)
+    print(f"\n[DONE] Mode '{mode}' completed successfully.")
+    print(f"[DONE] Raw logs are stored in: {output_dir}")
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Run exactly one NSSON_V02 experimental mode."
+    )
+
+    parser.add_argument(
+        "--mode",
+        required=True,
+        choices=VALID_MODES,
+        help="Experimental scenario."
+    )
+
+    parser.add_argument(
+        "--cycles",
+        type=int,
+        default=300,
+        help="Number of inference cycles."
+    )
+
+    parser.add_argument(
+        "--output-dir",
+        default=os.path.join(ROOT, "logs"),
+        help="Directory used for raw telemetry files."
+    )
+
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+
+    if args.cycles <= 0:
+        raise ValueError("--cycles must be greater than zero.")
+
+    run_one_mode(
+        mode=args.mode,
+        cycles=args.cycles,
+        output_dir=os.path.abspath(args.output_dir),
+    )
+
+
+if __name__ == "__main__":
+    main()
+
+END FILE: simrunner.py

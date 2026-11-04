@@ -1,0 +1,6 @@
+107: pa9f629-eth4@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
+    link/ether fe:f7:df:bd:1e:f2 brd ff:ff:ff:ff:ff:ff link-netnsid 3
+    RX:  bytes packets errors dropped  missed   mcast           
+      24467756   19718      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+          8430      73      0       0       0       0

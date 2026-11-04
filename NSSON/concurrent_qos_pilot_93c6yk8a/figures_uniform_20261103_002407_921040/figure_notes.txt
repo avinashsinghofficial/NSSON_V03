@@ -1,0 +1,6 @@
+Source CSV: /home/avi/NSSON/concurrent_qos_pilot_93c6yk8a/measured_results.csv
+baseline = Baseline (shared queue); color #8C8C8C
+static_queues = NSSON (static-queue configuration); color #2F6FB2
+Single pilot per configuration; no confidence intervals.
+Static-queue configuration is not a full inference-aware controller test.
+UDP jitter is the final iperf3 reported estimator, not mean latency.

@@ -1,0 +1,95 @@
+project:
+  root: /home/avi/NSSON_V02
+  controller_port: 6633
+  bottleneck_capacity_mbps: 20
+  bottleneck_delay_ms: 3
+  bottleneck_queue_packets: 30
+
+topology:
+  autonomous_source:
+    name: qa
+    ip: 10.20.0.1
+  healthcare_source:
+    name: qh
+    ip: 10.20.0.2
+  industrial_source:
+    name: qi
+    ip: 10.20.0.3
+  server:
+    name: qs
+    ip: 10.20.0.10
+  background_source:
+    name: qb1
+    ip: 10.20.0.11
+  background_sink:
+    name: qb2
+    ip: 10.20.0.12
+  switches:
+    ingress: s1
+    egress: s2
+
+loads:
+  light:
+    background_mbps: 2
+  moderate:
+    background_mbps: 12
+  heavy:
+    background_mbps: 19
+
+slices:
+  autonomous:
+    description: Safety-critical autonomous-driving inference
+    protocol: tcp
+    port: 8090
+    udp_probe_port: 9090
+    priority: 400
+    queue_id: 1
+    min_rate_mbps: 8
+    max_rate_mbps: 15
+    udp_probe_rate_mbps: 0.30
+    sla:
+      jitter_ms_max: 5
+      loss_pct_max: 1
+      pdr_min: 0.99
+      throughput_mbps_min: 8
+
+  healthcare:
+    description: Mission-critical healthcare inference
+    protocol: tcp
+    port: 8091
+    udp_probe_port: 9091
+    priority: 300
+    queue_id: 2
+    min_rate_mbps: 6
+    max_rate_mbps: 10
+    udp_probe_rate_mbps: 0.25
+    sla:
+      jitter_ms_max: 8
+      loss_pct_max: 1
+      pdr_min: 0.99
+      throughput_mbps_min: 6
+
+  industrial:
+    description: Periodic industrial monitoring inference
+    protocol: tcp
+    port: 8092
+    udp_probe_port: 9092
+    priority: 200
+    queue_id: 3
+    min_rate_mbps: 3
+    max_rate_mbps: 6
+    udp_probe_rate_mbps: 0.20
+    sla:
+      jitter_ms_max: 15
+      loss_pct_max: 3
+      pdr_min: 0.97
+      throughput_mbps_min: 3
+
+  background:
+    description: Best-effort UDP background traffic
+    protocol: udp
+    port: 5001
+    priority: 10
+    queue_id: 0
+    min_rate_mbps: 1
+    max_rate_mbps: 3

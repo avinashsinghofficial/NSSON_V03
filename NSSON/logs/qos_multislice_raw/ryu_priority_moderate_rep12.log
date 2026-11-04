@@ -1,0 +1,8 @@
+1 RLock(s) were not greened, to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+loading app /home/avi/NSSON_V02/controllers/qos_nsson_controller.py
+loading app ryu.controller.ofp_handler
+instantiating app /home/avi/NSSON_V02/controllers/qos_nsson_controller.py of NSSONController
+NSSON QoS-aware controller started
+instantiating app ryu.controller.ofp_handler of OFPHandler
+Installed table-miss rule: dpid=1
+Installed table-miss rule: dpid=2

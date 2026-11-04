@@ -1,0 +1,13 @@
+{
+  "model": "cnn",
+  "architecture": "baseline",
+  "profile": "default",
+  "nodes": 300,
+  "cycles": 1200,
+  "accuracy": 92.7504,
+  "avg_latency_ms": 31.6152,
+  "avg_power_mw": 124.94,
+  "avg_throughput_fps": 16.6319,
+  "avg_rtt_ms": 34.8146,
+  "offload_ratio": 0.6967
+}

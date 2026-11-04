@@ -1,0 +1,10 @@
+{"sampleid": 0, "label": 6, "conf_snn": 0.27337391594646554, "conf_cnn": 0.879055047383946, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6768537, "cycle": 0, "mode": "local_only"}
+{"sampleid": 1, "label": 9, "conf_snn": 0.6232334448672797, "conf_cnn": 0.8803345035229626, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6768835, "cycle": 1, "mode": "local_only"}
+{"sampleid": 2, "label": 7, "conf_snn": 0.6225646316108401, "conf_cnn": 0.981565812704725, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6768963, "cycle": 2, "mode": "local_only"}
+{"sampleid": 3, "label": 1, "conf_snn": 0.6733618039413735, "conf_cnn": 0.8574269294896713, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6769056, "cycle": 3, "mode": "local_only"}
+{"sampleid": 4, "label": 8, "conf_snn": 0.8447411578889518, "conf_cnn": 0.7876433945605654, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6769145, "cycle": 4, "mode": "local_only"}
+{"sampleid": 5, "label": 2, "conf_snn": 0.9932923543227152, "conf_cnn": 0.9579821220208962, "decision": "local", "theta": 0.0, "timestamp": 1789551582.676922, "cycle": 5, "mode": "local_only"}
+{"sampleid": 6, "label": 6, "conf_snn": 0.6260206371941118, "conf_cnn": 0.6862528132298238, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6769297, "cycle": 6, "mode": "local_only"}
+{"sampleid": 7, "label": 1, "conf_snn": 0.6063865008880857, "conf_cnn": 0.7723076398078035, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6769376, "cycle": 7, "mode": "local_only"}
+{"sampleid": 8, "label": 6, "conf_snn": 0.9332779646944658, "conf_cnn": 0.8173181822719722, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6769454, "cycle": 8, "mode": "local_only"}
+{"sampleid": 9, "label": 1, "conf_snn": 0.7246844304357644, "conf_cnn": 0.8640130838029838, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6769526, "cycle": 9, "mode": "local_only"}

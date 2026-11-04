@@ -1,0 +1,135 @@
+Execution device: cuda:0
+Loading CNN checkpoint...
+Loading SNN checkpoint...
+Namespace(exp_name='snn_test', data_dir='dataset/', dataset='cifar100', seed=1234, timestep=5, batch_size=64, epochs=300, tau=1.3333333333333333, threshold=1.0, celltype='backward', second_avgpooling=2, optimizer='sgd', scheduler='cosine', learning_rate=0.1, momentum=0.9, weight_decay=0.0005, val_interval=20, num_search=5000, cnt_mat=None, savemodel_pth=None)
+
+Checking SNN reset consistency...
+{
+  "sequence": "A, B, A; reset before every forward",
+  "rtol": 0.0001,
+  "atol": 1e-05,
+  "maximum_absolute_score_difference": 0.0,
+  "passed": true,
+  "limitation": "A finite consistency check, not proof of all possible state-isolation cases."
+}
+
+Evaluating both models on all 10000 images...
+  Accuracy evaluation: 640/10000
+  Accuracy evaluation: 1280/10000
+  Accuracy evaluation: 1920/10000
+  Accuracy evaluation: 2560/10000
+  Accuracy evaluation: 3200/10000
+  Accuracy evaluation: 3840/10000
+  Accuracy evaluation: 4480/10000
+  Accuracy evaluation: 5120/10000
+  Accuracy evaluation: 5760/10000
+  Accuracy evaluation: 6400/10000
+  Accuracy evaluation: 7040/10000
+  Accuracy evaluation: 7680/10000
+  Accuracy evaluation: 8320/10000
+  Accuracy evaluation: 8960/10000
+  Accuracy evaluation: 9600/10000
+
+Starting repeated batch-size-one timing...
+  Timing repetition 1/3: 50/300 paired requests
+  Timing repetition 1/3: 100/300 paired requests
+  Timing repetition 1/3: 150/300 paired requests
+  Timing repetition 1/3: 200/300 paired requests
+  Timing repetition 1/3: 250/300 paired requests
+  Timing repetition 1/3: 300/300 paired requests
+  Timing repetition 2/3: 50/300 paired requests
+  Timing repetition 2/3: 100/300 paired requests
+  Timing repetition 2/3: 150/300 paired requests
+  Timing repetition 2/3: 200/300 paired requests
+  Timing repetition 2/3: 250/300 paired requests
+  Timing repetition 2/3: 300/300 paired requests
+  Timing repetition 3/3: 50/300 paired requests
+  Timing repetition 3/3: 100/300 paired requests
+  Timing repetition 3/3: 150/300 paired requests
+  Timing repetition 3/3: 200/300 paired requests
+  Timing repetition 3/3: 250/300 paired requests
+  Timing repetition 3/3: 300/300 paired requests
+
+===== COMPLETED =====
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_models_20261102_085404_QzL8in",
+  "test_samples": 10000,
+  "cnn_accuracy_percent": 95.71,
+  "snn_accuracy_percent": 93.47,
+  "snn_timesteps": 5,
+  "snn_reset_consistency_passed": true,
+  "timing_summary": [
+    {
+      "repetition": 1,
+      "model": "cnn",
+      "requests": 300,
+      "mean_forward_ms": 1.2354690899999998,
+      "mean_tensor_to_result_ms": 1.3202859833333334,
+      "median_tensor_to_result_ms": 1.2643805000000001,
+      "p95_tensor_to_result_ms": 1.4431894,
+      "p99_tensor_to_result_ms": 1.5647008699999998
+    },
+    {
+      "repetition": 1,
+      "model": "snn",
+      "requests": 300,
+      "mean_forward_ms": 11.94918602,
+      "mean_tensor_to_result_ms": 12.269144576666667,
+      "median_tensor_to_result_ms": 11.720427,
+      "p95_tensor_to_result_ms": 12.9966275,
+      "p99_tensor_to_result_ms": 13.88207411
+    },
+    {
+      "repetition": 2,
+      "model": "cnn",
+      "requests": 300,
+      "mean_forward_ms": 1.1633980800000001,
+      "mean_tensor_to_result_ms": 1.2356784966666665,
+      "median_tensor_to_result_ms": 1.2233265,
+      "p95_tensor_to_result_ms": 1.31988565,
+      "p99_tensor_to_result_ms": 1.5194046799999998
+    },
+    {
+      "repetition": 2,
+      "model": "snn",
+      "requests": 300,
+      "mean_forward_ms": 11.377241976666667,
+      "mean_tensor_to_result_ms": 11.658178233333334,
+      "median_tensor_to_result_ms": 11.625254,
+      "p95_tensor_to_result_ms": 11.79965215,
+      "p99_tensor_to_result_ms": 12.81412258
+    },
+    {
+      "repetition": 3,
+      "model": "cnn",
+      "requests": 300,
+      "mean_forward_ms": 1.1722529166666666,
+      "mean_tensor_to_result_ms": 1.2504703733333333,
+      "median_tensor_to_result_ms": 1.2316894999999999,
+      "p95_tensor_to_result_ms": 1.33229185,
+      "p99_tensor_to_result_ms": 2.1192857599999995
+    },
+    {
+      "repetition": 3,
+      "model": "snn",
+      "requests": 300,
+      "mean_forward_ms": 11.422823853333332,
+      "mean_tensor_to_result_ms": 11.704333206666666,
+      "median_tensor_to_result_ms": 11.6881555,
+      "p95_tensor_to_result_ms": 11.7797236,
+      "p99_tensor_to_result_ms": 12.277129149999999
+    }
+  ],
+  "offline_threshold_monotonicity_passed": true,
+  "elapsed_wall_seconds": 125.40724921226501,
+  "limitations": [
+    "Host RTX/CPU results, not Jetson Nano measurements.",
+    "Timing excludes image loading and preprocessing.",
+    "Timing repetitions share one process; independent-process runs remain necessary for final uncertainty estimates.",
+    "Maximum-softmax confidence is not calibrated accuracy.",
+    "Threshold sweep is offline, not a live feedback or network experiment.",
+    "No energy, QoS, SLA, slicing, or SDN improvement is established.",
+    "Checkpoint training/preprocessing provenance must still be documented."
+  ]
+}

@@ -1,0 +1,6 @@
+1 RLock(s) were not greened, to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+loading app /home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py
+loading app ryu.controller.ofp_handler
+instantiating app /home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py of BaselineSdnIotController
+Baseline SDN-IoT controller started
+instantiating app ryu.controller.ofp_handler of OFPHandler

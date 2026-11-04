@@ -1,0 +1,245 @@
+     1	#!/usr/bin/env python3
+     2	"""
+     3	NSSON_V02 single-mode experiment runner.
+     4	
+     5	Runs exactly one scenario per invocation and leaves all generated raw telemetry
+     6	directly in the requested --output-dir. No unnecessary copy step is performed.
+     7	
+     8	Modes:
+     9	  local_only       : every sample is processed locally
+    10	  offload_only     : every sample is offloaded
+    11	  adaptive_no_sdn  : adaptive confidence policy; no SDN controller
+    12	  baseline_sdn_iot : conventional/static SDN; no NSSON QoS policy
+    13	  nsson_full       : adaptive NSSON policy plus QoS-aware SDN
+    14	"""
+    15	
+    16	import argparse
+    17	import inspect
+    18	import os
+    19	import sys
+    20	
+    21	ROOT = "/home/avi/NSSON_V02"
+    22	
+    23	if ROOT not in sys.path:
+    24	    sys.path.insert(0, ROOT)
+    25	
+    26	VALID_MODES = (
+    27	    "local_only",
+    28	    "offload_only",
+    29	    "adaptive_no_sdn",
+    30	    "baseline_sdn_iot",
+    31	    "nsson_full",
+    32	)
+    33	
+    34	
+    35	def call_supported(function, **kwargs):
+    36	    """
+    37	    Call an existing NSSON function using only keyword arguments accepted by
+    38	    that function. This lets the runner work during incremental refactoring.
+    39	    """
+    40	    parameters = inspect.signature(function).parameters
+    41	    accepted = {k: v for k, v in kwargs.items() if k in parameters}
+    42	    return function(**accepted)
+    43	
+    44	
+    45	def ensure_clean_log_dir(output_dir):
+    46	    """
+    47	    Remove only runtime telemetry files. Do not delete model checkpoints,
+    48	    training histories, or unrelated log artifacts.
+    49	    """
+    50	    os.makedirs(output_dir, exist_ok=True)
+    51	
+    52	    runtime_files = (
+    53	        "metrics.csv",
+    54	        "offloaddecisionlog.json",
+    55	        "decisionlog.json",
+    56	        "offloadlatencylog.csv",
+    57	        "latencylog.csv",
+    58	        "offloadpowerlog.csv",
+    59	        "powerlog.csv",
+    60	        "thresholdlog.csv",
+    61	        "ryuflowlog.jsonl",
+    62	        "linkstats.csv",
+    63	    )
+    64	
+    65	    for name in runtime_files:
+    66	        path = os.path.join(output_dir, name)
+    67	        if os.path.isfile(path):
+    68	            os.remove(path)
+    69	
+    70	
+    71	def report_output_logs(output_dir):
+    72	    """
+    73	    Report only the files actually written by offloadengine, latencytracker,
+    74	    powermodel, feedbackloop, or the controller.
+    75	    """
+    76	    candidates = (
+    77	        "offloaddecisionlog.json",
+    78	        "decisionlog.json",
+    79	        "offloadlatencylog.csv",
+    80	        "latencylog.csv",
+    81	        "offloadpowerlog.csv",
+    82	        "powerlog.csv",
+    83	        "thresholdlog.csv",
+    84	        "ryuflowlog.jsonl",
+    85	        "linkstats.csv",
+    86	        "metrics.csv",
+    87	    )
+    88	
+    89	    print("\n[OUTPUT] Runtime files:")
+    90	    found = 0
+    91	
+    92	    for name in candidates:
+    93	        path = os.path.join(output_dir, name)
+    94	        if os.path.isfile(path):
+    95	            size = os.path.getsize(path)
+    96	            print(f"  [OK] {path} ({size} bytes)")
+    97	            found += 1
+    98	
+    99	    if found == 0:
+   100	        raise RuntimeError(
+   101	            f"No telemetry logs were found in {output_dir}. "
+   102	            "Check the hard-coded output paths in offloadengine.py, "
+   103	            "latencytracker.py, and powermodel.py."
+   104	        )
+   105	
+   106	
+   107	def run_one_mode(mode, cycles, output_dir):
+   108	    """
+   109	    Execute exactly one mode. Existing modules may accept a subset of the
+   110	    provided parameters; call_supported() retains only supported arguments.
+   111	    """
+   112	    ensure_clean_log_dir(output_dir)
+   113	
+   114	    try:
+   115	        from offloadengine import run_offload
+   116	        from latencytracker import measure_latency
+   117	        from powermodel import compute_power
+   118	    except ImportError as exc:
+   119	        raise RuntimeError(
+   120	            "Cannot import NSSON modules. Confirm these files exist:\n"
+   121	            "  /home/avi/NSSON_V02/offloadengine.py\n"
+   122	            "  /home/avi/NSSON_V02/latencytracker.py\n"
+   123	            "  /home/avi/NSSON_V02/powermodel.py"
+   124	        ) from exc
+   125	
+   126	    try:
+   127	        from feedbackloop import update_threshold
+   128	    except ImportError:
+   129	        update_threshold = None
+   130	
+   131	    common = {
+   132	        "cycles": cycles,
+   133	        "mode": mode,
+   134	        "output_dir": output_dir,
+   135	    }
+   136	
+   137	    if mode == "local_only":
+   138	        print("[MODE] local_only: all decisions must be local; theta = 0.0")
+   139	        call_supported(
+   140	            run_offload,
+   141	            **common,
+   142	            base_theta=0.0,
+   143	            force_decision="local",
+   144	            sdn_enabled=False,
+   145	            qos_enabled=False,
+   146	        )
+   147	
+   148	    elif mode == "offload_only":
+   149	        print("[MODE] offload_only: all decisions must be offload; theta = 1.0")
+   150	        call_supported(
+   151	            run_offload,
+   152	            **common,
+   153	            base_theta=1.0,
+   154	            force_decision="offload",
+   155	            sdn_enabled=False,
+   156	            qos_enabled=False,
+   157	        )
+   158	
+   159	    elif mode == "adaptive_no_sdn":
+   160	        print("[MODE] adaptive_no_sdn: confidence feedback; no SDN/QoS controller")
+   161	        call_supported(
+   162	            run_offload,
+   163	            **common,
+   164	            base_theta=0.60,
+   165	            sdn_enabled=False,
+   166	            qos_enabled=False,
+   167	        )
+   168	
+   169	    elif mode == "baseline_sdn_iot":
+   170	        print("[MODE] baseline_sdn_iot: conventional static/best-effort SDN")
+   171	        call_supported(
+   172	            run_offload,
+   173	            **common,
+   174	            base_theta=0.60,
+   175	            sdn_enabled=True,
+   176	            qos_enabled=False,
+   177	        )
+   178	
+   179	    elif mode == "nsson_full":
+   180	        print("[MODE] nsson_full: adaptive confidence policy plus QoS-aware SDN")
+   181	        call_supported(
+   182	            run_offload,
+   183	            **common,
+   184	            base_theta=0.60,
+   185	            sdn_enabled=True,
+   186	            qos_enabled=True,
+   187	        )
+   188	
+   189	    call_supported(measure_latency, **common)
+   190	    call_supported(compute_power, **common)
+   191	
+   192	    if mode in ("adaptive_no_sdn", "baseline_sdn_iot", "nsson_full"):
+   193	        if update_threshold is None:
+   194	            print("[WARN] feedbackloop.update_threshold is not importable.")
+   195	        else:
+   196	            call_supported(update_threshold, **common)
+   197	
+   198	    report_output_logs(output_dir)
+   199	    print(f"\n[DONE] Mode '{mode}' completed successfully.")
+   200	    print(f"[DONE] Raw logs are stored in: {output_dir}")
+   201	
+   202	
+   203	def parse_args():
+   204	    parser = argparse.ArgumentParser(
+   205	        description="Run exactly one NSSON_V02 experimental mode."
+   206	    )
+   207	
+   208	    parser.add_argument(
+   209	        "--mode",
+   210	        required=True,
+   211	        choices=VALID_MODES,
+   212	        help="Experimental scenario."
+   213	    )
+   214	
+   215	    parser.add_argument(
+   216	        "--cycles",
+   217	        type=int,
+   218	        default=300,
+   219	        help="Number of inference cycles."
+   220	    )
+   221	
+   222	    parser.add_argument(
+   223	        "--output-dir",
+   224	        default=os.path.join(ROOT, "logs"),
+   225	        help="Directory used for raw telemetry files."
+   226	    )
+   227	
+   228	    return parser.parse_args()
+   229	
+   230	
+   231	def main():
+   232	    args = parse_args()
+   233	
+   234	    if args.cycles <= 0:
+   235	        raise ValueError("--cycles must be greater than zero.")
+   236	
+   237	    run_one_mode(
+   238	        mode=args.mode,
+   239	        cycles=args.cycles,
+   240	        output_dir=os.path.abspath(args.output_dir),
+   241	    )
+   242	
+   243	
+   244	if __name__ == "__main__":
+   245	    main()

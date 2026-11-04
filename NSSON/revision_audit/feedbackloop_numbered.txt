@@ -1,0 +1,63 @@
+     1	import os
+     2	import pandas as pd
+     3	import numpy as np
+     4	
+     5	NSSON_ROOT = "/home/avi/NSSON_V02"
+     6	LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+     7	POWER_LOG = os.path.join(NSSON_ROOT, "logs", "offloadpowerlog.csv")
+     8	DECISION_LOG = os.path.join(NSSON_ROOT, "logs", "offloaddecisionlog.json")
+     9	THRESHOLD_LOG = os.path.join(NSSON_ROOT, "logs", "thresholdlog.csv")
+    10	
+    11	BASE_THETA = 0.6
+    12	ALPHA_L = 0.1
+    13	ALPHA_P = 0.05
+    14	ALPHA_A = 0.05
+    15	WINDOW_N = 10
+    16	
+    17	def load_latency_power(mode):
+    18	    lat_df = pd.read_csv(LATENCY_LOG)
+    19	    pow_df = pd.read_csv(POWER_LOG)
+    20	    lat_df = lat_df[lat_df["mode"] == mode]
+    21	    pow_df = pow_df[pow_df["mode"] == mode]
+    22	    df = pd.merge(lat_df, pow_df, on="cycle", how="inner")
+    23	    return df
+    24	
+    25	def compute_accuracy_window(decisions_df, cycles_window):
+    26	    sub = decisions_df[decisions_df["cycle"].isin(cycles_window)]
+    27	    if sub.empty:
+    28	        return 0.0
+    29	    return np.mean(sub["conf_cnn"] > sub["conf_snn"])
+    30	
+    31	def update_threshold(mode="adaptive_no_sdn"):
+    32	    df = load_latency_power(mode)
+    33	    decisions = pd.read_json(DECISION_LOG, lines=True)
+    34	    decisions = decisions[decisions["mode"] == mode]
+    35	
+    36	    cycles = df["cycle"].values
+    37	    thresholds = []
+    38	    theta = BASE_THETA
+    39	
+    40	    for i, cycle in enumerate(cycles):
+    41	        start = max(0, i - WINDOW_N + 1)
+    42	        window_cycles = cycles[start:i+1]
+    43	
+    44	        L_bar = df[df["cycle"].isin(window_cycles)]["total_sec"].mean()
+    45	        P_bar = df[df["cycle"].isin(window_cycles)]["total_power_wh"].mean()
+    46	        A_bar = compute_accuracy_window(decisions, window_cycles)
+    47	
+    48	        theta = BASE_THETA - ALPHA_L * L_bar - ALPHA_P * P_bar - ALPHA_A * A_bar
+    49	        theta = max(0.30, min(0.90, theta))
+    50	        thresholds.append({"cycle": int(cycle), "theta": float(theta),
+    51	                           "L_bar": float(L_bar), "P_bar": float(P_bar), "A_bar": float(A_bar),
+    52	                           "mode": mode})
+    53	
+    54	    pd.DataFrame(thresholds).to_csv(THRESHOLD_LOG, index=False)
+    55	    print("Threshold log written to", THRESHOLD_LOG)
+    56	
+    57	if __name__ == "__main__":
+    58	    import argparse
+    59	    p = argparse.ArgumentParser()
+    60	    p.add_argument("--mode", required=True,
+    61	                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+    62	    args = p.parse_args()
+    63	    update_threshold(mode=args.mode)

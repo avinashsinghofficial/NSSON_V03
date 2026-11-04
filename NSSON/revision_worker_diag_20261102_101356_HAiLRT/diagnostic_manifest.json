@@ -1,0 +1,7 @@
+{
+  "source": "/home/avi/NSSON/revision_network_fix_20261102_095839_eDgjaD/network_smoke.py",
+  "source_sha256": "9bd5dca92c0be455ca9d96fe130a940dac3b124e56e27f58e311d9e11205b9d7",
+  "diagnostic_script": "/home/avi/NSSON/revision_worker_diag_20261102_101356_HAiLRT/network_smoke.py",
+  "diagnostic_sha256": "c44541ff9a30858fa6f9afca88cf5bd8ed3a243454e5533b96388be7a0e07738",
+  "scope": "Startup diagnostics only. Inference policies, checkpoints, CUDA selection, and network settings are unchanged."
+}

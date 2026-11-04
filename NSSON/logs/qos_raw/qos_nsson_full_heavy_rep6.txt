@@ -1,0 +1,58 @@
+=== ICMP PING ===
+PING 10.20.0.2 (10.20.0.2) 56(84) bytes of data.
+64 bytes from 10.20.0.2: icmp_seq=2 ttl=64 time=27.8 ms
+64 bytes from 10.20.0.2: icmp_seq=3 ttl=64 time=24.9 ms
+64 bytes from 10.20.0.2: icmp_seq=4 ttl=64 time=25.1 ms
+64 bytes from 10.20.0.2: icmp_seq=8 ttl=64 time=24.8 ms
+64 bytes from 10.20.0.2: icmp_seq=9 ttl=64 time=25.1 ms
+64 bytes from 10.20.0.2: icmp_seq=11 ttl=64 time=25.2 ms
+64 bytes from 10.20.0.2: icmp_seq=12 ttl=64 time=25.0 ms
+64 bytes from 10.20.0.2: icmp_seq=13 ttl=64 time=25.0 ms
+64 bytes from 10.20.0.2: icmp_seq=14 ttl=64 time=25.0 ms
+64 bytes from 10.20.0.2: icmp_seq=16 ttl=64 time=25.1 ms
+64 bytes from 10.20.0.2: icmp_seq=17 ttl=64 time=25.0 ms
+64 bytes from 10.20.0.2: icmp_seq=18 ttl=64 time=25.1 ms
+64 bytes from 10.20.0.2: icmp_seq=20 ttl=64 time=25.2 ms
+64 bytes from 10.20.0.2: icmp_seq=21 ttl=64 time=25.0 ms
+64 bytes from 10.20.0.2: icmp_seq=22 ttl=64 time=25.1 ms
+64 bytes from 10.20.0.2: icmp_seq=28 ttl=64 time=24.9 ms
+64 bytes from 10.20.0.2: icmp_seq=29 ttl=64 time=25.2 ms
+
+--- 10.20.0.2 ping statistics ---
+30 packets transmitted, 17 received, 43.3333% packet loss, time 5895ms
+rtt min/avg/max/mdev = 24.804/25.208/27.820/0.662 ms
+
+=== TCP IPERF 8090 ===
+------------------------------------------------------------
+Client connecting to 10.20.0.2, TCP port 8090
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.1 port 34326 connected with 10.20.0.2 port 8090
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  97.6 KBytes   800 Kbits/sec
+[  1] 1.0000-2.0000 sec  5.66 KBytes  46.3 Kbits/sec
+[  1] 2.0000-3.0000 sec  1.41 KBytes  11.6 Kbits/sec
+[  1] 3.0000-4.0000 sec  1.25 MBytes  10.5 Mbits/sec
+[  1] 4.0000-5.0000 sec  2.50 MBytes  21.0 Mbits/sec
+[  1] 5.0000-5.2554 sec   128 KBytes  4.11 Mbits/sec
+[  1] 0.0000-5.2554 sec  3.98 MBytes  6.35 Mbits/sec
+
+=== UDP IPERF BACKGROUND ===
+------------------------------------------------------------
+Client connecting to 10.20.0.12, UDP port 5001
+Sending 1470 byte datagrams, IPG target: 590.27 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.11 port 43067 connected with 10.20.0.12 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  2.38 MBytes  19.9 Mbits/sec
+[  1] 1.0000-2.0000 sec  2.37 MBytes  19.9 Mbits/sec
+[  1] 2.0000-3.0000 sec  2.37 MBytes  19.9 Mbits/sec
+[  1] 3.0000-4.0000 sec  2.37 MBytes  19.9 Mbits/sec
+[  1] 4.0000-5.0000 sec  2.37 MBytes  19.9 Mbits/sec
+[  1] 0.0000-5.0009 sec  11.9 MBytes  19.9 Mbits/sec
+[  1] Sent 8475 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-5.0099 sec  11.6 MBytes  19.5 Mbits/sec   0.031 ms 186/8474 (2.2%)
+[  1] 0.0000-5.0099 sec  6 datagrams received out-of-order

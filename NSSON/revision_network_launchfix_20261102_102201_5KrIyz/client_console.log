@@ -1,0 +1,31 @@
+{
+  "role": "client",
+  "pid": 25225,
+  "uid": 1000,
+  "gid": 1000,
+  "actual_network_namespace": "net:[4026533238]",
+  "expected_network_namespace": "net:[4026533238]",
+  "expected_ip": "10.231.77.1",
+  "observed_ipv4_addresses": [
+    "10.231.77.1",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "expected_ip_present": true
+}
+CLIENT namespace and address checks passed
+STAGE: before NumPy import
+STAGE: NumPy import completed
+STAGE: before PyTorch import
+STAGE: PyTorch import completed; version=2.12.1+cu130
+STAGE: before torch.manual_seed
+STAGE: torch.manual_seed completed
+STAGE: before CUDA availability check
+STAGE: CUDA availability check completed: True
+STAGE: tensor environment ready: cuda:0
+Namespace(exp_name='snn_test', data_dir='dataset/', dataset='cifar100', seed=1234, timestep=5, batch_size=64, epochs=300, tau=1.3333333333333333, threshold=1.0, celltype='backward', second_avgpooling=2, optimizer='sgd', scheduler='cosine', learning_rate=0.1, momentum=0.9, weight_decay=0.0005, val_interval=20, num_search=5000, cnt_mat=None, savemodel_pth=None)
+CLIENT POLICY: local_cnn
+CLIENT POLICY: local_snn
+CLIENT POLICY: remote_cnn
+CLIENT POLICY: adaptive_fixed
+CLIENT COMPLETED

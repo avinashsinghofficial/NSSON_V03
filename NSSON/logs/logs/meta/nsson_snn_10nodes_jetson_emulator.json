@@ -1,0 +1,13 @@
+{
+  "model": "snn",
+  "architecture": "nsson",
+  "profile": "jetson_emulator",
+  "nodes": 10,
+  "cycles": 1200,
+  "accuracy": 90.1959,
+  "avg_latency_ms": 24.3926,
+  "avg_power_mw": 104.53,
+  "avg_throughput_fps": 101.0499,
+  "avg_rtt_ms": 26.1364,
+  "offload_ratio": 0.4592
+}

@@ -1,0 +1,40 @@
+
+*** NSSON: 2 nodes | SNN | SDN/OVS mode
+*** Adding controller
+*** Adding OVS switch (SDN backbone)
+*** Adding 2 Jetson-emulated edge nodes
+(100.00Mbit 1ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(100.00Mbit 1ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(100.00Mbit 1ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(100.00Mbit 1ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+*** Configuring hosts
+h1 h2 
+(100.00Mbit 1ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(100.00Mbit 1ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+*** Waiting for OpenFlow connection to Ryu on port 6633
+*** Generating h1 -> h2 ICMP traffic for Ryu PacketIn verification
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=13.5 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=4.64 ms
+64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=4.11 ms
+
+--- 10.0.0.2 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 4.105/7.409/13.487/4.303 ms
+*** Generating TCP/8090 offload-inference traffic for NSSON verification
+TCP/8090 inference flow sent
+*** Running NSSON inference simulation
+    [1/2] lat=8.228ms pwr=321.54mW acc=90.29%
+    [2/2] lat=8.241ms pwr=324.25mW acc=90.21%
+*** Stopping 1 controllers
+c0 
+*** Stopping 2 links
+..
+*** Stopping 1 switches
+s1 
+*** Stopping 2 hosts
+h1 h2 
+*** Done
+
+*** RESULTS: lat=8.23ms | pwr=322.9mW | acc=90.25% | thr=121.44fps
+*** Saved → shared/net_runs/nsson_snn_2nodes_20260916_161402.csv

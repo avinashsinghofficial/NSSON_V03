@@ -1,0 +1,9 @@
+mode,slice,receiver_mbps
+baseline,Autonomous,1.881609234833927
+baseline,Healthcare,0.34689663324106895
+baseline,Industrial,0.254276720616486
+baseline,Background,17.264172854594776
+static_queues,Autonomous,8.559298927200656
+static_queues,Healthcare,6.141984100903213
+static_queues,Industrial,3.451925444224725
+static_queues,Background,1.5991828923409768

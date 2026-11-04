@@ -1,0 +1,541 @@
+def feedback_next(theta, mean_latency_s, local_accuracy=None):
+    """Update for subsequent requests, not the completed request.
+
+    Accuracy is used only in the explicitly labeled oracle experiment.
+    No energy-feedback term is evaluated.
+    """
+    latency_error = max(
+        -1.0, min(1.0, mean_latency_s / 0.030 - 1.0)
+    )
+
+    accuracy_correction = 0.0
+    if local_accuracy is not None:
+        accuracy_correction = 0.05 * (0.95 - local_accuracy)
+
+    candidate = theta - 0.05 * latency_error + accuracy_correction
+    return max(0.30, min(0.90, candidate))
+
+
+def feedback_self_test():
+    # Functional tests, not experimental results.
+    assert feedback_next(0.60, 0.060) < 0.60
+    assert feedback_next(0.60, 0.015) > 0.60
+
+    assert (
+        feedback_next(0.60, 0.030, 0.50)
+        > feedback_next(0.60, 0.030, 1.00)
+    )
+
+    for latency in (0.001, 0.030, 1.0):
+        for accuracy in (None, 0.0, 1.0):
+            value = feedback_next(
+                0.90, latency, accuracy
+            )
+            assert 0.30 <= value <= 0.90
+
+    return "passed"
+
+
+def run_client(args):
+    verify_worker_network(args, CLIENT_IP)
+
+    np, torch, device = tensor_environment()
+    import torchvision
+
+    out = Path(args.out)
+    config = json.loads(
+        (out / "experiment_config.json").read_text()
+    )
+    repetition = int(config["repetition"])
+
+    print("STAGE: loading client CNN", flush=True)
+    cnn, cnn_transform = cnn_components(device)
+
+    print("STAGE: loading client SNN", flush=True)
+    snn, snn_transform, reset_snn = snn_components(device)
+
+    dataset = torchvision.datasets.CIFAR10(
+        root=str(ROOT / "data/cifar10"),
+        train=False,
+        download=False,
+        transform=None,
+    )
+
+    # Same sample set in all repetitions and policies.
+    sample_ids = np.random.default_rng(
+        20261102
+    ).permutation(len(dataset))[
+        :REQUESTS_PER_POLICY
+    ].tolist()
+
+    # Different, recorded request order in each repetition.
+    request_order = sample_ids.copy()
+    np.random.default_rng(
+        20261102 + repetition
+    ).shuffle(request_order)
+
+    # Counterbalance policy order across repetitions.
+    offset = (2 * (repetition - 1)) % len(POLICIES)
+    policy_order = (
+        list(POLICIES[offset:]) + list(POLICIES[:offset])
+    )
+
+    samples = {}
+    for sample_id in sample_ids:
+        image, label = dataset[sample_id]
+        payload = image.tobytes()
+
+        if len(payload) != 3072:
+            raise ValueError("Unexpected raw image payload size")
+
+        samples[sample_id] = (
+            image,
+            int(label),
+            payload,
+            hashlib.sha256(payload).hexdigest(),
+        )
+
+    # Warm-up is not included in recorded request intervals.
+    with torch.no_grad():
+        for sample_id in sample_ids[:10]:
+            image = samples[sample_id][0]
+            infer(
+                torch, device,
+                cnn, cnn_transform, image,
+            )
+            infer(
+                torch, device,
+                snn, snn_transform, image,
+                reset=reset_snn,
+            )
+
+    test_status = feedback_self_test()
+
+    write_json(out / "client_configuration.json", {
+        "repetition": repetition,
+        "policies": policy_order,
+        "sample_ids": sample_ids,
+        "request_order": request_order,
+        "requests_per_policy": REQUESTS_PER_POLICY,
+        "initial_threshold": 0.60,
+        "threshold_bounds": [0.30, 0.90],
+        "window_requests": 10,
+        "update_frequency": "after every 10 completed requests",
+        "latency_reference_s": 0.030,
+        "alpha_latency": 0.05,
+        "alpha_accuracy_oracle": 0.05,
+        "accuracy_target_oracle": 0.95,
+        "alpha_energy": 0.0,
+        "parameter_status": (
+            "Declared engineering settings, not optimized."
+        ),
+        "accuracy_feedback_source": (
+            "Ground-truth CIFAR-10 labels, oracle policy only. "
+            "Not assumed available in deployment."
+        ),
+        "device": str(device),
+        "feedback_unit_tests": test_status,
+        "scope": (
+            "Actual network inference between namespaces on one "
+            "workstation; no Jetson measurements or Ryu QoS."
+        ),
+        "timing_scope": (
+            "Image acquisition and initial payload preparation excluded. "
+            "Request interval ends at prediction/response completion. "
+            "Feedback computation and CSV logging occur afterward."
+        ),
+    })
+
+    fields = [
+        "run_id", "policy", "repetition",
+        "sequence", "sample_id", "label",
+        "decision", "threshold", "theta_next",
+        "feedback_applied", "feedback_source",
+        "snn_confidence_uncalibrated",
+        "snn_prediction", "snn_correct",
+        "final_prediction", "correct",
+        "local_phase_sec", "remote_rpc_sec",
+        "request_sec", "residual_overhead_sec",
+        "feedback_compute_sec",
+        "session_id", "request_id",
+        "client_ip", "client_port",
+        "server_ip", "server_port",
+        "image_sha256", "server_inference_sec",
+    ]
+
+    trace_fields = [
+        "policy", "repetition",
+        "update_after_sequence",
+        "window_first_sequence", "window_last_sequence",
+        "theta_used_in_completed_window",
+        "theta_for_next_request",
+        "window_mean_request_sec",
+        "window_local_snn_accuracy_oracle",
+        "latency_reference_sec",
+        "alpha_latency", "alpha_accuracy", "alpha_energy",
+        "accuracy_signal_source",
+    ]
+
+    summaries = {}
+
+    with (
+        (out / "client_requests.csv").open("w", newline="") as log,
+        (out / "feedback_updates.csv").open("w", newline="") as trace,
+    ):
+        writer = csv.DictWriter(log, fieldnames=fields)
+        writer.writeheader()
+
+        trace_writer = csv.DictWriter(
+            trace, fieldnames=trace_fields
+        )
+        trace_writer.writeheader()
+
+        for policy in policy_order:
+            print(
+                f"CLIENT POLICY: {policy}; repetition={repetition}",
+                flush=True,
+            )
+
+            theta = 0.60
+            expected_next_theta = theta
+            session_id = str(uuid.uuid4())
+            connection = None
+            completed = []
+            window = []
+            update_count = 0
+            mismatch_count = 0
+
+            use_feedback = policy in (
+                "feedback_latency",
+                "feedback_label_oracle",
+            )
+            use_oracle = policy == "feedback_label_oracle"
+
+            try:
+                with torch.no_grad():
+                    for sequence, sample_id in enumerate(request_order):
+                        image, label, payload, digest = samples[sample_id]
+
+                        if use_feedback and theta != expected_next_theta:
+                            raise RuntimeError(
+                                "Causality check failed: prior update "
+                                "was not used by the next request"
+                            )
+
+                        theta_used = theta
+                        snn_prediction = None
+                        snn_correct = None
+                        snn_confidence = ""
+                        response = None
+                        local_sec = 0.0
+                        rpc_sec = 0.0
+
+                        synchronize(torch, device)
+                        start = time.perf_counter_ns()
+
+                        if policy == "local_cnn":
+                            local_start = time.perf_counter_ns()
+                            prediction, _ = infer(
+                                torch, device,
+                                cnn, cnn_transform, image,
+                            )
+                            local_sec = (
+                                time.perf_counter_ns() - local_start
+                            ) / 1e9
+                            offload = False
+
+                        elif policy == "remote_cnn":
+                            # Explicit remote-only mode.
+                            offload = True
+
+                        else:
+                            local_start = time.perf_counter_ns()
+                            snn_prediction, snn_confidence = infer(
+                                torch, device,
+                                snn, snn_transform, image,
+                                reset=reset_snn,
+                            )
+                            local_sec = (
+                                time.perf_counter_ns() - local_start
+                            ) / 1e9
+
+                            prediction = snn_prediction
+
+                            offload = (
+                                policy != "local_snn"
+                                and snn_confidence < theta_used
+                            )
+
+                        request_id = (
+                            f"{policy}:{sequence}:{sample_id}"
+                        )
+
+                        if offload:
+                            rpc_start = time.perf_counter_ns()
+
+                            if connection is None:
+                                connection = socket.create_connection(
+                                    (SERVER_IP, SERVER_PORT),
+                                    timeout=60,
+                                )
+                                connection.settimeout(60)
+
+                            header = {
+                                "run_id": out.name,
+                                "session_id": session_id,
+                                "request_id": request_id,
+                                "sample_id": sample_id,
+                                "payload_bytes": len(payload),
+                                "image_sha256": digest,
+                            }
+
+                            send_json(connection, header)
+                            connection.sendall(payload)
+                            response = receive_json(connection)
+
+                            for key in (
+                                "run_id", "session_id", "request_id",
+                                "sample_id", "image_sha256",
+                            ):
+                                if response.get(key) != header[key]:
+                                    mismatch_count += 1
+                                    raise RuntimeError(
+                                        f"Response association mismatch: {key}"
+                                    )
+
+                            actual_tuple = connection.getsockname()
+
+                            if (
+                                response["client_ip"] != actual_tuple[0]
+                                or response["client_port"] != actual_tuple[1]
+                            ):
+                                mismatch_count += 1
+                                raise RuntimeError(
+                                    "Transport tuple mismatch"
+                                )
+
+                            prediction = int(response["prediction"])
+                            rpc_sec = (
+                                time.perf_counter_ns() - rpc_start
+                            ) / 1e9
+
+                        request_sec = (
+                            time.perf_counter_ns() - start
+                        ) / 1e9
+
+                        # Ground truth is used for evaluation after completion.
+                        # Only the explicitly labeled oracle controller consumes it.
+                        if snn_prediction is not None:
+                            snn_correct = int(
+                                snn_prediction == label
+                            )
+
+                        feedback_start = time.perf_counter_ns()
+                        feedback_applied = 0
+
+                        if use_feedback:
+                            window.append({
+                                "sequence": sequence,
+                                "request_sec": request_sec,
+                                "snn_correct": snn_correct,
+                            })
+
+                            if len(window) == 10:
+                                mean_latency = statistics.mean(
+                                    item["request_sec"]
+                                    for item in window
+                                )
+
+                                oracle_accuracy = (
+                                    statistics.mean(
+                                        item["snn_correct"]
+                                        for item in window
+                                    )
+                                    if use_oracle else None
+                                )
+
+                                theta = feedback_next(
+                                    theta_used,
+                                    mean_latency,
+                                    oracle_accuracy,
+                                )
+                                update_count += 1
+                                feedback_applied = 1
+
+                                update_record = {
+                                    "policy": policy,
+                                    "repetition": repetition,
+                                    "update_after_sequence": sequence,
+                                    "window_first_sequence": window[0]["sequence"],
+                                    "window_last_sequence": window[-1]["sequence"],
+                                    "theta_used_in_completed_window": theta_used,
+                                    "theta_for_next_request": theta,
+                                    "window_mean_request_sec": mean_latency,
+                                    "window_local_snn_accuracy_oracle": (
+                                        oracle_accuracy
+                                        if use_oracle else ""
+                                    ),
+                                    "latency_reference_sec": 0.030,
+                                    "alpha_latency": 0.05,
+                                    "alpha_accuracy": (
+                                        0.05 if use_oracle else 0.0
+                                    ),
+                                    "alpha_energy": 0.0,
+                                    "accuracy_signal_source": (
+                                        "ground_truth_oracle"
+                                        if use_oracle else "not_used"
+                                    ),
+                                }
+                                window.clear()
+                            else:
+                                update_record = None
+                        else:
+                            update_record = None
+
+                        expected_next_theta = theta
+                        feedback_compute_sec = (
+                            time.perf_counter_ns() - feedback_start
+                        ) / 1e9
+
+                        row = {
+                            "run_id": out.name,
+                            "policy": policy,
+                            "repetition": repetition,
+                            "sequence": sequence,
+                            "sample_id": sample_id,
+                            "label": label,
+                            "decision": "offload" if offload else "local",
+                            "threshold": (
+                                theta_used
+                                if policy not in (
+                                    "local_cnn", "local_snn", "remote_cnn"
+                                ) else ""
+                            ),
+                            "theta_next": theta if use_feedback else "",
+                            "feedback_applied": feedback_applied,
+                            "feedback_source": (
+                                "latency_and_ground_truth_oracle"
+                                if use_oracle else
+                                "latency_only" if use_feedback else
+                                "none"
+                            ),
+                            "snn_confidence_uncalibrated": snn_confidence,
+                            "snn_prediction": (
+                                snn_prediction
+                                if snn_prediction is not None else ""
+                            ),
+                            "snn_correct": (
+                                snn_correct
+                                if snn_correct is not None else ""
+                            ),
+                            "final_prediction": prediction,
+                            "correct": int(prediction == label),
+                            "local_phase_sec": local_sec,
+                            "remote_rpc_sec": rpc_sec,
+                            "request_sec": request_sec,
+                            "residual_overhead_sec": (
+                                request_sec - local_sec - rpc_sec
+                            ),
+                            "feedback_compute_sec": feedback_compute_sec,
+                            "session_id": (
+                                session_id if offload else ""
+                            ),
+                            "request_id": (
+                                request_id if offload else ""
+                            ),
+                            "client_ip": (
+                                response["client_ip"] if offload else ""
+                            ),
+                            "client_port": (
+                                response["client_port"] if offload else ""
+                            ),
+                            "server_ip": (
+                                response["server_ip"] if offload else ""
+                            ),
+                            "server_port": (
+                                response["server_port"] if offload else ""
+                            ),
+                            "image_sha256": digest,
+                            "server_inference_sec": (
+                                response["server_inference_sec"]
+                                if offload else ""
+                            ),
+                        }
+
+                        writer.writerow(row)
+                        completed.append(row)
+
+                        if update_record is not None:
+                            trace_writer.writerow(update_record)
+
+                        if (sequence + 1) % 50 == 0:
+                            log.flush()
+                            trace.flush()
+                            print(
+                                f"  {policy}: "
+                                f"{sequence + 1}/{REQUESTS_PER_POLICY}; "
+                                f"theta_next={theta:.6f}",
+                                flush=True,
+                            )
+
+            finally:
+                if connection is not None:
+                    connection.close()
+
+            log.flush()
+            trace.flush()
+
+            latencies_ms = [
+                row["request_sec"] * 1000.0
+                for row in completed
+            ]
+
+            summaries[policy] = {
+                "requests": len(completed),
+                "offloaded": sum(
+                    row["decision"] == "offload"
+                    for row in completed
+                ),
+                "accuracy_percent": (
+                    100.0 * statistics.mean(
+                        row["correct"] for row in completed
+                    )
+                ),
+                "mean_request_ms": statistics.mean(latencies_ms),
+                "p95_request_ms": float(
+                    np.percentile(latencies_ms, 95)
+                ),
+                "feedback_updates": update_count,
+                "final_threshold": theta if use_feedback else None,
+                "observed_response_mismatches": mismatch_count,
+                "label_feedback": (
+                    "oracle_only" if use_oracle else "not_used"
+                ),
+            }
+
+    result = {
+        "status": "completed",
+        "repetition": repetition,
+        "results_directory": str(out),
+        "feedback_unit_tests": test_status,
+        "request_causality_check": "passed",
+        "policy_summaries": summaries,
+        "limitations": [
+            "Same workstation and shared physical GPU resources.",
+            "Static OpenFlow forwarding; not inference-aware Ryu registration.",
+            "Policies run sequentially, not concurrently.",
+            "No QoS queues, adaptive routing, or SLA guarantees.",
+            "Energy feedback disabled; no justified power coefficients.",
+            "Accuracy-aware variant consumes evaluation labels and is oracle-only.",
+            "Parameters are declared engineering settings, not optimized.",
+            "Request timing excludes image acquisition and feedback computation.",
+            "Host results are not Jetson Nano measurements.",
+        ],
+    }
+
+    write_json(
+        out / "client_feedback_summary.json",
+        result,
+    )
+
+    print(json.dumps(result, indent=2), flush=True)

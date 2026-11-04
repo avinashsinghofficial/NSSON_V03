@@ -1,0 +1,18 @@
+{
+  "snn": {
+    "base_accuracy": 90.11588125,
+    "base_local_latency": 28.529981250000002,
+    "base_offload_latency": 28.529981250000002,
+    "base_power_local": 112.06483125000001,
+    "base_power_offload": 112.06483125000001,
+    "base_throughput": 82.10847499999998
+  },
+  "cnn": {
+    "base_accuracy": 92.9156625,
+    "base_local_latency": 34.113887500000004,
+    "base_offload_latency": 34.113887500000004,
+    "base_power_local": 167.274,
+    "base_power_offload": 167.274,
+    "base_throughput": 30.076974999999997
+  }
+}

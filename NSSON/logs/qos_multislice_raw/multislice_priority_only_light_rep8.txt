@@ -1,0 +1,226 @@
+MODE=priority_only
+LOAD=light
+REP=8
+TOPOLOGY=qa,qh,qi,qb1--s1--s2--qs,qb2
+TCP_TOOL=classic_iperf
+UDP_PROBE_TOOL=classic_iperf
+BACKGROUND_OFFERED_MBPS=2.0
+
+===== AUTONOMOUS =====
+
+--- TCP IPERF OUTPUT ---
+------------------------------------------------------------
+Client connecting to 10.20.0.10, TCP port 8090
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.1 port 33456 connected with 10.20.0.10 port 8090
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 1.0000-2.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 2.0000-3.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 3.0000-4.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 4.0000-5.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 5.0000-6.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 6.0000-7.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 7.0000-8.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 8.0000-9.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 9.0000-10.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 10.0000-11.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 11.0000-12.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 12.0000-13.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 13.0000-14.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 14.0000-15.0000 sec  1.12 MBytes  9.44 Mbits/sec
+[  1] 15.0000-16.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 16.0000-17.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 17.0000-18.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 18.0000-19.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 19.0000-20.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 20.0000-21.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 21.0000-22.0000 sec   384 KBytes  3.15 Mbits/sec
+[  1] 22.0000-23.0000 sec   384 KBytes  3.15 Mbits/sec
+[  1] 23.0000-24.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 24.0000-25.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 25.0000-26.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 26.0000-27.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 27.0000-28.0000 sec   392 KBytes  3.21 Mbits/sec
+[  1] 28.0000-29.0000 sec  63.6 KBytes   521 Kbits/sec
+[  1] 29.0000-30.0000 sec  0.000 Bytes  0.000 bits/sec
+
+--- UDP IPERF OUTPUT ---
+
+===== UDP CLIENT OUTPUT =====
+------------------------------------------------------------
+Client connecting to 10.20.0.10, UDP port 9090
+Sending 1470 byte datagrams, IPG target: 37384.13 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.1 port 45374 connected with 10.20.0.10 port 9090
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  40.2 KBytes   329 Kbits/sec
+[  1] 1.0000-2.0000 sec  38.8 KBytes   318 Kbits/sec
+[  1] 2.0000-3.0000 sec  38.8 KBytes   318 Kbits/sec
+[  1] 3.0000-4.0000 sec  37.3 KBytes   306 Kbits/sec
+[  1] 4.0000-5.0000 sec  38.8 KBytes   318 Kbits/sec
+[  1] 5.0000-6.0000 sec  38.8 KBytes   318 Kbits/sec
+[  1] 6.0000-7.0000 sec  38.8 KBytes   318 Kbits/sec
+[  1] 7.0000-8.0000 sec  37.3 KBytes   306 Kbits/sec
+[  1] 0.0000-8.0378 sec   312 KBytes   317 Kbits/sec
+[  1] Sent 218 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-8.0305 sec   312 KBytes   318 Kbits/sec   0.019 ms 0/217 (0%)
+
+===== UDP RECEIVER OUTPUT =====
+------------------------------------------------------------
+Server listening on UDP port 9090
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.10 port 9090 connected with 10.20.0.1 port 45374
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-8.0305 sec   312 KBytes   318 Kbits/sec   0.019 ms 0/217 (0%)
+
+===== HEALTHCARE =====
+
+--- TCP IPERF OUTPUT ---
+------------------------------------------------------------
+Client connecting to 10.20.0.10, TCP port 8091
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.2 port 36254 connected with 10.20.0.10 port 8091
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  1.13 MBytes  9.44 Mbits/sec
+[  1] 1.0000-2.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 2.0000-3.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 3.0000-4.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 4.0000-5.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 5.0000-6.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 6.0000-7.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 7.0000-8.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 8.0000-9.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 9.0000-10.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 10.0000-11.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 11.0000-12.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 12.0000-13.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 13.0000-14.0000 sec   384 KBytes  3.15 Mbits/sec
+[  1] 14.0000-15.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 15.0000-16.0000 sec   384 KBytes  3.15 Mbits/sec
+[  1] 16.0000-17.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 17.0000-18.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 18.0000-19.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 19.0000-20.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 20.0000-21.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 21.0000-22.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 22.0000-23.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 23.0000-24.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 24.0000-25.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 25.0000-26.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 26.0000-27.0000 sec  1.12 MBytes  9.44 Mbits/sec
+[  1] 27.0000-28.0000 sec  1.62 MBytes  13.6 Mbits/sec
+[  1] 28.0000-29.0000 sec   676 KBytes  5.54 Mbits/sec
+[  1] 29.0000-30.0000 sec  0.000 Bytes  0.000 bits/sec
+
+--- UDP IPERF OUTPUT ---
+
+===== UDP CLIENT OUTPUT =====
+------------------------------------------------------------
+Client connecting to 10.20.0.10, UDP port 9091
+Sending 1470 byte datagrams, IPG target: 44860.84 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.2 port 58564 connected with 10.20.0.10 port 9091
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  34.5 KBytes   282 Kbits/sec
+[  1] 1.0000-2.0000 sec  31.6 KBytes   259 Kbits/sec
+[  1] 2.0000-3.0000 sec  31.6 KBytes   259 Kbits/sec
+[  1] 3.0000-4.0000 sec  33.0 KBytes   270 Kbits/sec
+[  1] 4.0000-5.0000 sec  31.6 KBytes   259 Kbits/sec
+[  1] 5.0000-6.0000 sec  31.6 KBytes   259 Kbits/sec
+[  1] 6.0000-7.0000 sec  33.0 KBytes   270 Kbits/sec
+[  1] 7.0000-8.0000 sec  31.6 KBytes   259 Kbits/sec
+[  1] 0.0000-8.0751 sec   261 KBytes   265 Kbits/sec
+[  1] Sent 183 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-8.0748 sec   261 KBytes   265 Kbits/sec   0.023 ms 0/182 (0%)
+
+===== UDP RECEIVER OUTPUT =====
+------------------------------------------------------------
+Server listening on UDP port 9091
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.10 port 9091 connected with 10.20.0.2 port 58564
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-8.0748 sec   261 KBytes   265 Kbits/sec   0.024 ms 0/182 (0%)
+
+===== INDUSTRIAL =====
+
+--- TCP IPERF OUTPUT ---
+------------------------------------------------------------
+Client connecting to 10.20.0.10, TCP port 8092
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.3 port 45168 connected with 10.20.0.10 port 8092
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 1.0000-2.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 2.0000-3.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 3.0000-4.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 4.0000-5.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 5.0000-6.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 6.0000-7.0000 sec   384 KBytes  3.15 Mbits/sec
+[  1] 7.0000-8.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 8.0000-9.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 9.0000-10.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 10.0000-11.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 11.0000-12.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 12.0000-13.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 13.0000-14.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 14.0000-15.0000 sec   640 KBytes  5.24 Mbits/sec
+[  1] 15.0000-16.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 16.0000-17.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 17.0000-18.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 18.0000-19.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 19.0000-20.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 20.0000-21.0000 sec  1.00 MBytes  8.39 Mbits/sec
+[  1] 21.0000-22.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 22.0000-23.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 23.0000-24.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 24.0000-25.0000 sec   512 KBytes  4.19 Mbits/sec
+[  1] 25.0000-26.0000 sec   177 KBytes  1.45 Mbits/sec
+[  1] 26.0000-27.0000 sec  0.000 Bytes  0.000 bits/sec
+[  1] 27.0000-28.0000 sec  0.000 Bytes  0.000 bits/sec
+[  1] 28.0000-29.0000 sec  0.000 Bytes  0.000 bits/sec
+[  1] 29.0000-30.0000 sec  0.000 Bytes  0.000 bits/sec
+
+--- UDP IPERF OUTPUT ---
+
+===== UDP CLIENT OUTPUT =====
+------------------------------------------------------------
+Client connecting to 10.20.0.10, UDP port 9092
+Sending 1470 byte datagrams, IPG target: 56076.10 us (kalman adjust)
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.3 port 57635 connected with 10.20.0.10 port 9092
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  27.3 KBytes   223 Kbits/sec
+[  1] 1.0000-2.0000 sec  25.8 KBytes   212 Kbits/sec
+[  1] 2.0000-3.0000 sec  25.8 KBytes   212 Kbits/sec
+[  1] 3.0000-4.0000 sec  25.8 KBytes   212 Kbits/sec
+[  1] 4.0000-5.0000 sec  25.8 KBytes   212 Kbits/sec
+[  1] 5.0000-6.0000 sec  24.4 KBytes   200 Kbits/sec
+[  1] 6.0000-7.0000 sec  25.8 KBytes   212 Kbits/sec
+[  1] 7.0000-8.0000 sec  25.8 KBytes   212 Kbits/sec
+[  1] 0.0000-8.0751 sec   210 KBytes   213 Kbits/sec
+[  1] Sent 147 datagrams
+[  1] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-8.0704 sec   210 KBytes   213 Kbits/sec   0.030 ms 0/146 (0%)
+
+===== UDP RECEIVER OUTPUT =====
+------------------------------------------------------------
+Server listening on UDP port 9092
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.10 port 9092 connected with 10.20.0.3 port 57635
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  1] 0.0000-8.0704 sec   210 KBytes   213 Kbits/sec   0.031 ms 0/146 (0%)

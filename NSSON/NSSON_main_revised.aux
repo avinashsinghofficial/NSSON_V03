@@ -1,0 +1,178 @@
+\relax 
+\citation{shi2016edge,satyanarayanan2017emergence,mach2017mobile,mao2017survey,feng2022computation,al2021deep}
+\citation{nano2025nvidia}
+\citation{teerapittayanon2017distributed,chang2021survey,10534618,karjee2022split,wang2024end}
+\citation{10812728,9453402,xie2023edge,chiang2023management}
+\citation{zeb2023toward,fan2025latency,zhu2023pushing}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\newlabel{sec:intro}{{I}{1}}
+\citation{kreutz2014software,mckeown2008openflow,gude2008nox,siddiqui2022toward,jazaeri2021edge,lo2023sdn,ray2025internet}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-A}}Why SDN is Essential}{2}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-B}}Summary of Contributions}{2}{}\protected@file@percent }
+\citation{putra2025spikenas}
+\citation{kim2022neural}
+\citation{di2024ec}
+\citation{ferdowsi2025distributed}
+\citation{ferdowsi2025distributed,goltz2021fast}
+\citation{teerapittayanon2017distributed,chang2021survey,10534618,karjee2022split,wang2024end}
+\citation{tian2026survey,zhu2023pushing,fan2025latency}
+\citation{kreutz2014software}
+\citation{mckeown2008openflow}
+\citation{siddiqui2022toward,jazaeri2021edge,lo2023sdn,ray2025internet}
+\citation{putra2025spikenas}
+\citation{di2024ec}
+\citation{ferdowsi2025distributed}
+\citation{bera2017software}
+\citation{wen2023integrated}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{3}{}\protected@file@percent }
+\newlabel{sec:background}{{II}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}SMCC and Large-Scale AI IoT}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Neuromorphic Computing and Spiking Neural Networks}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Split Computing and Collaborative Inference}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-D}}SDN for IoT and Edge Computing}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-E}}Comparison Summary}{3}{}\protected@file@percent }
+\citation{fontes2015mininet}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Comparison of NSSON with Related Frameworks\relax }}{4}{}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:comparison}{{I}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Proposed NSSON System Architecture}{4}{}\protected@file@percent }
+\newlabel{sec:architecture}{{III}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Architecture Overview}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}SMCC Mapping}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Offload Decision Model}{4}{}\protected@file@percent }
+\newlabel{sec:model}{{\mbox  {III-C}}{4}}
+\newlabel{eq:decision}{{1}{4}}
+\newlabel{eq:offload_ratio}{{2}{4}}
+\newlabel{eq:local_ratio}{{3}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Complete NSSON architecture with five planes: Sensing (CNN/SNN), Memory (telemetry logs), Computation (adaptive offload engine), Communication (Ryu), and Feedback (adaptive threshold).\relax }}{5}{}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Notation and Nomenclature for Offloading and SMCC\relax }}{5}{}\protected@file@percent }
+\newlabel{tab:nssonn-notation}{{II}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}SMCC Utility Formulation}{5}{}\protected@file@percent }
+\newlabel{eq:smcc_utility}{{4}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Measured post-hoc threshold sweep over recorded SNN confidence values. \relax }}{6}{}\protected@file@percent }
+\newlabel{fig:theta_offload_ratio}{{2}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-E}}End-to-End Latency Model}{6}{}\protected@file@percent }
+\newlabel{sec:latency_model}{{\mbox  {III-E}}{6}}
+\newlabel{eq:latency}{{5}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-F}}Edge Energy Model}{6}{}\protected@file@percent }
+\newlabel{sec:power_model}{{\mbox  {III-F}}{6}}
+\newlabel{eq:power}{{6}{6}}
+\newlabel{eq:power_terms}{{7}{6}}
+\newlabel{eq:energy_transfer}{{8}{6}}
+\newlabel{eq:energy}{{9}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-G}}Closed-Loop Feedback Mechanism}{6}{}\protected@file@percent }
+\newlabel{sec:feedback}{{\mbox  {III-G}}{6}}
+\newlabel{eq:averages}{{10}{6}}
+\newlabel{eq:theta}{{11}{6}}
+\citation{mancuso2026mind}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces NSSON Adaptive Feedback Threshold Update\relax }}{7}{}\protected@file@percent }
+\newlabel{alg:feedback}{{1}{7}}
+\newlabel{eq:theta_smcc}{{12}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-H}}SDN Controller Design}{7}{}\protected@file@percent }
+\newlabel{sec:sdn_design}{{\mbox  {III-H}}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-I}}Flow Association and Consistency}{7}{}\protected@file@percent }
+\newlabel{sec:flow_association}{{\mbox  {III-I}}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-J}}Without SDN: Cost Quantification}{7}{}\protected@file@percent }
+\newlabel{sec:nosdn}{{\mbox  {III-J}}{7}}
+\newlabel{eq:queue}{{13}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Implementation and Telemetry Pipeline}{7}{}\protected@file@percent }
+\newlabel{sec:implementation}{{IV}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}System Components}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Telemetry Log Formats}{7}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces NSSON Module-to-Artifact Mapping\relax }}{8}{}\protected@file@percent }
+\newlabel{tab:modules}{{III}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}SDN Log}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Experimental Setup}{8}{}\protected@file@percent }
+\newlabel{sec:setup}{{V}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Hardware and Software Environment}{8}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces NSSON Experimental Configuration\relax }}{8}{}\protected@file@percent }
+\newlabel{tab:env}{{IV}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Evaluation Scenarios}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Evaluation Metrics}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Parameter Settings and Utility Weights}{8}{}\protected@file@percent }
+\citation{putra2025spikenas}
+\citation{putra2025spikenas,di2024ec,11201000,majumdar2025spiking}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Key NSSON Parameter Settings\relax }}{9}{}\protected@file@percent }
+\newlabel{tab:param_settings}{{V}{9}}
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces CNN and SNN Sensing Performance on CIFAR-10\relax }}{9}{}\protected@file@percent }
+\newlabel{tab:sensing}{{VI}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Results and Analysis}{9}{}\protected@file@percent }
+\newlabel{sec:results}{{VI}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Sensing Performance}{9}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Training dynamics for NSSON sensing models. CNN converges smoothly and quickly; SNN exhibits characteristic surrogate-gradient oscillation before stabilizing.\relax }}{9}{}\protected@file@percent }
+\newlabel{fig:curves}{{3}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Test accuracy comparison: CNN (94.84\%) vs SNN (77.66\%).\relax }}{9}{}\protected@file@percent }
+\newlabel{fig:bar}{{4}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Test Accuracy Comparison}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Offload Telemetry Results}{9}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces 300-Cycle Offload Telemetry Summary\relax }}{10}{}\protected@file@percent }
+\newlabel{tab:telemetry}{{VII}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Offload telemetry: decision ratio, latency distribution, power scatter, and adaptive threshold evolution over 300 cycles.\relax }}{10}{}\protected@file@percent }
+\newlabel{fig:offload}{{5}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Power Model Sensitivity and Uncertainty}{10}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces Mininet-WiFi RTT Comparison Across Controller Modes\relax }}{10}{}\protected@file@percent }
+\newlabel{tab:rtt}{{VIII}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}SDN Network Results}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Extended Network QoS Metrics}{10}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Latency vs.\ cycle for baseline and NSSON.\relax }}{11}{}\protected@file@percent }
+\newlabel{fig:latency_cycle}{{6}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Packet delivery ratio vs.\ cycle for baseline and NSSON.\relax }}{11}{}\protected@file@percent }
+\newlabel{fig:pdr_cycle}{{7}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Packet drop rate vs.\ cycle for baseline and NSSON.\relax }}{11}{}\protected@file@percent }
+\newlabel{fig:pdrop_cycle}{{8}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Routing overhead ratio vs.\ cycle for baseline and NSSON.\relax }}{11}{}\protected@file@percent }
+\newlabel{fig:routing_overhead}{{9}{11}}
+\citation{10812728,9453402,chiang2023management,zeb2023toward}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Throughput vs.\ cycle for baseline and NSSON.\relax }}{12}{}\protected@file@percent }
+\newlabel{fig:throughput_cycle}{{10}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-G}}Multi-Slice QoS, SLA, and Congestion Evaluation}{12}{}\protected@file@percent }
+\newlabel{sec:multislice_qos}{{\mbox  {VI-G}}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-G}1}Per-Slice SLA Formulation}{12}{}\protected@file@percent }
+\newlabel{eq:multislice_sla_indicators}{{15}{12}}
+\newlabel{eq:multislice_sla_fulfillment}{{16}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-G}2}Throughput Gain and Heavy-Load Robustness}{12}{}\protected@file@percent }
+\newlabel{eq:multislice_throughput_multiplier}{{17}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-H}}Comparative Study}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{12}{}\protected@file@percent }
+\newlabel{sec:discussion}{{VII}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-A}}Cross-Layer SMCC Integration}{12}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Per-slice throughput under the baseline and NSSON modes.\relax }}{13}{}\protected@file@percent }
+\newlabel{fig:multislice_throughput}{{11}{13}}
+\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Ablation Study: Component-Level Contributions\relax }}{13}{}\protected@file@percent }
+\newlabel{tab:ablation}{{IX}{13}}
+\citation{putra2025spikenas}
+\citation{di2024ec}
+\newlabel{fig:multislice_sla_heatmap}{{12a}{14}}
+\newlabel{sub@fig:multislice_sla_heatmap}{{a}{14}}
+\newlabel{fig:multislice_heavy_load}{{12b}{14}}
+\newlabel{sub@fig:multislice_heavy_load}{{b}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Measured multi-slice SLA fulfillment and congestion performance. (a) reports the measured SLA fulfillment ratios, while (b) evaluates slice throughput as the background load $\lambda $ increases.\relax }}{14}{}\protected@file@percent }
+\newlabel{fig:multislice_sla_congestion}{{12}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-B}}The Role of SDN in Collaborative Inference}{14}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-C}}Positioning within QoS-Aware SD-IoT}{14}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-D}}Neuromorphic Sensing Viability}{14}{}\protected@file@percent }
+\citation{putra2025spikenas}
+\citation{di2024ec}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces NSSON-to-baseline throughput multipliers. The dimensionless throughput multiplier $\mu _T(s;\lambda )$ is computed according to \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 17\hbox {}\unskip \@@italiccorr )}}.\relax }}{15}{}\protected@file@percent }
+\newlabel{fig:multislice_multiplier}{{13}{15}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-E}}Feedback Stability and Policy Quality}{15}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-F}}Theoretical and Practical Implications}{15}{}\protected@file@percent }
+\citation{putra2025spikenas}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Multi-dimensional QoS comparison between baseline and NSSON, including latency, jitter, packet delivery ratio, and packet drop rate. These metrics complement the slice-level throughput and SLA results in Fig.\nobreakspace  {}\nobreakspace  {}11\hbox {}, 12\hbox {}, and 13\hbox {}.\relax }}{16}{}\protected@file@percent }
+\newlabel{fig:ieee_qos_panel}{{14}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces NSSON ablation suite: (a) CNN vs SNN accuracy gap; (b) local vs offload latency distribution; (c) local vs offload power distribution; (d) SDN baseline vs NSSON RTT.\relax }}{16}{}\protected@file@percent }
+\newlabel{fig:ablation}{{15}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-G}}Comparison with Prior Work}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Limitations and Future Work}{16}{}\protected@file@percent }
+\newlabel{sec:limitations}{{VIII}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-A}}Current Limitations}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-B}}Future Work}{16}{}\protected@file@percent }
+\citation{kreutz2014software,mckeown2008openflow,gude2008nox,siddiqui2022toward,lo2023sdn}
+\citation{10812728,9453402,chiang2023management}
+\bibstyle{IEEEtran}
+\bibdata{references}
+\@writefile{toc}{\contentsline {section}{\numberline {IX}Conclusion}{17}{}\protected@file@percent }
+\newlabel{sec:conclusion}{{IX}{17}}
+\@writefile{toc}{\contentsline {section}{References}{17}{}\protected@file@percent }
+\gdef \@abspage@last{17}

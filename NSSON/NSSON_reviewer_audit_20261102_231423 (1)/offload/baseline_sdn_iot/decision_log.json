@@ -1,0 +1,10 @@
+{"sampleid": 0, "label": 6, "conf_snn": 0.27337391594646554, "conf_cnn": 0.879055047383946, "decision": "offload", "theta": 0.6, "timestamp": 1789551584.9463248, "cycle": 0, "mode": "baseline_sdn_iot"}
+{"sampleid": 1, "label": 9, "conf_snn": 0.6232334448672797, "conf_cnn": 0.8803345035229626, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9463542, "cycle": 1, "mode": "baseline_sdn_iot"}
+{"sampleid": 2, "label": 7, "conf_snn": 0.6225646316108401, "conf_cnn": 0.981565812704725, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9463677, "cycle": 2, "mode": "baseline_sdn_iot"}
+{"sampleid": 3, "label": 1, "conf_snn": 0.6733618039413735, "conf_cnn": 0.8574269294896713, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9463775, "cycle": 3, "mode": "baseline_sdn_iot"}
+{"sampleid": 4, "label": 8, "conf_snn": 0.8447411578889518, "conf_cnn": 0.7876433945605654, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9463866, "cycle": 4, "mode": "baseline_sdn_iot"}
+{"sampleid": 5, "label": 2, "conf_snn": 0.9932923543227152, "conf_cnn": 0.9579821220208962, "decision": "local", "theta": 0.6, "timestamp": 1789551584.946395, "cycle": 5, "mode": "baseline_sdn_iot"}
+{"sampleid": 6, "label": 6, "conf_snn": 0.6260206371941118, "conf_cnn": 0.6862528132298238, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9464092, "cycle": 6, "mode": "baseline_sdn_iot"}
+{"sampleid": 7, "label": 1, "conf_snn": 0.6063865008880857, "conf_cnn": 0.7723076398078035, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9464169, "cycle": 7, "mode": "baseline_sdn_iot"}
+{"sampleid": 8, "label": 6, "conf_snn": 0.9332779646944658, "conf_cnn": 0.8173181822719722, "decision": "local", "theta": 0.6, "timestamp": 1789551584.9464252, "cycle": 8, "mode": "baseline_sdn_iot"}
+{"sampleid": 9, "label": 1, "conf_snn": 0.7246844304357644, "conf_cnn": 0.8640130838029838, "decision": "local", "theta": 0.6, "timestamp": 1789551584.946433, "cycle": 9, "mode": "baseline_sdn_iot"}

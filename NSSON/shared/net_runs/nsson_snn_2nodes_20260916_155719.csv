@@ -1,0 +1,3 @@
+node_id,model,num_nodes,accuracy,latency_ms,power_mw,throughput_fps
+h1,snn,2,90.29,8.228,321.54,121.53
+h2,snn,2,90.21,8.241,324.25,121.34

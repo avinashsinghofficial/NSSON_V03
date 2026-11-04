@@ -1,0 +1,29 @@
+=== PROCESS DETAILS ===
+USER         PID    PPID     ELAPSED STAT COMMAND
+avi        30329    2819    03:21:23 Sl   /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j
+avi        30949    2819    03:17:48 Sl   /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j
+avi        31597    2819    03:15:57 Sl   /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j
+avi        31942    2819    03:15:01 Sl   /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j
+avi        32300    2819    03:14:01 Sl   /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j
+
+=== WORKING DIRECTORIES AND COMMAND LINES ===
+
+--- PID 30329 ---
+Working directory: /home/avi/NSSON
+Command: /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j 
+
+--- PID 30949 ---
+Working directory: /home/avi/NSSON
+Command: /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j 
+
+--- PID 31597 ---
+Working directory: /home/avi/NSSON
+Command: /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j 
+
+--- PID 31942 ---
+Working directory: /home/avi/NSSON
+Command: /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j 
+
+--- PID 32300 ---
+Working directory: /home/avi/NSSON
+Command: /home/avi/NSSON/.venv_nsson_gpu/bin/python3 -u /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py --role server --out /home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j 

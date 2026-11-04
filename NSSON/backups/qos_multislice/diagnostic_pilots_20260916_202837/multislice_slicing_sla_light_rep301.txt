@@ -1,0 +1,98 @@
+MODE=slicing_sla
+LOAD=light
+REP=301
+TOPOLOGY=qa,qh,qi,qb1--s1--s2--qs,qb2
+BACKGROUND_OFFERED_MBPS=2.0
+TCP_FLOW_SECONDS=16
+UDP_PROBE_SECONDS=16
+UDP_PROBE_TOOL=iperf3_json
+
+===== AUTONOMOUS =====
+TCP_INFERENCE_PORT=8090
+UDP_PROBE_PORT=9090
+
+--- TCP IPERF OUTPUT ---
+------------------------------------------------------------
+Client connecting to 10.20.0.10, TCP port 8090
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.1 port 43654 connected with 10.20.0.10 port 8090
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  1.63 MBytes  13.6 Mbits/sec
+[  1] 1.0000-2.0000 sec  1.25 MBytes  10.5 Mbits/sec
+[  1] 2.0000-3.0000 sec  1.62 MBytes  13.6 Mbits/sec
+[  1] 3.0000-4.0000 sec  1.26 MBytes  10.6 Mbits/sec
+[  1] 4.0000-5.0000 sec  1.18 MBytes  9.90 Mbits/sec
+[  1] 5.0000-6.0000 sec   764 KBytes  6.26 Mbits/sec
+[  1] 6.0000-7.0000 sec  1.24 MBytes  10.4 Mbits/sec
+[  1] 7.0000-8.0000 sec  1.18 MBytes  9.90 Mbits/sec
+[  1] 8.0000-9.0000 sec  1.30 MBytes  10.9 Mbits/sec
+[  1] 9.0000-10.0000 sec  1.37 MBytes  11.5 Mbits/sec
+[  1] 10.0000-11.0000 sec  1.43 MBytes  12.0 Mbits/sec
+[  1] 11.0000-12.0000 sec  1.74 MBytes  14.6 Mbits/sec
+[  1] 12.0000-13.0000 sec  2.11 MBytes  17.7 Mbits/sec
+[  1] 13.0000-14.0000 sec  2.11 MBytes  17.7 Mbits/sec
+[  1] 14.0000-15.0000 sec  2.49 MBytes  20.9 Mbits/sec
+[  1] 15.0000-16.0000 sec  2.36 MBytes  19.8 Mbits/sec
+
+--- UDP IPERF3 JSON OUTPUT ---
+
+===== HEALTHCARE =====
+TCP_INFERENCE_PORT=8091
+UDP_PROBE_PORT=9091
+
+--- TCP IPERF OUTPUT ---
+------------------------------------------------------------
+Client connecting to 10.20.0.10, TCP port 8091
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.2 port 36450 connected with 10.20.0.10 port 8091
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec  1.63 MBytes  13.6 Mbits/sec
+[  1] 1.0000-2.0000 sec   768 KBytes  6.29 Mbits/sec
+[  1] 2.0000-3.0000 sec   923 KBytes  7.56 Mbits/sec
+[  1] 3.0000-4.0000 sec  1018 KBytes  8.34 Mbits/sec
+[  1] 4.0000-5.0000 sec   954 KBytes  7.82 Mbits/sec
+[  1] 5.0000-6.0000 sec   954 KBytes  7.82 Mbits/sec
+[  1] 6.0000-7.0000 sec   954 KBytes  7.82 Mbits/sec
+[  1] 7.0000-8.0000 sec   954 KBytes  7.82 Mbits/sec
+[  1] 8.0000-9.0000 sec  1018 KBytes  8.34 Mbits/sec
+[  1] 9.0000-10.0000 sec  1.37 MBytes  11.5 Mbits/sec
+[  1] 10.0000-11.0000 sec  1.49 MBytes  12.5 Mbits/sec
+[  1] 11.0000-12.0000 sec  1.55 MBytes  13.0 Mbits/sec
+[  1] 12.0000-13.0000 sec  1.86 MBytes  15.6 Mbits/sec
+[  1] 13.0000-14.0000 sec  1.86 MBytes  15.6 Mbits/sec
+[  1] 14.0000-15.0000 sec  2.24 MBytes  18.8 Mbits/sec
+[  1] 15.0000-16.0000 sec  2.11 MBytes  17.7 Mbits/sec
+
+--- UDP IPERF3 JSON OUTPUT ---
+
+===== INDUSTRIAL =====
+TCP_INFERENCE_PORT=8092
+UDP_PROBE_PORT=9092
+
+--- TCP IPERF OUTPUT ---
+------------------------------------------------------------
+Client connecting to 10.20.0.10, TCP port 8092
+TCP window size: 85.3 KByte (default)
+------------------------------------------------------------
+[  1] local 10.20.0.3 port 34474 connected with 10.20.0.10 port 8092
+[ ID] Interval       Transfer     Bandwidth
+[  1] 0.0000-1.0000 sec   896 KBytes  7.34 Mbits/sec
+[  1] 1.0000-2.0000 sec   441 KBytes  3.61 Mbits/sec
+[  1] 2.0000-3.0000 sec   444 KBytes  3.64 Mbits/sec
+[  1] 3.0000-4.0000 sec   445 KBytes  3.65 Mbits/sec
+[  1] 4.0000-5.0000 sec   445 KBytes  3.65 Mbits/sec
+[  1] 5.0000-6.0000 sec   509 KBytes  4.17 Mbits/sec
+[  1] 6.0000-7.0000 sec   573 KBytes  4.70 Mbits/sec
+[  1] 7.0000-8.0000 sec   700 KBytes  5.73 Mbits/sec
+[  1] 8.0000-9.0000 sec   892 KBytes  7.30 Mbits/sec
+[  1] 9.0000-10.0000 sec   891 KBytes  7.30 Mbits/sec
+[  1] 10.0000-11.0000 sec  1018 KBytes  8.34 Mbits/sec
+[  1] 11.0000-12.0000 sec  1.18 MBytes  9.91 Mbits/sec
+[  1] 12.0000-13.0000 sec  1.43 MBytes  12.0 Mbits/sec
+[  1] 13.0000-14.0000 sec  1.37 MBytes  11.5 Mbits/sec
+[  1] 14.0000-15.0000 sec  1.24 MBytes  10.4 Mbits/sec
+[  1] 15.0000-16.0000 sec  1.49 MBytes  12.5 Mbits/sec
+
+--- UDP IPERF3 JSON OUTPUT ---

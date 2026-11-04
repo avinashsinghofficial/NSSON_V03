@@ -1,0 +1,5 @@
+controller_url: http://127.0.0.1:8080
+node_id: jetson-nano-1
+role: jetson
+service_url: http://127.0.0.1:8090/infer
+heartbeat_sec: 2

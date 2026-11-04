@@ -1,0 +1,156 @@
+{
+  "role": "client",
+  "pid": 27660,
+  "uid": 1000,
+  "gid": 1000,
+  "actual_network_namespace": "net:[4026533240]",
+  "expected_network_namespace": "net:[4026533240]",
+  "expected_ip": "10.231.77.1",
+  "observed_ipv4_addresses": [
+    "10.231.77.1",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "expected_ip_present": true
+}
+CLIENT namespace and address checks passed
+STAGE: before NumPy import
+STAGE: NumPy import completed
+STAGE: before PyTorch import
+STAGE: PyTorch import completed; version=2.12.1+cu130
+STAGE: before torch.manual_seed
+STAGE: torch.manual_seed completed
+STAGE: before CUDA availability check
+STAGE: CUDA availability check completed: True
+STAGE: tensor environment ready: cuda:0
+STAGE: loading client CNN
+STAGE: loading client SNN
+Namespace(exp_name='snn_test', data_dir='dataset/', dataset='cifar100', seed=1234, timestep=5, batch_size=64, epochs=300, tau=1.3333333333333333, threshold=1.0, celltype='backward', second_avgpooling=2, optimizer='sgd', scheduler='cosine', learning_rate=0.1, momentum=0.9, weight_decay=0.0005, val_interval=20, num_search=5000, cnt_mat=None, savemodel_pth=None)
+CLIENT POLICY: remote_cnn; repetition=2
+  remote_cnn: 50/300; theta_next=0.600000
+  remote_cnn: 100/300; theta_next=0.600000
+  remote_cnn: 150/300; theta_next=0.600000
+  remote_cnn: 200/300; theta_next=0.600000
+  remote_cnn: 250/300; theta_next=0.600000
+  remote_cnn: 300/300; theta_next=0.600000
+CLIENT POLICY: adaptive_fixed; repetition=2
+  adaptive_fixed: 50/300; theta_next=0.600000
+  adaptive_fixed: 100/300; theta_next=0.600000
+  adaptive_fixed: 150/300; theta_next=0.600000
+  adaptive_fixed: 200/300; theta_next=0.600000
+  adaptive_fixed: 250/300; theta_next=0.600000
+  adaptive_fixed: 300/300; theta_next=0.600000
+CLIENT POLICY: feedback_latency; repetition=2
+  feedback_latency: 50/300; theta_next=0.747738
+  feedback_latency: 100/300; theta_next=0.896512
+  feedback_latency: 150/300; theta_next=0.900000
+  feedback_latency: 200/300; theta_next=0.900000
+  feedback_latency: 250/300; theta_next=0.900000
+  feedback_latency: 300/300; theta_next=0.900000
+CLIENT POLICY: feedback_label_oracle; repetition=2
+  feedback_label_oracle: 50/300; theta_next=0.749614
+  feedback_label_oracle: 100/300; theta_next=0.900000
+  feedback_label_oracle: 150/300; theta_next=0.900000
+  feedback_label_oracle: 200/300; theta_next=0.900000
+  feedback_label_oracle: 250/300; theta_next=0.900000
+  feedback_label_oracle: 300/300; theta_next=0.900000
+CLIENT POLICY: local_cnn; repetition=2
+  local_cnn: 50/300; theta_next=0.600000
+  local_cnn: 100/300; theta_next=0.600000
+  local_cnn: 150/300; theta_next=0.600000
+  local_cnn: 200/300; theta_next=0.600000
+  local_cnn: 250/300; theta_next=0.600000
+  local_cnn: 300/300; theta_next=0.600000
+CLIENT POLICY: local_snn; repetition=2
+  local_snn: 50/300; theta_next=0.600000
+  local_snn: 100/300; theta_next=0.600000
+  local_snn: 150/300; theta_next=0.600000
+  local_snn: 200/300; theta_next=0.600000
+  local_snn: 250/300; theta_next=0.600000
+  local_snn: 300/300; theta_next=0.600000
+{
+  "status": "completed",
+  "repetition": 2,
+  "results_directory": "/home/avi/NSSON/revision_causal_20261102_110047_TfyZ9O/repetition_2",
+  "feedback_unit_tests": "passed",
+  "request_causality_check": "passed",
+  "policy_summaries": {
+    "remote_cnn": {
+      "requests": 300,
+      "offloaded": 300,
+      "accuracy_percent": 95.66666666666667,
+      "mean_request_ms": 18.782829866666667,
+      "p95_request_ms": 19.6742952,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "adaptive_fixed": {
+      "requests": 300,
+      "offloaded": 1,
+      "accuracy_percent": 93.0,
+      "mean_request_ms": 13.529792370000001,
+      "p95_request_ms": 15.18465495,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "feedback_latency": {
+      "requests": 300,
+      "offloaded": 11,
+      "accuracy_percent": 93.66666666666667,
+      "mean_request_ms": 12.486191136666667,
+      "p95_request_ms": 12.52402965,
+      "feedback_updates": 30,
+      "final_threshold": 0.9,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "feedback_label_oracle": {
+      "requests": 300,
+      "offloaded": 11,
+      "accuracy_percent": 93.66666666666667,
+      "mean_request_ms": 12.487915863333333,
+      "p95_request_ms": 12.4753912,
+      "feedback_updates": 30,
+      "final_threshold": 0.9,
+      "observed_response_mismatches": 0,
+      "label_feedback": "oracle_only"
+    },
+    "local_cnn": {
+      "requests": 300,
+      "offloaded": 0,
+      "accuracy_percent": 95.66666666666667,
+      "mean_request_ms": 1.3638518033333333,
+      "p95_request_ms": 1.3915726999999998,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "local_snn": {
+      "requests": 300,
+      "offloaded": 0,
+      "accuracy_percent": 92.66666666666666,
+      "mean_request_ms": 11.71567483,
+      "p95_request_ms": 11.7571361,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    }
+  },
+  "limitations": [
+    "Same workstation and shared physical GPU resources.",
+    "Static OpenFlow forwarding; not inference-aware Ryu registration.",
+    "Policies run sequentially, not concurrently.",
+    "No QoS queues, adaptive routing, or SLA guarantees.",
+    "Energy feedback disabled; no justified power coefficients.",
+    "Accuracy-aware variant consumes evaluation labels and is oracle-only.",
+    "Parameters are declared engineering settings, not optimized.",
+    "Request timing excludes image acquisition and feedback computation.",
+    "Host results are not Jetson Nano measurements."
+  ]
+}

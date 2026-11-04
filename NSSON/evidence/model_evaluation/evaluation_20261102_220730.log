@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_models_20261102_085404_QzL8in/evaluate_real_models.py", line 14, in <module>
+    ROOT = Path(os.environ["NSSON_ROOT"]).resolve()
+  File "/usr/lib/python3.10/os.py", line 680, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'NSSON_ROOT'

@@ -1,0 +1,7 @@
+host: 0.0.0.0
+port: 8090
+models:
+  cnn_model: models/verifier_yolo_cls.pt
+  snn_model: models/snn_gate.pt
+runtime:
+  device: cuda

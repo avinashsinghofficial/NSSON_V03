@@ -1,0 +1,82 @@
+{
+  "seed": 20261102,
+  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "torch": "2.12.1+cu130",
+  "torchvision": "0.27.1+cu130",
+  "torch_cuda_build": "13.0",
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA RTX 2000 Ada Generation",
+  "accuracy_batch_size": 32,
+  "accuracy_drop_last": false,
+  "timing_batch_size": 1,
+  "timing_requests_per_repetition": 300,
+  "timing_repetitions": 3,
+  "timing_warmups_per_model_per_repetition": 10,
+  "cnn_transform": "Compose(\n    ToTensor()\n    Normalize(mean=(0.4914, 0.4822, 0.4465), std=(0.247, 0.2435, 0.2616))\n)",
+  "snn_transform": "Compose(\n    ToTensor()\n    Normalize(mean=[0.4913, 0.4821, 0.4465], std=[0.247, 0.2434, 0.2615])\n)",
+  "snn_args": {
+    "exp_name": "snn_test",
+    "data_dir": "/home/avi/NSSON/snasnet/dataset",
+    "dataset": "cifar10",
+    "seed": 1234,
+    "timestep": 5,
+    "batch_size": 64,
+    "epochs": 300,
+    "tau": 1.3333333333333333,
+    "threshold": 1.0,
+    "celltype": "backward",
+    "second_avgpooling": 4,
+    "optimizer": "sgd",
+    "scheduler": "cosine",
+    "learning_rate": 0.1,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "val_interval": 20,
+    "num_search": 5000,
+    "cnt_mat": [
+      [
+        "0",
+        "3",
+        "0",
+        "3"
+      ],
+      [
+        "0",
+        "0",
+        "3",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0",
+        "2"
+      ],
+      [
+        "0",
+        "2",
+        "0",
+        "0"
+      ]
+    ],
+    "savemodel_pth": "/home/avi/NSSON/snasnet/savemodel/save_cifar10_bw.pth.tar"
+  },
+  "snn_reset": "functional.reset_net(model) and model.neuron_init() before each independent forward",
+  "checkpoint_hashes": {
+    "/home/avi/NSSON/models/cnn_baseline/checkpoints/resnet18_cifar10_best.pth": "1b5944358ee740dd96f0e6a189c71dca964226d16fb719fe0d94d5026760f038",
+    "/home/avi/NSSON/snasnet/savemodel/save_cifar10_bw.pth.tar": "4c93246705bf75a6e998347f696b090c12fbcc24f9cf07ace1023a214212b08c"
+  },
+  "source_hashes": {
+    "/home/avi/NSSON/models/cifar10_cnn.py": "eaa9a30d93db0494716ed7ffe71f85b0ed025730574f6582432899f45fb62d6e",
+    "/home/avi/NSSON/snn/snn_snasnet/eval_snasnet_cifar10.py": "65d2f1bf963077af6eac75bbd27b620a4120311e30aa1efa696a4d2393c499d6",
+    "/home/avi/NSSON/snasnet/config.py": "c317ab2495a1788549e68b54e370b4400a6cdf4e4cf1303e52bfbf8d79038b89",
+    "/home/avi/NSSON/snasnet/model_snn.py": "5d7314a9ab5321b0d6574640397f937721926164ca12c6c601503c7dcdcb5cde",
+    "/home/avi/NSSON/snasnet/utils.py": "1798015958bd7220692d14d239943ef301a98773816593f82511daee40c74211",
+    "/home/avi/NSSON/revision_models_20261102_085404_QzL8in/evaluate_real_models.py": "21740031f5458f8a61b3e7257a89a62bf95bde262325e2855c83b7b5fd500f64"
+  },
+  "raw_image_array_sha256": "f9b1e2130bab680db56eb06d886f7f1ad0f1183907ceff4659d1735c890f5b04",
+  "raw_targets_sha256": "cbb7365de8ed11f05cc4c3a1e7f78144127c5e851efd83762fb18202461230bb",
+  "scope": "Real model evaluation on the current host. Not Jetson hardware measurement, network offloading, SDN evaluation, or an energy experiment.",
+  "confidence": "Maximum softmax of model class scores; uncalibrated. SNN scores are temporally averaged outputs returned by SNASNet."
+}

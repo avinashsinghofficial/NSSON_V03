@@ -1,0 +1,2 @@
+timestamp_utc,mode,load,rep,controller_port,bottleneck_mbps,bottleneck_delay_ms,offered_background_mbps,ping_tx,ping_rx,ping_loss_pct,rtt_min_ms,rtt_avg_ms,rtt_max_ms,rtt_jitter_mdev_ms,control_tcp_throughput_mbps,background_udp_throughput_mbps,background_udp_jitter_ms,background_udp_loss_pct
+2026-09-16T11:00:12Z,nsson_full,light,2,6633,20,3.0,2,30,30,0.0,10.09,10.244,13.182,0.547,17.5,2.1,0.0,0.0

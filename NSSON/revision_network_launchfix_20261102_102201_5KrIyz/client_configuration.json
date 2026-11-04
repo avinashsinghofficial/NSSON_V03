@@ -1,0 +1,41 @@
+{
+  "policies": [
+    "local_cnn",
+    "local_snn",
+    "remote_cnn",
+    "adaptive_fixed"
+  ],
+  "requests_per_policy": 20,
+  "sample_ids": [
+    2483,
+    7431,
+    6705,
+    2296,
+    6696,
+    993,
+    7683,
+    5685,
+    3190,
+    2395,
+    5876,
+    9493,
+    4873,
+    6571,
+    1498,
+    5166,
+    1646,
+    1434,
+    2766,
+    1537
+  ],
+  "threshold": 0.6,
+  "device": "cuda:0",
+  "scope": "Two network namespaces on the same workstation. Shared physical CPU/GPU resources. No Jetson measurements.",
+  "timing_scope": "Original image retrieval and raw-payload preparation excluded. Local phase includes preprocessing, reset where applicable, inference, and prediction extraction. Remote RPC includes connection establishment, transport, server execution, and response.",
+  "limitations": [
+    "Smoke test, not a final repeated benchmark.",
+    "Static OpenFlow forwarding; no Ryu association or QoS queues.",
+    "Fixed threshold; no adaptive feedback.",
+    "No energy model applied."
+  ]
+}

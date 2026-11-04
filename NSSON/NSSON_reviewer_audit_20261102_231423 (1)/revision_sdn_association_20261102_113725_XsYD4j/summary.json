@@ -1,0 +1,57 @@
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j",
+  "total_requests": 40,
+  "completed_remote_requests": 1,
+  "matched_server_records": 1,
+  "observed_identity_mismatches": 0,
+  "session_results": {
+    "sessions": [
+      {
+        "session_id": "2906cfa7-1e86-4ef9-bad5-915158b47fb1",
+        "test_case": "delayed",
+        "requests": 10,
+        "offloaded": 0,
+        "completed_remote": 0,
+        "rejected_stale": 0,
+        "rejected_missing": 0
+      },
+      {
+        "session_id": "e8e90de8-6918-4e5f-8035-6bc60d97e546",
+        "test_case": "missing",
+        "requests": 10,
+        "offloaded": 10,
+        "completed_remote": 0,
+        "rejected_stale": 0,
+        "rejected_missing": 10
+      },
+      {
+        "session_id": "e86a0ebc-ec3f-4d54-b6df-172a1fdd20b8",
+        "test_case": "normal",
+        "requests": 10,
+        "offloaded": 1,
+        "completed_remote": 1,
+        "rejected_stale": 0,
+        "rejected_missing": 0
+      },
+      {
+        "session_id": "6629388e-01b8-483f-8568-9394616c1af5",
+        "test_case": "stale",
+        "requests": 10,
+        "offloaded": 10,
+        "completed_remote": 0,
+        "rejected_stale": 10,
+        "rejected_missing": 0
+      }
+    ],
+    "scope": "Concurrent application sessions; functional registration association only."
+  },
+  "limitations": [
+    "Functional concurrent-session association test.",
+    "Controller records registrations; it does not install flows.",
+    "Static OpenFlow forwarding only.",
+    "No QoS queues, SLAs, slicing, or adaptive routing.",
+    "No Jetson measurements.",
+    "Local SNN inference sequential; network requests concurrent."
+  ]
+}

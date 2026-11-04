@@ -1,0 +1,89 @@
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+*** Configuring hosts
+nr96df5cc nr96df5cr 
+*** Starting controller
+
+*** Starting 1 switches
+nr96df5cs (20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+...(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+
+PING 10.231.77.2 (10.231.77.2) 56(84) bytes of data.
+64 bytes from 10.231.77.2: icmp_seq=1 ttl=64 time=16.6 ms
+64 bytes from 10.231.77.2: icmp_seq=2 ttl=64 time=8.08 ms
+
+--- 10.231.77.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 8.081/12.333/16.586/4.252 ms
+
+MONITORED SERVER PID: 27999
+SERVER PID VERIFIED: 27999
+MONITORED CLIENT PID: 28047
+CLIENT PID VERIFIED: 28047
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_causal_20261102_110047_TfyZ9O/repetition_3",
+  "total_client_requests": 1800,
+  "matched_remote_requests": 321,
+  "observed_identity_mismatches": 0,
+  "policies": {
+    "local_cnn": {
+      "requests": 300,
+      "offloaded": 0,
+      "correct": 287,
+      "mean_request_ms": 1.3812478766666667
+    },
+    "local_snn": {
+      "requests": 300,
+      "offloaded": 0,
+      "correct": 278,
+      "mean_request_ms": 11.744634126666668
+    },
+    "remote_cnn": {
+      "requests": 300,
+      "offloaded": 300,
+      "correct": 287,
+      "mean_request_ms": 18.796875066666665
+    },
+    "adaptive_fixed": {
+      "requests": 300,
+      "offloaded": 1,
+      "correct": 279,
+      "mean_request_ms": 11.85722655
+    },
+    "feedback_latency": {
+      "requests": 300,
+      "offloaded": 10,
+      "correct": 282,
+      "mean_request_ms": 12.446453723333335
+    },
+    "feedback_label_oracle": {
+      "requests": 300,
+      "offloaded": 10,
+      "correct": 282,
+      "mean_request_ms": 12.58544393
+    }
+  },
+  "limitations": [
+    "300 requests per policy; one independent process/topology per repetition.",
+    "Same workstation and shared physical GPU resources.",
+    "Static OpenFlow forwarding, not Ryu inference registration.",
+    "No queue differentiation, SLA enforcement, or adaptive routing.",
+    "Includes fixed and causal-feedback policies; accuracy feedback is oracle-only.",
+    "No Jetson energy or hardware measurements.",
+    "Timing excludes original image acquisition."
+  ]
+}
+*** Stopping 0 controllers
+
+*** Stopping 2 links
+..
+*** Stopping 1 switches
+nr96df5cs 
+*** Stopping 2 hosts
+nr96df5cc nr96df5cr 
+*** Done

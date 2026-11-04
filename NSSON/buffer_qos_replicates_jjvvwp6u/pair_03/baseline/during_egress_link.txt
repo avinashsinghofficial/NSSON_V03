@@ -1,0 +1,6 @@
+182: pa681b1-eth5@pb681b1-eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc htb master ovs-system state UP mode DEFAULT group default qlen 1000
+    link/ether 2e:26:b7:92:2d:2e brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+         15878     208      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+      29561012   21191      0       0       0       0

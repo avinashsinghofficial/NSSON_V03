@@ -1,0 +1,105 @@
+experiment:
+  name: nsson_qos_sla_adaptive_routing
+  random_seed: 20260916
+  telemetry_period_s: 1.0
+  window_size: 5
+  reroute_persistence_windows: 2
+  reroute_hysteresis_score: 0.10
+  controller_of_port: 6633
+
+modes:
+  baseline:
+    description: "Best-effort SDN-IoT; no NSSON priority, SLA, or adaptive routing."
+    enable_priority: false
+    enable_slicing: false
+    enable_sla: false
+    enable_adaptive_routing: false
+
+  nsson_priority:
+    description: "Existing NSSON binary priority: offload versus background."
+    enable_priority: true
+    enable_slicing: false
+    enable_sla: false
+    enable_adaptive_routing: false
+
+  nsson_slice_sla:
+    description: "Per-slice policies, logical slices, queues, and SLA monitoring."
+    enable_priority: true
+    enable_slicing: true
+    enable_sla: true
+    enable_adaptive_routing: false
+
+  nsson_isar:
+    description: "Inference-aware slicing, SLA-aware admission, and adaptive routing."
+    enable_priority: true
+    enable_slicing: true
+    enable_sla: true
+    enable_adaptive_routing: true
+
+slices:
+  control:
+    application: autonomous_control
+    port: 8090
+    priority: 300
+    queue_id: 1
+    deadline_ms: 30.0
+    min_snr_db: 18.0
+    sla:
+      rtt_ms_max: 30.0
+      jitter_ms_max: 5.0
+      loss_pct_max: 1.0
+      throughput_mbps_min: 8.0
+
+  healthcare:
+    application: healthcare_alert
+    port: 8091
+    priority: 250
+    queue_id: 2
+    deadline_ms: 45.0
+    min_snr_db: 15.0
+    sla:
+      rtt_ms_max: 45.0
+      jitter_ms_max: 8.0
+      loss_pct_max: 1.0
+      throughput_mbps_min: 5.0
+
+  monitoring:
+    application: industrial_monitoring
+    port: 8092
+    priority: 150
+    queue_id: 3
+    deadline_ms: 80.0
+    min_snr_db: 10.0
+    sla:
+      rtt_ms_max: 80.0
+      jitter_ms_max: 20.0
+      loss_pct_max: 5.0
+      throughput_mbps_min: 2.0
+
+  background:
+    application: best_effort
+    port: 8099
+    priority: 10
+    queue_id: 0
+    deadline_ms: 250.0
+    min_snr_db: 0.0
+    sla:
+      rtt_ms_max: 250.0
+      jitter_ms_max: 100.0
+      loss_pct_max: 20.0
+      throughput_mbps_min: 0.2
+
+routing:
+  score_weights:
+    rtt: 0.28
+    jitter: 0.12
+    loss: 0.25
+    bandwidth: 0.18
+    snr: 0.07
+    deadline: 0.10
+
+  candidate_paths:
+    path_primary:
+      description: "Primary direct path; deliberately degraded in heavy-load fault test."
+    path_backup:
+      description: "Backup path with a different forwarding branch."

@@ -1,0 +1,5 @@
+OFPST_QUEUE reply (OF1.3) (xid=0x2): 4 queues
+  port 5 queue 0: bytes=1530152, pkts=1079, errors=0, duration=3482481989.3638967296s
+  port 5 queue 1: bytes=6664034, pkts=4412, errors=0, duration=3482481989.3638967296s
+  port 5 queue 2: bytes=4824524, pkts=3197, errors=0, duration=3482481989.3638967296s
+  port 5 queue 3: bytes=2644364, pkts=1757, errors=0, duration=3482481989.3638967296s

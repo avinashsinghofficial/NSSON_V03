@@ -1,0 +1,38 @@
+slices:
+  autonomous:
+    app_class: real_time
+    sla:
+      latency_ms_max: 25
+      jitter_ms_max: 5
+      pdr_min: 0.97
+      drop_rate_max: 0.01
+      throughput_mbps_min: 10
+  industrial:
+    app_class: periodic
+    sla:
+      latency_ms_max: 50
+      jitter_ms_max: 10
+      pdr_min: 0.95
+      drop_rate_max: 0.03
+      throughput_mbps_min: 5
+  healthcare:
+    app_class: real_time
+    sla:
+      latency_ms_max: 40
+      jitter_ms_max: 8
+      pdr_min: 0.98
+      drop_rate_max: 0.01
+      throughput_mbps_min: 8
+
+paths:
+  path_A:
+    description: "Primary low-latency path"
+  path_B:
+    description: "Backup path with higher latency but lower loss"
+  path_C:
+    description: "Alternative path used for industrial slice under heavy load"
+
+selection_policy:
+  latency_weight: 1.0
+  loss_weight: 3.0
+  snr_weight: -0.5   # negative because higher SNR is better

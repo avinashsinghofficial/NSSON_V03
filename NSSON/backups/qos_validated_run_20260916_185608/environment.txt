@@ -1,0 +1,4 @@
+Ryu: 4.34
+Eventlet: 0.39.1
+dnspython: 2.8.0
+Controller port: 6633

@@ -1,0 +1,2 @@
+timestamp_utc,mode,load,rep,controller_port,bottleneck_mbps,bottleneck_delay_ms,offered_background_mbps,ping_tx,ping_rx,ping_loss_pct,rtt_min_ms,rtt_avg_ms,rtt_max_ms,rtt_jitter_mdev_ms,control_tcp_throughput_mbps,background_udp_throughput_mbps,background_udp_jitter_ms,background_udp_loss_pct
+2026-09-16T11:06:28Z,baseline_sdn_iot,heavy,2,6633,20,3.0,19,30,12,60.0,24.795,24.952,25.175,0.131,19.0,19.4,0.027,2.1

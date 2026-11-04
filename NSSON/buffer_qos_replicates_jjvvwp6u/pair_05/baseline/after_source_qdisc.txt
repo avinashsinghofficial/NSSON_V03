@@ -1,0 +1,3 @@
+qdisc netem 800f: root refcnt 37 limit 1000 delay 1ms
+ Sent 63912037 bytes 51486 pkt (dropped 0, overlimits 0 requeues 0) 
+ backlog 0b 0p requeues 0

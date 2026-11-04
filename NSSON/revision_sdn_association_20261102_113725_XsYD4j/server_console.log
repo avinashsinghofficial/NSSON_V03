@@ -1,0 +1,15 @@
+{
+  "role": "server",
+  "pid": 32300,
+  "uid": 1000,
+  "actual_namespace": "net:[4026533634]",
+  "expected_namespace": "net:[4026533634]",
+  "expected_ip": "10.241.77.2",
+  "addresses": [
+    "10.241.77.2",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "ip_present": true
+}
+SERVER READY

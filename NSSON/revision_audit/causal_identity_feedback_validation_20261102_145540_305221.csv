@@ -1,0 +1,88 @@
+repetition,check,passed,detail
+1,policy_set,True,"['adaptive_fixed', 'feedback_label_oracle', 'feedback_latency', 'local_cnn', 'local_snn', 'remote_cnn']"
+1,local_cnn: sample_order,True,rows=300; expected=300
+1,local_snn: sample_order,True,rows=300; expected=300
+1,remote_cnn: sample_order,True,rows=300; expected=300
+1,adaptive_fixed: sample_order,True,rows=300; expected=300
+1,feedback_latency: sample_order,True,rows=300; expected=300
+1,feedback_label_oracle: sample_order,True,rows=300; expected=300
+1,valid_decisions,True,"{'local': 1477, 'offload': 323}"
+1,remote_identity_present,True,offloaded=323
+1,unique_remote_identities,True,duplicate_rows=0
+1,client_server_one_to_one,True,"{'both': 323, 'left_only': 0, 'right_only': 0}"
+1,remote_match: sample_id,True,matched=323
+1,remote_match: client_ip,True,matched=323
+1,remote_match: client_port,True,matched=323
+1,remote_match: server_ip,True,matched=323
+1,remote_match: server_port,True,matched=323
+1,remote_match: image_sha256,True,matched=323
+1,remote_match: prediction,True,matched=323
+1,remote_match: server_duration,True,matched=323
+1,local_rpc_zero,True,local_requests=1477
+1,confidence_policies_include_local_execution,True,Checks recorded local duration; not power calibration
+1,feedback_latency: update_schedule,True,updates=30
+1,feedback_latency: update_flags,True,Every 10 completed requests
+1,feedback_latency: feedback_chronology,True,"Window, mean latency, and next-request threshold"
+1,feedback_latency: feedback_equation,True,Compared with inspected implementation
+1,feedback_label_oracle: update_schedule,True,updates=30
+1,feedback_label_oracle: update_flags,True,Every 10 completed requests
+1,feedback_label_oracle: feedback_chronology,True,"Window, mean latency, and next-request threshold"
+1,feedback_label_oracle: feedback_equation,True,Compared with inspected implementation
+2,policy_set,True,"['adaptive_fixed', 'feedback_label_oracle', 'feedback_latency', 'local_cnn', 'local_snn', 'remote_cnn']"
+2,remote_cnn: sample_order,True,rows=300; expected=300
+2,adaptive_fixed: sample_order,True,rows=300; expected=300
+2,feedback_latency: sample_order,True,rows=300; expected=300
+2,feedback_label_oracle: sample_order,True,rows=300; expected=300
+2,local_cnn: sample_order,True,rows=300; expected=300
+2,local_snn: sample_order,True,rows=300; expected=300
+2,valid_decisions,True,"{'local': 1477, 'offload': 323}"
+2,remote_identity_present,True,offloaded=323
+2,unique_remote_identities,True,duplicate_rows=0
+2,client_server_one_to_one,True,"{'both': 323, 'left_only': 0, 'right_only': 0}"
+2,remote_match: sample_id,True,matched=323
+2,remote_match: client_ip,True,matched=323
+2,remote_match: client_port,True,matched=323
+2,remote_match: server_ip,True,matched=323
+2,remote_match: server_port,True,matched=323
+2,remote_match: image_sha256,True,matched=323
+2,remote_match: prediction,True,matched=323
+2,remote_match: server_duration,True,matched=323
+2,local_rpc_zero,True,local_requests=1477
+2,confidence_policies_include_local_execution,True,Checks recorded local duration; not power calibration
+2,feedback_latency: update_schedule,True,updates=30
+2,feedback_latency: update_flags,True,Every 10 completed requests
+2,feedback_latency: feedback_chronology,True,"Window, mean latency, and next-request threshold"
+2,feedback_latency: feedback_equation,True,Compared with inspected implementation
+2,feedback_label_oracle: update_schedule,True,updates=30
+2,feedback_label_oracle: update_flags,True,Every 10 completed requests
+2,feedback_label_oracle: feedback_chronology,True,"Window, mean latency, and next-request threshold"
+2,feedback_label_oracle: feedback_equation,True,Compared with inspected implementation
+3,policy_set,True,"['adaptive_fixed', 'feedback_label_oracle', 'feedback_latency', 'local_cnn', 'local_snn', 'remote_cnn']"
+3,feedback_latency: sample_order,True,rows=300; expected=300
+3,feedback_label_oracle: sample_order,True,rows=300; expected=300
+3,local_cnn: sample_order,True,rows=300; expected=300
+3,local_snn: sample_order,True,rows=300; expected=300
+3,remote_cnn: sample_order,True,rows=300; expected=300
+3,adaptive_fixed: sample_order,True,rows=300; expected=300
+3,valid_decisions,True,"{'local': 1479, 'offload': 321}"
+3,remote_identity_present,True,offloaded=321
+3,unique_remote_identities,True,duplicate_rows=0
+3,client_server_one_to_one,True,"{'both': 321, 'left_only': 0, 'right_only': 0}"
+3,remote_match: sample_id,True,matched=321
+3,remote_match: client_ip,True,matched=321
+3,remote_match: client_port,True,matched=321
+3,remote_match: server_ip,True,matched=321
+3,remote_match: server_port,True,matched=321
+3,remote_match: image_sha256,True,matched=321
+3,remote_match: prediction,True,matched=321
+3,remote_match: server_duration,True,matched=321
+3,local_rpc_zero,True,local_requests=1479
+3,confidence_policies_include_local_execution,True,Checks recorded local duration; not power calibration
+3,feedback_latency: update_schedule,True,updates=30
+3,feedback_latency: update_flags,True,Every 10 completed requests
+3,feedback_latency: feedback_chronology,True,"Window, mean latency, and next-request threshold"
+3,feedback_latency: feedback_equation,True,Compared with inspected implementation
+3,feedback_label_oracle: update_schedule,True,updates=30
+3,feedback_label_oracle: update_flags,True,Every 10 completed requests
+3,feedback_label_oracle: feedback_chronology,True,"Window, mean latency, and next-request threshold"
+3,feedback_label_oracle: feedback_equation,True,Compared with inspected implementation

@@ -1,0 +1,22 @@
+mode: controller_driven
+camera_index: 0
+display: true
+edge_url: http://127.0.0.1:8090/infer
+remote_url: http://127.0.0.1:8091/infer
+controller_url: http://127.0.0.1:8080
+frame:
+  width: 1280
+  height: 720
+roi:
+  expand_ratio: 0.35
+  min_size: 80
+  max_size: 320
+policy:
+  danger_alert_threshold: 0.70
+models:
+  proposal_model: models/proposal_yolo.pt
+  verifier_model: models/verifier_yolo_cls.pt
+  verifier_task: classify
+  snn_checkpoint: models/snn_gate.pt
+logging:
+  metrics_csv: logs/metrics.csv

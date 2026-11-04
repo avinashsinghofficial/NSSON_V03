@@ -1,0 +1,14 @@
+{
+  "run_id": "20260528_233320",
+  "model": "snn",
+  "policy": "nsson",
+  "nodes": 100,
+  "aps": 10,
+  "ovs_switches": 5,
+  "accuracy": 90.22802874046529,
+  "avg_latency_ms": 9.15652877941585,
+  "avg_power_mw": 319.97563098928146,
+  "avg_throughput_fps": 109.3106297930059,
+  "start_time": "2026-05-28T23:33:20.246167",
+  "end_time": "2026-05-28T23:33:32.702781"
+}

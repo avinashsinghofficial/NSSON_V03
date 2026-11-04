@@ -1,0 +1,11 @@
+class htb 1:1 parent 1:fffe prio 0 rate 20Mbit ceil 20Mbit burst 1564b cburst 1564b 
+ Sent 65984653 bytes 51430 pkt (dropped 9109, overlimits 40266 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 43094 borrowed: 0 giants: 0
+ tokens: 9362 ctokens: 9362
+
+class htb 1:fffe root rate 20Mbit ceil 20Mbit burst 1500b cburst 1500b 
+ Sent 65984653 bytes 51430 pkt (dropped 0, overlimits 2694 requeues 0) 
+ backlog 0b 0p requeues 0
+ lended: 0 borrowed: 0 giants: 0
+ tokens: 8962 ctokens: 8962

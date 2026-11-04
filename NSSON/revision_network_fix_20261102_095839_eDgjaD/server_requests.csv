@@ -1,0 +1,1 @@
+run_id,session_id,request_id,sample_id,client_ip,client_port,server_ip,server_port,image_sha256,prediction,confidence_uncalibrated,server_inference_sec

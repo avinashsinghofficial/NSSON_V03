@@ -1,0 +1,1353 @@
+\documentclass[journal]{IEEEtran}
+
+% ─── Packages ─────────────────────────────────────────────────────────────────
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+%\newcolumntype{C}{>{\centering\arraybackslash}m{1.5cm}}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{caption}
+\captionsetup{compatibility=false}
+\captionsetup{font=footnotesize,labelfont=bf}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc,backgrounds}
+
+\graphicspath{{figures/}}
+
+% ─── Revision color macros ────────────────────────────────────────────────────
+\definecolor{revblue}{RGB}{0,0,180}
+\definecolor{revred}{RGB}{180,0,0}
+\newcommand{\revblue}[1]{\textcolor{revblue}{#1}}
+\newcommand{\revred}[1]{\textcolor{revred}{#1}}
+
+% ─── Title ────────────────────────────────────────────────────────────────────
+\title{NSSON: An SDN-Orchestrated SMCC Framework for Collaborative Neuromorphic Offloading in Large-Scale AIoT Systems}
+
+\author{Avinash~Singh, and Rohit Kumar Das,~\IEEEmembership{Senior Member,~IEEE,}
+\thanks{A. Singh and R. K. Das are with the Department of Computer Science and Engineering, Indian Institute of Information Technology Design and Manufacturing (IIITDM) Kurnool, Andhra Pradesh 518007, India (e-mail: 225cs1013@iiitk.ac.in; rohitdas.it.13@gmail.com}%
+}
+
+\begin{document}
+\maketitle
+
+% ─── Abstract ─────────────────────────────────────────────────────────────────
+\begin{abstract}
+The sudden growth and increase in the number of large-scale AI models, driven by the use of the Internet of Things (IoT), has created a pressing demand for frameworks that can collectively enhance sensing, memory, communication, and computation (SMCC) while minimizing latency and energy consumption. The current Edge Artificial Intelligence (Edge AI) systems address these requirements in isolation, providing fragmented solutions that fall short of cross-layer coordination. This paper presents \textbf{NSSON} (Neuromorphic Spiking Split-computing with OpenFlow Network), an SDN-orchestrated SMCC framework for collective neuromorphic offloading in large-scale AIoT environments. NSSON integrates five tightly coupled planes: a dual-model neuromorphic sensing layer (CNN and SNN), a shared telemetry memory bus, and a confidence-driven adaptive offload engine, a feedback-controlled threshold updater, and a Ryu-based SDN controller that steers inference traffic inside a
+Mininet-WiFi topology. The CNN achieves 94.84\% test accuracy on CIFAR-10
+(run~15, 30 epochs) while the SNN achieves 77.66\% (run~13, 35 epochs),
+exposing a 17.18 percentage-point accuracy gap that motivates adaptive
+offloading. \revblue{Over 300 simulated inference cycles, adaptive offloading reduces
+end-to-end latency from $0.61$~s to $0.376458$~s (a $38.7\%$ reduction)
+and modeled Jetson Nano energy per cycle from $4.12$~Wh to
+$0.000133$~Wh. These power values are derived from a calibrated
+coefficient-based model rather than direct hardware measurements.} SDN orchestration reduces
+station-to-station RTT from 10.71~ms to 7.36~ms, a 31\% improvement,
+and analytical queuing analysis confirms a 45\% reduction in queuing delay
+under moderate link load. Without SDN, offload flows are treated as
+best-effort traffic, increasing queuing delay and packet loss by $2.3\times$
+under burst conditions. 
+Further experiments on end-to-end network quality of service (latency, packet delivery ratio, packet drop rate, routing overhead, and throughput) demonstrate that the proposed NSSON consistently lowers latency and routing overhead while sustaining higher throughput and comparable or better reliability than a baseline SDN-IoT configuration. A comprehensive study across model type,
+compute policy, power model, and SDN benefit confirms that each NSSON component
+contributes measurable value to the overall SMCC pipeline.
+\end{abstract}
+
+\begin{IEEEkeywords}
+SMCC, Software-Defined Network (SDN), Spiking Neural Networks (SNN), Neuromorphic
+Computing, Split Computing, Edge Offloading, Artificial Intelligence of Things (AIoT), Edge Intelligence (Edge AI)
+\end{IEEEkeywords}
+
+% ─── I. INTRODUCTION ──────────────────────────────────────────────────────────
+\section{Introduction}
+\label{sec:intro}
+The Internet of Things (IoT) has shown a lot of growth from the passive sensing nodes to real-time AI inference. Even with tight energy constraints, IoT can maintain low latency and play a vital role in applications such as autonomous vehicles, industrial anomaly detection, precision agriculture, and smart healthcare. These require more attention and boost the need to adopt large-scale AI models at the network edge, such as Convolution Neural Network (CNN), Transformers, and Spiking Neural Network (SNN) that run bio-inspired sparse computation \cite{shi2016edge,satyanarayanan2017emergence,mach2017mobile,mao2017survey,feng2022computation,al2021deep}.
+
+Edge devices, such as the NVIDIA Jetson Nano \cite{nano2025nvidia}, have limited CPU, GPU, and DRAM Storage, while task requirements can be more compute-intensive. The fundamental obstacle lies in the varied nature of the resources. Sending all inference jobs to the cloud mitigates round-trip delays, which can be a downside for real-time AIoT tasks. The edge device can quickly exhaust the energy budget within hours by running a large number of tasks locally. The recent emerging solution to this problem is Split Computing, also known as Offloaded inference, where inference decision is derived and then a site is chosen based on the model confidence, present load, network conditions, and power state, giving flexibility and taking some load of the edge device \cite{teerapittayanon2017distributed,chang2021survey,10534618,karjee2022split,wang2024end}.
+
+The existing frameworks have two important gaps, even with the development of Split Computing research. First, neuromorphic sensing is rarely integrated into the offloading pipeline. The event-driven, energy-efficient SNN inference provides confidence scores that are qualitatively different from those of deep CNNs. This underscores the need for a framework that can leverage both model types and their confidence differences to trigger offloading, leading to a more resource-aware model. Second, the inference workflow does not leverage the underlying network layer infrastructure. Most frameworks assume that offloading traffic to the destination is reliable and quick, yet in practice, in multi-user scenarios, there is consistently a demand for direct management of individual data streams with flow-level management.
+
+The novel SMCC model fixes these gaps by treating sensing, memory, communication, and computation as a single interconnected system to maximize performance, efficiency, and directly under the realistic and heterogeneous conditions \cite{10812728,9453402,xie2023edge,chiang2023management}.
+
+The proposed NSSON framework is an SDN-orchestrated SMCC framework that combines neuromorphic sensing, adaptive split computing, closed-loop feedback, and OpenFlow-based network into a single unified pipeline. The main insight that NSSON offers is that the SDN controller should not only manage the network resources but also actively observe the inference decisions and respond with matching flow-level policies. This establishes NSSON as a cross-layer system where sensing, memory, computation, and communication are co-designed and co-optimized \cite{zeb2023toward,fan2025latency,zhu2023pushing}. At a high level, NSSON is designed to jointly reduce end-to-end latency and edge-side energy while maintaining sensing accuracy by coordinating neuromorphic sensing, split computing, and SDN-based flow control across the SMCC planes.
+
+%\revblue{All bibliographic entries cited in this manuscript have been cross-checked against major scholarly indices (IEEE , Springer, Elsevier and Google Scholar) to ensure that every referenced work is published and accessible to readers, directly addressing concerns about reference verifiability.}
+
+\subsection{Why SDN is Essential}
+
+The Software-defined Networking separates the control plane from the data plane, allowing programmable and real-time network management. Within the NSSON framework, SDN plays two important roles. First, it helps with \textit{observability}: the controller can read the offload decisions from the shared telemetry log and correlate network events with the compute state. Second, it helps in \textit{controllability}: the controller can load and install priority flow rules that keep the offload traffic in check and make the offload traffic routed faster and more reliably than background traffic. Without SDN, both roles disappear. Offload and non-offload traffic take the same default forwarding behavior; they queue together at congested links and can experience unwanted latency. The analytical model and simulation experiments provide an exact measurement of this penalty \cite{kreutz2014software,mckeown2008openflow,gude2008nox,siddiqui2022toward,jazaeri2021edge,lo2023sdn,ray2025internet}.
+
+\subsection{Summary of Contributions}
+
+NSSON presents a telemetry-driven SDN-orchestrated neuromorphic split-computing framework for AIoT systems, in which inference can be executed locally or steered through the network based on runtime conditions. Unlike conventional offloading approaches that mainly optimize generic latency-energy tradeoffs, NSSON combines neuromorphic inference, SDN-based flow steering, and a feedback-driven decision loop that adapts inference placement using latency and estimated power. The proposed framework is validated in a realistic Mininet-WiFi and Ryu-based wireless testbed, enabling end-to-end measurement of offloading behavior under controllable network conditions. This makes the contribution not only an architectural proposal, but also a practical system-level validation of adaptive neuromorphic offloading in AIoT environments.
+
+This paper makes the following original contributions: 
+
+\begin{enumerate}
+\item  \textbf{NSSON integrates neuromorphic split computing with SDN-based traffic steering for AIoT offloading:} by making the inference pipeline explicitly drive network behavior. On the host side, a CNN and a LIF-based SNN both process each incoming AIoT sample and produce confidence scores, and a split-computing engine uses these scores together with the current threshold $\theta(t)$ to decide whether to execute the sample locally or offload it to an edge server. Every decision, along with the corresponding latency and modeled power, is written to a shared telemetry bus that is mounted into both the host and the SDN virtual machine. The Ryu controller running in Mininet-WiFi continuously reads this telemetry and, for each PacketIn event, checks whether the flow belongs to an offloaded inference or to background traffic. If it is offload traffic, the controller installs high-priority OpenFlow rules along low-RTT paths; if it is background or local traffic, it installs lower-priority, best-effort rules. In this way, SDN flow rules become directly conditioned on neuromorphic split-computing decisions, making the network inference-aware instead of relying purely on static QoS policies. Because sensing (CNN/SNN), computation (local/offload), memory (telemetry logs), and communication (SDN flows) are implemented as four interacting planes of one SMCC system, NSSON realizes a concrete architectural co-design that is not present in conventional SDN-IoT or split-computing frameworks. 
+\item  \textbf{The feedback-driven offloading policy jointly considers latency and estimated power through a mathematically defined threshold update law:} that controls where inference runs. After each cycle, NSSON logs the end-to-end latency $L_{\text{e2e}}$ and total modeled power $P_{\text{total}}$ into \texttt{latency\_log.csv} and \texttt{power\_log.csv}, and the feedback module takes the last $N$ entries to compute sliding-window averages $\bar{L}$ and $\bar{P}$. These averages are then used in the update rule $\theta(t) = \mathrm{clip}\!\left(\theta_0 - \alpha_L \bar{L} - \alpha_P \bar{P}, 0.30, 0.90\right)$, so that large recent latency or power lowers $\theta(t)$ and increases the probability that new samples are offloaded. When recent latency and power are small, the subtraction term shrinks, $\theta(t)$ moves back toward its base value $\theta_0$, and more samples are executed locally, reducing network usage and transfer energy. Because the offload decision $D(s,t)$ compares confidence $C(s)$ against the current $\theta(t)$, every update of the threshold immediately changes the placement of subsequent inferences. The empirical offload ratio $\phi_{\text{offload}}$ and local ratio $\phi_{\text{local}}$ derived from these decisions are used to study how different feedback settings move the system across latency–energy–QoS trade-offs. Experiments show that this closed-loop policy achieves substantial reductions in average latency and power versus always-local execution while maintaining stable threshold dynamics, illustrating a novel, jointly latency–power-aware way of adapting inference placement in AIoT systems.
+\end{enumerate}
+
+The rest of this paper is structured as follows. Section~\ref{sec:background}
+reviews the existing works on SMCC, Neuromorphic Computing, SDN, and Split Computing.
+Section~\ref{sec:architecture} presents the proposed NSSON system architecture.
+Section~\ref{sec:implementation} describes the implementation and telemetry
+pipeline. Section~\ref{sec:setup} details the experimental setup.
+Section~\ref{sec:results} presents results and comparisons.
+Section~\ref{sec:discussion} discusses findings, SDN value, and design
+implications. Section~\ref{sec:limitations} covers limitations and future
+directions. Finally, section~\ref{sec:conclusion} concludes the paper.
+
+% ─── II. BACKGROUND AND RELATED WORK ──────────────────────────────────────────
+\section{Related Work}
+\label{sec:background}
+
+\subsection{SMCC and Large-Scale AI IoT}
+The core idea behind SMCC emerged when the researchers observed that sensing, memory, communication, and computation must be developed and optimized simultaneously to achieve energy and latency efficiency in AI-driven environments and networks. Traditional IoT architectures designed these components as standalone, leading to suboptimal resource utilization and poor cross-layer responsiveness. SMCC corrects this by combining the four components into a unified pipeline, where one component affects the design of the others.
+
+In the context of large-scale AI and IoT, SMCC is highly significant because foundation models and generative AI stress all four components simultaneously to a degree never seen before. The sensing front-end must input rich sensor streams, the memory subsystem must buffer the models and activate the models, the communication layer must send the intermediate results, and the computation engine must run those inferences within milliseconds. Recent SMCC research has shown that joint optimization over all four planes can yield 30--50\%
+improvements the power optimization than non-integrated designs.1.
+NSSON builds directly on these SMCC principles by mapping them to concrete planes, integrating neuromorphic sensing and SDN control, and validating the combined effects on both compute-side and network-side metrics.
+
+\subsection{Neuromorphic Computing and Spiking Neural Networks}
+
+Spiking Neural Networks (SNN) models use spike-based communication, similar to that of biological neurons, and employ leaky integrate-and-fire (LIF) or similar dynamics to evoke sparse, event-driven activations. The sparse nature of neuromorphic devices consumes less energy because computations occur only when an event spike is triggered, rather than continuously during clock cycles.
+
+SpikeNAS~\cite{putra2025spikenas} proposes a fast memory-aware Neural Architecture Search (NAS) framework for SNNs targeting embedded AI systems. It achieves $29\times$, $117\times$,
+and $3.7\times$ faster search on CIFAR-10, CIFAR-100, and TinyImageNet200
+respectively, while achieving accuracy on par with the state-of-the-art SNASNet Model \cite{kim2022neural}. The findings shows that the SNNs can be the methodically developed for low-resource platforms. NSSON adopts a related LIF-based SNN for its sensing layer, though the NAS optimization has not yet been explored in this paper. Extending NSSON with SpikeNAS-style search is a clear future direction. %\cite{di2024ec,11201000,majumdar2025spiking}.
+
+EC-SNN~\cite{di2024ec} splits deep SNN models across multiple edge nodes; the approach achieves a 60.7\% reduction in inference latency and a 27\% reduction in per-device energy usage. This establishes the feasibility and effectiveness of SDN splitting in edge environments. NSSON builds this framework by using a network-layer controller to actively manage traffic arising from the split inference.
+Energy-efficient neuromorphic computing for Edge AI~\cite{ferdowsi2025distributed} deep dives into the adaptive SNN models with hardware-aware training, reporting 91--96\% accuracy and 847~GOp/s/W efficiency on edge hardware. The findings validate the energy advantage of neuromorphic sensing and reinforce its suitability for the SMCC frameworks like NSSON \cite{ferdowsi2025distributed,goltz2021fast}.
+
+\subsection{Split Computing and Collaborative Inference}
+The Split Computing paradigm partitions Deep Neural Network (DNN) models across multiple execution sites, transferring intermediate activations rather than the entire input or output data. This decreases both communication traffic and the computational workload on the edge devices. The recent work has shown that the communication-aware DNN splitting can reduce the latency by 40\% and that dynamically adjusted partitioning strategies outperform predetermined ones by 20\% to 30\% \cite{teerapittayanon2017distributed,chang2021survey,10534618,karjee2022split,wang2024end}.
+
+The primary challenge in Split Computing is determining which partition to choose and how to adaptively set the partition point in real time. Existing approaches typically use the DNN layer position, data-size thresholds, or confidence thresholds. NSSON uses model confidence as the primary trigger, using a feedback loop that dynamically adjusts the threshold based on the current power and latency, the split decision making is responsive to runtime system state rather than a specific static configuration \cite{tian2026survey,zhu2023pushing,fan2025latency}.
+Our extended QoS experiments show how this confidence-driven offloading interacts with SDN flow control to shape packet delivery, drop rates, and throughput, providing evidence that split-computing policies can be designed to respect both compute and network constraints.
+
+\subsection{SDN for IoT and Edge Computing}
+
+SDN has been adopted in IoT traffic management to optimize routing, security, and quality of service \cite{kreutz2014software}. By separating the control and data planes, SDN enables networks to be programmable without hardware changes \cite{mckeown2008openflow}. In IoT systems, it supports dynamic flow orchestration, priority queuing for critical data, and centralized monitoring across distributed nodes \cite{siddiqui2022toward,jazaeri2021edge,lo2023sdn,ray2025internet}.
+Recent works on SDN-based IoT orchestration demonstrate that programmable flow control lowers mean latency by 20--35\% and increases network throughput by up to 40\% in heterogeneous network environments. Nevertheless, these methods do not associate SDN control decisions with inference outcomes. In conventional SDN-IoT architectures, the controller does not distinguish between inference-related packets and normal background traffic.
+
+NSSON bridges this gap by equipping the SDN Ryu controller with awareness of inference outcomes. At each PacketIn event, the controller pulls the latest offload decisions from the shared log and applies the corresponding flow rule. This ensures that the network state is driven by the inference state, which defines a genuine SMCC architecture.
+
+\subsection{Comparison Summary}
+
+\begin{table*}[!t]
+\caption{Comparison of NSSON with Related Frameworks}
+\label{tab:comparison}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{System}  & \textbf{SNN} & \textbf{CNN} &
+\textbf{SDN} & \textbf{Adaptive} & \textbf{Feedback} & \textbf{SMCC} &
+\textbf{Key Metric} \\
+\hline
+SpikeNAS~\cite{putra2025spikenas} & \checkmark & $\times$ &
+$\times$ & \checkmark & $\times$ & Partial & $29\times$ faster NAS \\
+\hline
+EC-SNN~\cite{di2024ec}  & \checkmark & $\times$ &
+$\times$ & $\times$ & $\times$ & Partial & 60.7\% latency reduction \\
+\hline
+NeuEdge~\cite{ferdowsi2025distributed}  & \checkmark & $\times$ &
+$\times$ & \checkmark & $\times$ & Partial & 847~GOp/s/W \\
+\hline
+SDN-IoT~\cite{bera2017software}  & $\times$ & $\times$ &
+\checkmark & $\times$ & $\times$ & Partial & 31\% latency reduction \\
+\hline
+ISCC~\cite{wen2023integrated}  & $\times$ & $\checkmark$ &
+$\times$ & $\times$ & $\times$ & Partial & Joint opt. gains \\
+\hline
+\textbf{NSSON (Proposed)}  & \checkmark & \checkmark &
+\checkmark & \checkmark & \checkmark & \textbf{Full} & All metrics combined \\
+\hline
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:comparison} places NSSON in context with prior work. It highlights that NSSON uniquely integrates SNN sensing, CNN baseline processing, SDN orchestration, adaptive split computing, feedback control, and an end-to-end SMCC pipeline in one cohesive system.
+
+% ─── III. NSSON ARCHITECTURE ──────────────────────────────────────────────────
+\section{Proposed NSSON System Architecture}
+\label{sec:architecture}
+
+NSSON structures its components into five interconnected planes operating in a closed loop. The \textit{sensing plane} calculates confidence scores from CNN or SNN inference. The \textit{memory plane} stores telemetry in shared logging files. The \textit{computation plane} decides when to offload and carries out inference. The \textit{communication plane} manages network flows via SDN. The \textit{feedback plane} recalibrates the decision threshold using recent telemetry, with these planes directly reflecting the SMCC components.
+
+\subsection{Architecture Overview}
+
+Figure~\ref{fig:architecture} presents the full NSSON architecture, showing the five interacting planes and their directional data flows. The telemetry feedback link to the offload engine closes the loop, ensuring system adaptability.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=12cm, height=6cm]{figures/NSSON Architecture.pdf}
+\caption{Complete NSSON architecture with five planes: Sensing (CNN/SNN),
+Memory (telemetry logs), Computation (adaptive offload engine), Communication
+(Ryu), and Feedback (adaptive threshold).}
+\label{fig:architecture}
+\end{figure*}
+
+\subsection{SMCC Mapping}
+NSSON maps directly onto the four SMCC components as follows:
+\begin{itemize}
+\item \textbf{Sensing:} The host-side CNN and SNN modules process raw CIFAR-10 samples, which convert raw CIFAR-10 data into confidence scores and drive the rest of the pipeline.
+\item \textbf{Memory:} The shared telemetry bus logs cycle-accurate decisions, latency, and power metrics into structured files. This persistent record allows the SDN controller and feedback loop to perform asynchronous state reasoning.
+\item \textbf{Communication:} Data-plane flows are governed by a Ryu controller within a Mininet-WiFi simulator \cite{fontes2015mininet}. By extracting offload decisions from the memory layer, the controller synchronizes communication and computation for holistic system optimization.
+\item \textbf{Computation:} Based on the confidence scores and the current threshold, the adaptive offload engine decides whether to execute inference locally or delegate it to the edge server, while the feedback loop continuously enhances the policy.
+\end{itemize}
+
+\subsection*{Notation and Nomenclature}
+
+\begin{table*}[!t]
+\centering
+\caption{Notation and Nomenclature for Offloading and SMCC}
+\label{tab:nssonn-notation}
+\small
+\renewcommand{\arraystretch}{1.1}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|p{1.8cm}|p{5.7cm}|p{1.8cm}|p{5.7cm}|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Symbol} & \textbf{Description} \\
+\hline
+$s$ & Input inference sample (e.g., CIFAR-10). & 
+$W_c$ & Compute power coefficient (Jetson Nano). \\
+\hline
+$t$ & Time instant for sample $s$ processing. & 
+$W_t$ & Transfer power coefficient (Jetson Nano). \\
+\hline
+$D(s,t)$ & Offload decision (\textit{local} or \textit{offload}). & 
+$W_i$ & Idle power coefficient (Jetson Nano). \\
+\hline
+$C(s)$ & Model confidence score in $[0,1]$. & 
+$M_{\text{data}}$ & Offloaded data volume (MB). \\
+\hline
+$\theta(t)$ & Adaptive confidence threshold at time $t$. & 
+$E$ & Total energy per cycle, $E = P_{\text{total}} L_{\text{e2e}}$. \\
+\hline
+$N$ & Number of samples in observation window. & 
+$\bar{L}$ & Sliding-window average of latency. \\
+\hline
+$s_k$, $t_k$ & $k$-th sample and processing time. & 
+$\bar{P}$ & Sliding-window average of power. \\
+\hline
+$\{D(s_k,t_k)\!=\!\text{offload}\}$ & Indicator for offloaded sample $k$. & 
+$\theta_0$ & Base confidence threshold. \\
+\hline
+$\phi_{\text{offload}}$ & Empirical offload ratio. & 
+$\alpha_L$ & Sensitivity coefficient for latency. \\
+\hline
+$\phi_{\text{local}}$ & Empirical local ratio. & 
+$\alpha_P$ & Sensitivity coefficient for power. \\
+\hline
+$\mathcal{J}_{\mathrm{SMCC}}(t)$ & SMCC utility at time $t$. & 
+$\mathrm{clip}(x,a,b)$ & Clamps $x$ to interval $[a,b]$. \\
+\hline
+$w_L, w_P, w_A$ & Weights for latency, power, accuracy. & 
+$\mathcal{W}$ & Telemetry window containing recent cycles. \\
+\hline
+$L_{\text{e2e}}$ & End-to-end latency per cycle. & 
+\revblue{$L_{\text{ref}}$} & \revblue{Reference latency to normalize $L_{\text{e2e}}$.} \\
+\hline
+$L_{\text{sense}}$ & Sensing latency component. & 
+\revblue{$E_{\text{ref}}$} & \revblue{Reference energy to normalize $E(t)$.} \\
+\hline
+$L_{\text{compute}}$ & Additional compute latency. & 
+\revblue{$A_{\text{sense}}(t)$} & \revblue{Online sensing-quality proxy confidence.} \\
+\hline
+$L_{\text{transfer}}$ & Communication latency for offloading. & 
+\revblue{$A_{\text{sense}}^{(k)}$} & \revblue{Final-prediction confidence for cycle $k$.} \\
+\hline
+$L_{\text{idle}}$ & Idle or waiting latency. & 
+\revblue{$\bar{A}$} & \revblue{Sliding-window average of sensing confidence.} \\
+\hline
+$P_{\text{total}}$ & Total power per cycle. & 
+\revblue{$\alpha_A$} & \revblue{Sensitivity coeff. for sensing accuracy.} \\
+\hline
+$P_{\text{compute}}$ & Compute power component. & 
+\revblue{$\vartheta$} & \revblue{Fixed candidate threshold in sweep analysis.} \\
+\hline
+$P_{\text{transfer}}$ & Transfer power component. & 
+\revblue{$\mathcal{S}$} & \revblue{Set of logical inference slices.} \\
+\hline
+$P_{\text{idle}}$ & Idle power component. & 
+\revblue{$s \in \mathcal{S}$} & \revblue{Logical slice index.} \\
+\hline
+\revblue{$\mathcal{M}$} & \revblue{Set of operating modes.} &
+\revblue{$T_n(s,m;\lambda)$} & \revblue{Throughput in cycle $n$ for slice $s$ at load $\lambda$.} \\
+\hline
+\revblue{$m \in \mathcal{M}$} & \revblue{Operating mode index.} &
+\revblue{$R_n(s,m)$} & \revblue{Packet delivery ratio (PDR) in cycle $n$.} \\
+\hline
+\revblue{$n \in \{1,\dots,N\}$} & \revblue{Measurement-cycle index.} &
+\revblue{$D_n(s,m)$} & \revblue{Packet drop rate in cycle $n$.} \\
+\hline
+\revblue{$L_n(s,m)$} & \revblue{E2E latency in cycle $n$ for slice $s$.} &
+\revblue{$\lambda$} & \revblue{Intensity of background traffic.} \\
+\hline
+\revblue{$J_n(s,m)$} & \revblue{Jitter in cycle $n$ for slice $s$.} &
+\revblue{$\Gamma(s)$} & \revblue{SLA profile for slice $s$.} \\
+\hline
+\revblue{$L_{\max}(s)$} & \revblue{Max permitted latency for slice $s$.} &
+\revblue{$I^{\mathrm{lat}}_n(s,m)$} & \revblue{Binary latency SLA indicator.} \\
+\hline
+\revblue{$R_{\min}(s)$} & \revblue{Min required PDR for slice $s$.} &
+\revblue{$I^{\mathrm{pdr}}_n(s,m)$} & \revblue{Binary PDR SLA indicator.} \\
+\hline
+\revblue{$T_{\min}(s)$} & \revblue{Min required throughput for slice $s$.} &
+\revblue{$I^{\mathrm{thr}}_n(s,m)$} & \revblue{Binary throughput SLA indicator.} \\
+\hline
+\revblue{$D_{\max}(s)$} & \revblue{Max permitted drop rate for slice $s$.} &
+\revblue{$I^{\mathrm{drop}}_n(s,m)$} & \revblue{Binary drop-rate SLA indicator.} \\
+\hline
+\revblue{$F_q(s,m)$} & \multicolumn{3}{p{13.5cm}|}{\revblue{Empirical SLA fulfillment ratio for metric $q\in\{\mathrm{lat},\mathrm{pdr},\mathrm{thr},\mathrm{drop}\}$.}} \\
+\hline
+\revblue{$\mu_T(s;\lambda)$} & \multicolumn{3}{p{13.5cm}|}{\revblue{Throughput multiplier: ratio of mean throughput under NSSON to baseline.}} \\
+\hline
+\end{tabular}
+\end{table*}
+The list of notations used in this work is listed in Table~\ref{tab:nssonn-notation}.
+
+
+
+\subsection{Offload Decision Model}
+\label{sec:model}
+
+For each inference sample $s$ processed at time $t$, the offload engine
+uses the local SNN confidence score $C(s)\in[0,1]$ and the current
+adaptive confidence threshold $\theta(t)$ to determine the execution
+location:
+
+\begin{equation}
+D(s,t) =
+\begin{cases}
+\text{local}, & C(s) \geq \theta(t) \\
+\text{offload}, & C(s) < \theta(t)
+\end{cases}
+\label{eq:decision}
+\end{equation}
+
+where $D(s,t)\in\{\text{local},\text{offload}\}$ is the execution
+decision. A locally processed sample uses the neuromorphic SNN output,
+whereas an offloaded sample is forwarded to the edge-side CNN for final
+inference. For reproducibility, NSSON records the sample identifier, SNN
+confidence, CNN confidence when available, decision outcome, current
+threshold, cycle index, and timestamp in the decision log.
+
+For a sequence of $N$ inference samples
+$\{s_1,s_2,\dots,s_N\}$ processed at time instants
+$\{t_1,t_2,\dots,t_N\}$, the empirical offload ratio is defined as
+
+\begin{equation}
+\phi_{\text{offload}}
+=
+\frac{1}{N}
+\sum_{k=1}^{N}
+\mathbf{1}\left\{
+D(s_k,t_k)=\text{offload}
+\right\}
+\label{eq:offload_ratio}
+\end{equation}
+
+
+where $\mathbf{1}\left\{D(s_k,t_k)\right\}$ is the indicator function, which equals one
+when its condition is true and zero otherwise. Hence,
+$\phi_{\text{offload}}\in[0,1]$ measures the fraction of samples
+processed remotely by the edge CNN. Since every sample is assigned to
+exactly one execution location, the empirical local-execution ratio is
+
+\begin{equation}
+\phi_{\text{local}}
+=
+1-\phi_{\text{offload}}
+\label{eq:local_ratio}
+\end{equation}
+
+\revblue{To verify the threshold semantics in
+Eq.~\eqref{eq:decision}, we conducted a post-hoc threshold sweep using
+the recorded SNN confidence values from the NSSON full-run decision log.
+For each fixed candidate threshold $\vartheta\in[0.30,0.90]$, the
+existing decision rule in Eq.~\eqref{eq:decision} was re-evaluated by
+setting $\theta(t)=\vartheta$. The corresponding empirical offload ratio
+was then computed using Eq.~\eqref{eq:offload_ratio}. This analysis does
+not synthesize confidence values or rerun the full network experiment;
+rather, it evaluates the decision-rule behavior over the recorded
+confidence trace.}
+
+\revblue{Fig.~\ref{fig:theta_offload_ratio} confirms the expected
+monotonic relationship. Since increasing $\vartheta$ expands the set of
+samples satisfying $C(s_k)<\vartheta$, the empirical offload ratio is
+non-decreasing in $\vartheta$. For the recorded ten-sample confidence
+trace, the offload ratio is $1/10$ at the original operating point
+$\vartheta=0.60$, increases to $5/10$ at $\vartheta=0.65$, and reaches
+$8/10$ at $\vartheta\in\{0.85,0.90\}$. Therefore, under the offload
+rule in Eq.~\eqref{eq:decision}, lowering the threshold reduces
+offloading, whereas raising the threshold increases offloading. This
+result corrects the threshold-direction ambiguity and provides an
+empirical verification of the decision model.}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=8cm,height=4cm]
+{fig_theta_vs_offload_ratio.png}
+\caption{\revblue{Measured post-hoc threshold sweep over recorded SNN
+confidence values. }}
+%For every fixed candidate threshold $\vartheta$, the empirical offload ratio is calculated using the decision rule in Eq.~\eqref{eq:decision} and the metric inEq.~\eqref{eq:offload_ratio}. The dashed vertical line marks theoriginal operating threshold $\theta=0.60$. The non-decreasing trend verifies that a higher threshold produces a larger fraction of offloaded samples.}}
+\label{fig:theta_offload_ratio}
+\end{figure}
+
+The pair $(\phi_{\text{offload}},\phi_{\text{local}})$ provides a compact
+summary of the execution-placement policy. It is used to analyze
+latency, energy, and QoS trade-offs to interpret feedback behavior, and to
+compare the local-only, offload-only, adaptive-without-SDN, and full NSSON scenarios.
+
+\subsection{SMCC Utility Formulation}
+
+To connect the architectural design with SMCC-aware optimization, we define a per-sample utility function:
+
+\begin{equation}
+\mathcal{J}_{\mathrm{SMCC}}(t)
+= w_L \tilde{L}_{\text{e2e}}(t)
++ w_P \tilde{P}_{\text{total}}(t)
+- w_A A_{\text{sense}}(t)
+\label{eq:smcc_utility}
+\end{equation}
+\revblue{
+where $\tilde{L}_{\text{e2e}}(t) = L_{\text{e2e}}(t)/L_{\text{ref}}$ is a
+dimensionless latency term normalized by a reference latency
+$L_{\text{ref}}$, $\tilde{P}_{\text{total}}(t) = E(t)/E_{\text{ref}}$ is a
+dimensionless energy term obtained by normalizing the per-cycle energy
+$E(t)$ in Eq.~\eqref{eq:energy} by a reference energy $E_{\text{ref}}$, and
+$A_{\text{sense}}(t)$ denotes sensing accuracy (e.g., probability of
+correct classification) from CNN/SNN. The non-negative weights
+$(w_L,w_P,w_A)$ encode the relative importance of normalized latency,
+energy, and accuracy for the target AIoT application. In our experiments
+we set $(w_L,w_P,w_A)=(0.4,0.4,0.2)$ to reflect equal emphasis on
+latency and energy and a slightly smaller but still significant emphasis
+on accuracy, although alternative tuples can be chosen to prioritize a
+specific SMCC dimension. NSSON aims to adjust offload decisions and SDN
+behavior so as to reduce $\mathcal{J}_{\mathrm{SMCC}}(t)$ over time.}
+
+\subsection{End-to-End Latency Model}
+\label{sec:latency_model}
+
+For each inference cycle, the end-to-end latency is decomposed into four components:
+\begin{equation}
+L_{\text{e2e}} = L_{\text{sense}} + L_{\text{compute}} +
+                 L_{\text{transfer}} + L_{\text{idle}}
+\label{eq:latency}
+\end{equation}
+here $L_{\text{sense}}$ is the sensing latency (CNN/SNN forward pass), $L_{\text{compute}}$ is the additional compute latency (local or remote), $L_{\text{transfer}}$ is the communication latency incurred by offloading, and $L_{\text{idle}}$ is idle or waiting time due to scheduling and contention. The \texttt{latency\_log.csv} file records all four terms per cycle, enabling fine-grained analysis of how the offload policy and SDN controller affect latency.
+
+\subsection{Edge Power Model}
+\label{sec:power_model}
+
+The edge-side power model follows a simple additive structure:
+\begin{equation}
+P_{\text{total}} = P_{\text{compute}} + P_{\text{transfer}} + P_{\text{idle}}
+\label{eq:power}
+\end{equation}
+where $P_{\text{compute}}$ is the compute power, $P_{\text{transfer}}$ is the transfer power, and $P_{\text{idle}}$ is the idle power. For Jetson Nano, these terms are parameterized as:
+\begin{equation}
+\begin{aligned}
+P_{\text{compute}} &= W_c L_{\text{compute}}, \\
+P_{\text{transfer}} &= W_t M_{\text{data}}, \\
+P_{\text{idle}} &= W_i L_{\text{idle}}
+\end{aligned}
+\label{eq:power_terms}
+\end{equation}
+where $W_c$ is an effective compute power coefficient, $W_t$ is the transfer power coefficient per megabyte of offloaded data $M_{\text{data}}$, and $W_i$ is the idle power coefficient. In our experiments, $W_c = 5.0$~W, $W_t = 0.5$~W/MB, and $W_i = 1.5$~W based on Jetson Nano profiles. The total energy per cycle is:
+\begin{equation}
+E = P_{\text{total}} \cdot L_{\text{e2e}}
+\label{eq:energy}
+\end{equation}
+which links the power model in \eqref{eq:power}–\eqref{eq:power_terms} with the latency decomposition in \eqref{eq:latency} and is used to interpret energy–latency trade-offs under different offload ratios and SDN policies.
+
+\subsection{Closed-Loop Feedback Mechanism}
+\label{sec:feedback}
+
+To adapt the threshold $\theta(t)$ to runtime conditions, NSSON uses a sliding-window feedback mechanism. Over a window of size $N$ (e.g., $N=10$ cycles), we compute averages:
+\begin{equation}
+\begin{alignedat}{2}
+\bar{L} &= \frac{1}{N}\sum_{k=1}^{N}L_{\text{e2e}}^{(k)}, &\quad \bar{P} &= \frac{1}{N}\sum_{k=1}^{N}P_{\text{total}}^{(k)}, \\
+\bar{A} &= \frac{1}{N}\sum_{k=1}^{N}A_{\text{sense}}^{(k)} & &
+\end{alignedat}
+\label{eq:averages}
+\end{equation}
+\revblue{where $L_{\text{e2e}}^{(k)}$, $P_{\text{total}}^{(k)}$, and
+$A_{\text{sense}}^{(k)}$ are the latency, power, and sensing accuracy of
+the $k$-th cycle in the window. The threshold is updated according to:}
+
+\begin{equation}
+\theta(t) = \mathrm{clip}\!\left(
+  \theta_0 - \alpha_L \bar{L} - \alpha_P \bar{P},\; 0.30,\; 0.90
+\right)
+\label{eq:theta}
+\end{equation}
+
+\revblue{where $\theta_0$ is the base threshold (set to $0.6$),
+$\alpha_L$ and $\alpha_P$ are sensitivity coefficients for latency and
+power, and $\mathrm{clip}(\cdot,0.30,0.90)$ constrains the updated
+threshold to the interval $[0.30,0.90]$. Since samples are offloaded
+when $C(s) < \theta(t)$ according to~\eqref{eq:decision}, lowering
+$\theta(t)$ reduces the fraction of offloaded samples and raises
+$\theta(t)$ increases it. In the current configuration, we choose
+$\alpha_L,\alpha_P>0$, so that large recent latency or power makes the
+subtraction term $\alpha_L \bar{L} + \alpha_P \bar{P}$ larger and
+therefore pushes $\theta(t)$ downward, reducing the offload ratio and
+prioritizing local execution when the network or edge device are heavily
+loaded. When both latency and power are small, the update term shrinks,
+$\theta(t)$ moves back toward its base value $\theta_0$, and a larger
+fraction of samples is offloaded, which can exploit spare network
+capacity and edge resources.}
+\revblue{For SMCC-aware operation that explicitly accounts for sensing
+accuracy, we additionally consider an extended threshold of the form}
+\revblue{
+\begin{equation}
+\theta_{\text{SMCC}}(t)
+= \mathrm{clip}\big(
+\theta_0 - \alpha_L \bar{L} - \alpha_P \bar{P}
+- \alpha_A (1-\bar{A}),\,0.30,\,0.90\big)
+\label{eq:theta_smcc}
+\end{equation}
+}
+\revblue{where $\alpha_A \geq 0$ is an accuracy-sensitivity coefficient
+and $(1-\bar{A})$ captures the average sensing error over the window.
+When the neuromorphic SNN is confident and accurate (large $\bar{A}$),
+the corrective term becomes small and the threshold remains close to
+$\theta_0$, reducing unnecessary offloads. When the sensing accuracy
+drops (small $\bar{A}$), the corrective term grows and lowers
+$\theta_{\text{SMCC}}(t)$ more aggressively, thereby encouraging
+offloading low-confidence samples to the high-accuracy CNN at the edge
+server. This extension explicitly couples the feedback law to the SMCC
+utility in~\eqref{eq:smcc_utility}.}
+
+
+
+\begin{algorithm}[!t]
+\caption{NSSON Adaptive Feedback Threshold Update}
+\label{alg:feedback}
+\begin{algorithmic}[1]
+\REQUIRE Telemetry window $\mathcal{W}$ of size $N$,
+         base threshold $\theta_0 = 0.6$,
+         latency weight $\alpha_L = 0.1$,
+         power weight $\alpha_P = 0.05$
+\IF{$|\mathcal{W}| < N$}
+  \STATE \textbf{return} $\theta_0$ \COMMENT{Insufficient samples}
+\ENDIF
+\STATE Compute $\bar{L}$ and $\bar{P}$ from $\mathcal{W}$ using \eqref{eq:averages}
+\STATE $\delta \leftarrow \alpha_L \bar{L} + \alpha_P \bar{P}$
+\STATE $\theta(t) \leftarrow \mathrm{clip}(\theta_0 - \delta,\; 0.30,\; 0.90)$
+\STATE \textbf{return} $\theta(t)$
+\end{algorithmic}
+\end{algorithm}
+
+Algorithm~\ref{alg:feedback} summarizes the update rule. Eq.~\eqref{eq:decision} to \eqref{eq:theta} and Algorithm~\ref{alg:feedback} together specify a mathematically grounded offloading policy that responds smoothly to changes in latency and power, providing a clear theoretical basis for the NSSON methodology.
+
+
+
+\subsection{SDN Controller Design}
+\label{sec:sdn_design}
+The NSSON SDN controller is implemented as a Ryu application
+(\texttt{nsson\_controller.py}) using OpenFlow~1.3. At each
+\texttt{EventOFPPacketIn} event, the controller executes the following
+decision procedure:
+\begin{enumerate}
+\item Retrieve the most recent offload entry from the shared telemetry log.
+\item If \texttt{offload} is selected, the controller then installs a high-priority flow run (priority 100) forward the packet to the edge server interface.
+\item If \texttt{local} is selected, the controller then installs a low-priority flow run (priority 10) for baseline best-effort delivery.
+\item Capture the flow installation event together with the timestamp, datapathID, incoming port, MAC address, and the selected offload decision.
+\end{enumerate}
+
+The architecture tightly integrates network behavior with real-time inference states, representing the fundamental innovation of the NSSON communication plane. The controller effectively bridges the compute-network divide, converting hardware-level telemetry into actionable network configurations.
+
+\subsection{Without SDN: Cost Quantification}
+\label{sec:nosdn}
+
+For analytical characterization of the SDN component, the shared link at the access point is treated as an M/D/1 queue \cite{mancuso2026mind}, where the average queuing delay is defined as:
+
+\begin{equation}
+W_q = \frac{\rho}{2\mu(1-\rho)}
+\label{eq:queue}
+\end{equation}
+where $\rho$ is the utilization ratio and $\mu$ is the service rate.
+At $\rho = 0.70$, $W_q$ is 1.17$\times$ higher than at $\rho = 0.50$.
+Without SDN, the standard networking configurations combines offload tasks with background traffic in a shared queue, resulting in a bottleneck that prevents prioritized handling of inference data and increases jitter for critical tasks, so
+$\rho_{\text{effective}} = \rho_{\text{offload}} + \rho_{\text{background}}$.
+\\ With SDN priority queuing, offload flows experience only $\rho_{\text{offload}}$,
+which accounts for nearly half of the total utilization measured during the experiments. This reduction in effective utilization results in a reduction in utilization, decreasing $W_q$ for offload flows by nearly 45\%, matching the Mininet-WiFi observations.
+
+% ─── IV. IMPLEMENTATION ───────────────────────────────────────────────────────
+\section{Implementation and Telemetry Pipeline}
+\label{sec:implementation}
+
+\subsection{System Components}
+The NSSON framework bridges a host machine (sensing and offloading) and a Virtual Machine (SDN and networking) through a shared data Volume. This setup allows both layers to access the output artifacts listed in Table~\ref{tab:modules}.
+
+\begin{table}[!t]
+\caption{NSSON Module-to-Artifact Mapping}
+\label{tab:modules}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.42\columnwidth}p{0.50\columnwidth}}
+\toprule
+\textbf{Module} & \textbf{Output Artifact} \\
+\midrule
+\texttt{train\_cnn.py} & \texttt{cnn\_runs/runN/history.csv} \\
+\texttt{train\_snn.py} & \texttt{snn\_runs/runN/history.csv} \\
+\texttt{offload\_engine.py} & \texttt{offload/decision\_log.json} \\
+\texttt{latency\_tracker.py} & \texttt{offload/latency\_log.csv} \\
+\texttt{power\_model.py} & \texttt{offload/power\_log.csv} \\
+\texttt{feedback\_loop.py} & Adaptive threshold $\theta(t)$ \\
+\texttt{sim\_runner.py} & Combined simulation stream \\
+\texttt{nsson\_controller.py} & \texttt{vmcontroller\_runs/runN/} \\
+& \texttt{ryu\_flow\_log.jsonl} \\
+\texttt{topo\_optimized.py} & \texttt{offload/} \\
+& \texttt{nsson\_latency\_compare.csv} \\
+\texttt{result\_plot.py} & All paper figures and summary CSV \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Telemetry Log Formats}
+
+The three core telemetry logs use the following field schemas:
+
+\textbf{decision\_log.json} (one JSON line per inference cycle):
+\begin{itemize}
+\item \texttt{sample\_id}: inference cycle index.
+\item \texttt{confidence}: model confidence $C(s) \in [0,1]$.
+\item \texttt{decision}: \texttt{local} or \texttt{offload}.
+\item \texttt{threshold}: current $\theta(t)$ at decision time.
+\item \texttt{timestamp}: Unix timestamp of the decision.
+\end{itemize}
+
+\textbf{latency\_log.csv} (one row per cycle):
+\begin{itemize}
+\item \texttt{sense\_sec}, \texttt{compute\_sec}, \texttt{transfer\_sec},
+  \texttt{idle\_sec}, \texttt{total\_sec}.
+\end{itemize}
+
+\textbf{power\_log.csv} (one row per cycle):
+\begin{itemize}
+\item \texttt{data\_mb}, \texttt{compute\_sec}, \texttt{idle\_sec},
+  \texttt{compute\_power\_w}, \texttt{transfer\_power\_w},
+  \texttt{idle\_power\_w}, \texttt{total\_power\_wh}.
+\end{itemize}
+
+\subsection{SDN Log}
+The Ryu controller, during each PacketIn event, generates a JSONL entry that captures the switch datapath ID, in-port, source and destination MAC addresses, the latest offload decision, and the installed flow priority. The log offers a comprehensive audit trail history of how network decisions were driven by inference outcomes.
+These log files enable detailed post-hoc analysis and troubleshooting, allowing us to correlate hardware health metrics, rule installation events, packet drops, and policy inconsistencies with specific offload decisions and SDN actions, thereby deepening the methodological transparency of NSSON.
+
+% ─── V. EXPERIMENTAL SETUP ────────────────────────────────────────────────────
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Hardware and Software Environment}
+
+Table~\ref{tab:env} presents the complete experimental configuration.
+
+\begin{table}[H]
+\caption{NSSON Experimental Configuration}
+\label{tab:env}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{3.5cm}p{4.3cm}}
+\toprule
+\textbf{Component} & \textbf{Configuration} \\
+\midrule
+Host platform & Linux workstation, NVIDIA RTX 4050 GPU \\
+VM platform & Oracle VM VirtualBox \\
+Operating System & Ubuntu 22.04 LTS\\
+ML framework & PyTorch 2.x, SpikingJelly \\
+SNN neuron model & Leaky integrate-and-fire (LIF) \\
+Training method & Surrogate gradient \\
+Dataset & CIFAR-10 (50K train / 10K test, 10 classes) \\
+CNN configuration & ResNet-inspired, run15, 30 epochs \\
+SNN configuration & LIF-based, run13, 35 epochs \\
+SDN controller & Ryu \\
+Network emulator & Mininet-WiFi \\
+Offload cycles & 300 adaptive simulation cycles \\
+SDN validation runs & 27 controller runs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Evaluation Scenarios}
+We design four experimental scenarios to isolate contributions:
+\begin{enumerate}
+\item \textbf{Local Only:} All 300 inference tasks run locally on the simulated edge device without offloading, representing the baseline case with maximum power usage and latency.
+\item \textbf{Offload Only:} All 300 inferences are unconditionally offloaded, irrespective of confidence scores. This represents the worst-case baseline for network load while minimizing computational overhead on the edge.
+\item \textbf{Adaptive without SDN:} The feedback-adaptive engine governs decisions, while no SDN controller is present. Offload traffic is managed as best-effort traffic.
+\item \textbf{NSSON Full:} The feedback-adaptive engine, along with the Ryu SDN controller, governs the decisions.
+  This is the complete system.
+\end{enumerate}
+
+\subsection{Evaluation Metrics}
+
+The following metrics are measured across all scenarios:
+\begin{itemize}
+\item Inference accuracy (\%) on CIFAR-10
+\item End-to-end latency $L_{\text{e2e}}$ (s)
+\item Edge power consumption $P_{\text{total}}$ (Wh)
+\item Network RTT between stations (ms)
+\item Offload ratio (\%)
+\item Adaptive threshold $\theta(t)$ evolution
+\item Network QoS metrics over 300 cycles: per-cycle latency, packet delivery ratio (PDR), packet drop rate, routing overhead ratio, and throughput (Kbps) for both baseline and NSSON configurations.
+\end{itemize}
+\subsection{\revblue{Parameter Settings and Utility Weights}}
+
+\revblue{Table~\ref{tab:param_settings} summarizes the key protocol
+parameters used in NSSON, including the base threshold $\theta_0$,
+feedback window size $N$, sensitivity coefficients
+$(\alpha_L,\alpha_P,\alpha_A)$, and utility weights $(w_L,w_P,w_A)$.
+The values are chosen so that the threshold dynamics in Eq.~\eqref{eq:theta} and Eq.~\eqref{eq:theta_smcc} remain stable, the offload
+ratio stays within a practical operating band (roughly $40$--$60\%$),
+and the utility function in Eq.~\eqref{eq:smcc_utility} reflects the
+intended latency, energy, and accuracy priorities for the AIoT workload. In
+particular, $\theta_0=0.6$ matches the median confidence of the
+neuromorphic SNN over CIFAR-10, $N=10$ balances responsiveness against
+noise in the telemetry, and $(\alpha_L,\alpha_P)=(0.1,0.05)$ ensure that
+typical variations in $\bar{L}$ and $\bar{P}$ (over the ranges observed
+in Section~\ref{sec:results}) induce only small shifts in $\theta(t)$,
+avoiding oscillation. The utility weights $(w_L,w_P,w_A)=(0.4,0.4,0.2)$
+are selected after normalizing latency and energy by
+$(L_{\text{ref}},E_{\text{ref}})$ so that a unit change in
+$\tilde{L}_{\text{e2e}}$ or $\tilde{P}_{\text{total}}$ has comparable
+influence on $\mathcal{J}_{\mathrm{SMCC}}(t)$, while accuracy retains a
+non-negligible but slightly smaller impact. We also verified that
+moderate perturbations of these parameters do not qualitatively change the trends reported in the experiments, indicating that the conclusions
+are robust to reasonable parameter variations.}
+
+\begin{table}[!t]
+\centering
+\color{blue}
+\renewcommand{\arraystretch}{1.25}
+\caption{\revblue{Key NSSON Parameter Settings}}
+\label{tab:param_settings}
+\begin{tabular}{p{2.0cm}p{5.8cm}}
+\toprule
+\textbf{Parameter} & \textbf{Value / Rationale} \\
+\midrule
+$\theta_0$ & 0.6 (median SNN confidence on CIFAR-10) \\
+$N$ & 10 cycles (trade-off between responsiveness and smoothing) \\
+$(\alpha_L,\alpha_P)$ & (0.1, 0.05) (small-gain feedback to avoid oscillation) \\
+$\alpha_A$ & 0.02 (used in accuracy sensitivity study) \\
+$(w_L,w_P,w_A)$ & (0.4, 0.4, 0.2) (balanced latency/energy/accuracy priorities) \\
+$L_{\text{ref}}$ & 0.5~s (typical end-to-end latency scale) \\
+$E_{\text{ref}}$ & 4.0~Wh (typical energy scale per cycle) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% VI. RESULTS
+\section{Results and Analysis}
+\label{sec:results}
+
+\subsection{Sensing Performance}
+
+Table~\ref{tab:sensing} presents the final sensing performance for the CNN
+and SNN models. The CNN achieves 94.84\% test accuracy with a best
+validation accuracy of 95.08\%, confirming stable and high-quality learning.
+The SNN achieves 77.66\% test accuracy, which is consistent with the
+results reported in SpikeNAS~\cite{putra2025spikenas} for non-NAS-optimized
+LIF networks on CIFAR-10. The 17.18 percentage-point gap between CNN and
+SNN is expected and has been reported consistently in the neuromorphic
+computing literature \cite{putra2025spikenas,di2024ec,11201000,majumdar2025spiking}.
+
+\begin{table}[!t]
+\caption{CNN and SNN Sensing Performance on CIFAR-10}
+\label{tab:sensing}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Model} & \textbf{Run} & \textbf{Epochs} &
+\textbf{Best Val.} & \textbf{Test Acc.} & \textbf{Type} \\
+\midrule
+CNN & run15 & 30 & 95.08\% & \textbf{94.84\%} & ANN \\
+SNN & run13 & 35 & 76.74\% & 77.66\% & Neuromorphic \\
+\midrule
+Gap & -- & -- & 18.34 pp & 17.18 pp & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Fig.~\ref{fig:curves} presents four training dynamics plots generated from
+the real run logs. The CNN (top row) converges within the first 15 epochs
+and stabilizes near the peak accuracy, with a smooth and consistent loss
+decrease. The SNN (bottom row) shows more oscillatory convergence, which is
+typical of surrogate-gradient training, but reaches its peak at around
+epoch~28.
+
+\begin{figure}[!t]
+\centering
+
+\begin{subfigure}[t]{0.49\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{cnn_accuracy_curves.png}
+    \caption{CNN validation accuracy (run15)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{cnn_loss_curves.png}
+    \caption{CNN training and validation loss (run15)}
+\end{subfigure}
+
+\vspace{0.15cm}
+
+\begin{subfigure}[t]{0.49\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{snn_loss_curves.png}
+    \caption{SNN loss curves (run13)}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{paper_accuracy_curves.png}
+    \caption{CNN vs SNN validation accuracy comparison}
+\end{subfigure}
+
+\caption{Training dynamics for NSSON sensing models. CNN converges smoothly and quickly; SNN exhibits characteristic surrogate-gradient oscillation before stabilizing.}
+\label{fig:curves}
+\end{figure}
+\subsection{Test Accuracy Comparison}
+
+Fig.~\ref{fig:bar} shows the test accuracy bar chart comparing CNN and
+SNN directly.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.4\textwidth]{paper_test_accuracy.png}
+\caption{Test accuracy comparison: CNN (94.84\%) vs SNN (77.66\%).}
+\label{fig:bar}
+\end{figure}
+
+\subsection{Offload Telemetry Results}
+
+Table~\ref{tab:telemetry} summarizes the 300-cycle offload simulation.
+Adaptive offloading achieves a 23\% reduction in average latency and an
+18\% reduction in power compared with local-only execution.
+
+\begin{table}[!t]
+\caption{300-Cycle Offload Telemetry Summary}
+\label{tab:telemetry}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Local Only} & \textbf{Adaptive} & \textbf{Saving} \\
+\midrule
+Avg. latency (s) & 0.61 & 0.376458 & 23\% \\
+Avg. power (Wh)  & 4.12 & 0.000133 & 18\% \\
+Offload ratio     & 0\%  & \revblue{45\%} & -- \\
+Avg. $\theta$    & 0.60 (fixed) & 0.587 (adaptive) & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Fig.~\ref{fig:offload} shows the offload analysis plots, including the
+decision ratio, latency histogram, power distribution, and threshold
+evolution. The threshold evolution plot confirms that the feedback loop
+is responsive: when high-latency cycles are observed in the first half of
+the simulation, the threshold drops below 0.60, pushing more decisions
+toward offload.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{nssonoffloadanalysis.png}
+\caption{Offload telemetry: decision ratio, latency distribution, power
+scatter, and adaptive threshold evolution over 300 cycles.}
+\label{fig:offload}
+\end{figure}
+
+\subsection{\revblue{Power Model Sensitivity and Uncertainty}}
+
+\revblue{Because the Jetson Nano power model in
+Section~\ref{sec:power_model} relies on calibrated coefficients
+$(W_c,W_t,W_i)$ rather than direct on-board measurements, we performed a
+sensitivity analysis to understand how uncertainties in these parameters
+affect the latency, energy trade-off, and offload decisions. From
+Eq.~\eqref{eq:power_terms} and Eq.~\eqref{eq:energy}, the per-cycle energy can be
+written as
+\begin{equation}
+\begin{split}
+E(t) &= W_c L_{\text{compute}}(t) L_{\text{e2e}}(t)
++ W_t M_{\text{data}}(t) L_{\text{e2e}}(t) \\
+&\quad + W_i L_{\text{idle}}(t) L_{\text{e2e}}(t)
+\end{split}
+\end{equation}
+so that the partial derivatives $\partial E/\partial W_c$,
+$\partial E/\partial W_t$, and $\partial E/\partial W_i$ scale linearly
+with the corresponding latency and data-volume terms. Treating
+$(W_c,W_t,W_i)$ as random variables within plausible ranges derived from
+Jetson power profiles, we can bound the induced variation in $E(t)$ and
+hence in $\tilde{P}_{\text{total}}(t)$ in Eq.~\eqref{eq:smcc_utility}. In
+practice, varying each coefficient by $\pm 20\%$ around its nominal value
+rescales the energy term but does not change the ordering of policies:
+adaptive offloading continues to reduce the modeled energy compared to
+local-only execution over the 300-cycle run.}
+
+\revblue{Furthermore, since the feedback law (Eq.~\eqref{eq:theta}) depends on
+the sliding-window average $\bar{P}$, perturbations in
+$(W_c,W_t,W_i)$ primarily rescale the magnitude of
+$\alpha_P \bar{P}$, but do not alter the sign or qualitative behavior of
+the threshold dynamics. We therefore interpret the reported power savings
+as modeled estimates subject to hardware-dependent uncertainty, and we
+explicitly discuss the need for validating these coefficients using
+INA3221 rail measurements in Section~\ref{sec:limitations}.}
+
+\subsection{SDN Network Results}
+
+Table~\ref{tab:rtt} shows the RTT measurements from Mininet-WiFi across
+27 controller runs. NSSON's Ryu controller reduces RTT from 10.71~ms (without SDN) to 7.36~ms (with SDN). This result indicates an overall improvement of 31.3\% when SDN features were applied.
+
+\begin{table}[!t]
+\caption{Mininet-WiFi RTT Comparison Across Controller Modes}
+\label{tab:rtt}
+\centering
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{1.5cm}ccc}
+\toprule
+\textbf{Mode} & \textbf{$node\_i$$\to$$node\_j$ } &
+\textbf{$node_j$$\to$$node\_i$ } & \textbf{Packet } \\
+ &  (ms) & (ms) & \textbf{Loss} \\
+\midrule
+Baseline (no controller) & 10.71 & 2.83 & 0\% \\
+NSSON Ryu (optimized) & 7.36 & 2.28 & 0\% \\
+\midrule
+Improvement & 31.3\% & 19.4\% & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These improvements are significant because the RTT for the end-to-end node 
+represents the path taken by offloaded inference requests. A 31\% reduction
+means that latency-critical inference traffic reaches the edge server faster,
+which directly reduces $L_{\text{transfer}}$ in Equation~(\ref{eq:latency}).
+
+\subsection{Extended Network QoS Metrics}
+
+
+To provide a more comprehensive view of NSSON’s impact on network performance, we compare per-cycle latency, packet delivery ratio, packet drop rate, routing overhead, and throughput against a baseline SDN-IoT configuration over 300 cycles.
+
+Fig.~\ref{fig:latency_cycle} shows the latency vs.\ cycle comparison. NSSON maintains consistently lower latency than the baseline across most of the run, with several phases where the latency drops below 25~ms while the baseline oscillates between approximately 30 and 40~ms.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/latency_comparison.png}
+\caption{Latency vs.\ cycle for baseline and NSSON.}
+\label{fig:latency_cycle}
+\end{figure}
+
+Fig.~\ref{fig:pdr_cycle} presents packet delivery ratio (PDR) vs.\ cycle. Both systems exhibit a gradual decline in PDR as load increases, but NSSON stabilizes around the mid-80\% range and slightly outperforms the baseline in later cycles.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/pdr_comparison.png}
+\caption{Packet delivery ratio vs.\ cycle for baseline and NSSON.}
+\label{fig:pdr_cycle}
+\end{figure}
+
+Fig.~\ref{fig:pdrop_cycle} shows packet drop rate vs.\ cycle. After an initial transient, NSSON maintains a lower or comparable drop rate compared to the baseline, particularly in the latter half of the run, where baseline drop rates increase while NSSON remains more stable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/packet_drop_rate_comparison.png}
+\caption{Packet drop rate vs.\ cycle for baseline and NSSON.}
+\label{fig:pdrop_cycle}
+\end{figure}
+
+Fig.~\ref{fig:routing_overhead} reports the routing overhead ratio vs.\ cycle. NSSON consistently achieves a lower routing overhead (around 0.50) than the baseline (around 0.60), indicating more efficient control-plane traffic for similar data-plane performance.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/routing_overhead_comparison.png}
+\caption{Routing overhead ratio vs.\ cycle for baseline and NSSON.}
+\label{fig:routing_overhead}
+\end{figure}
+
+Finally, Fig.~\ref{fig:throughput_cycle} shows throughput vs.\ cycle. NSSON sustains significantly higher throughput, fluctuating roughly between 200 and 300~Kbps, while the baseline remains below 60~Kbps and exhibits a slower increase over cycles.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/throughput_comparison.png}
+\caption{Throughput vs.\ cycle for baseline and NSSON.}
+\label{fig:throughput_cycle}
+\end{figure}
+
+
+
+Overall, these QoS results confirm that NSSON’s SMCC-aware design not only improves latency and energy, but also delivers higher throughput with lower routing overhead and competitive reliability, thereby strengthening the empirical case for the proposed methodology.
+
+\subsection{\revblue{Multi-Slice QoS, SLA, and Congestion Evaluation}}
+\label{sec:multislice_qos}
+
+\revblue{To extend the original binary priority evaluation, we conducted
+additional experiments using the updated NSSON\_V02 implementation with
+three logical inference slices,
+$\mathcal{S}=\{\mathrm{control},\mathrm{healthcare},\mathrm{monitoring}\}$,
+and two operating modes,
+$\mathcal{M}=\{\mathrm{baseline},\mathrm{NSSON}\}$. The control slice
+represents latency-sensitive real-time inference traffic, the healthcare slice represents highly reliable alert-oriented inference traffic, and the monitoring slice represents periodic and comparatively delay-tolerant
+traffic. Each slice is associated with a distinct QoS profile rather than
+being evaluated solely as generic offload or background traffic.}
+
+\revblue{For every measurement cycle $n\in\{1,\ldots,N\}$, slice
+$s\in\mathcal{S}$, and mode $m\in\mathcal{M}$, the experiment records
+end-to-end latency $L_n(s,m)$, jitter $J_n(s,m)$, throughput
+$T_n(s,m;\lambda)$, packet delivery ratio $R_n(s,m)$, and packet drop
+rate $D_n(s,m)$. The load parameter $\lambda$ denotes the intensity of
+concurrent background traffic in the heavy-load experiment. This
+measurement design converts the controller evaluation from a single
+RTT-oriented comparison into a multi-dimensional QoS assessment across
+heterogeneous inference traffic classes.}
+
+\subsubsection{\revblue{Per-Slice SLA Formulation}}
+
+\revblue{Each slice $s$ is assigned an application-specific service-level
+agreement (SLA) profile
+$\Gamma(s)=\{L_{\max}(s),R_{\min}(s),T_{\min}(s),D_{\max}(s)\}$,
+where $L_{\max}(s)$ is the maximum permitted latency,
+$R_{\min}(s)$ is the minimum required packet delivery ratio,
+$T_{\min}(s)$ is the minimum required throughput, and
+$D_{\max}(s)$ is the maximum permitted packet drop rate. For a single
+measurement cycle, SLA compliance is represented by binary indicator
+functions:}
+\begin{equation}
+\color{blue}
+\begin{aligned}
+&I^{\mathrm{lat}}_n(s,m)= \mathbf{1}\!\left[L_n\leq L_{\max}\right], 
+&&I^{\mathrm{pdr}}_n(s,m)= \mathbf{1}\!\left[R_n\geq R_{\min}\right], \\
+&I^{\mathrm{thr}}_n(s,m)= \mathbf{1}\!\left[T_n\geq T_{\min}\right], 
+&&I^{\mathrm{drop}}_n(s,m)= \mathbf{1}\!\left[D_n\leq D_{\max}\right]
+\end{aligned}
+\label{eq:multislice_sla_indicators}
+\end{equation}
+
+\revblue{where $\mathbf{1}[\cdot]$ equals one when the condition is true
+and zero otherwise. These indicators provide a transparent operational
+definition of SLA satisfaction: a slice satisfies its latency, delivery,
+throughput, or loss requirement in a given cycle only when the
+corresponding inequality holds.}
+
+\revblue{For QoS metric $q\in\{\mathrm{lat},\mathrm{pdr},
+\mathrm{thr},\mathrm{drop}\}$, the empirical SLA fulfillment ratio is}
+
+\begin{equation}
+\color{blue}
+F_q(s,m)=\frac{1}{N}\sum_{n=1}^{N} I^q_n,
+\; 0\leq F_q\leq 1
+\label{eq:multislice_sla_fulfillment}
+\end{equation}
+\revblue{Thus, $F_q(s,m)$ is the fraction of cycles for which the SLA for
+metric $q$ is met by slice $s$ under mode $m$. Unlike a single mean
+latency number, this statistic reveals whether a policy consistently
+respects application-level requirements. Fig.~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}
+(b) visualizes the measured SLA fulfillment ratios for the evaluated
+slices and modes.}
+
+\subsubsection{\revblue{Throughput Gain and Heavy-Load Robustness}}
+
+\revblue{To quantify the benefit of NSSON relative to the baseline, we
+define the throughput multiplier for each slice at background-load level
+$\lambda$ as}
+
+\begin{equation}
+\color{blue}
+\mu_T(s;\lambda)=
+\frac{\frac{1}{N}\sum_{n=1}^{N}T_n(s,\mathrm{NSSON};\lambda)}
+{\frac{1}{N}\sum_{n=1}^{N}T_n(s,\mathrm{baseline};\lambda)}
+\label{eq:multislice_throughput_multiplier}
+\end{equation}
+
+\revblue{A value $\mu_T(s;\lambda)>1$ indicates that NSSON delivers a
+higher mean throughput than the baseline for slice $s$ at load
+$\lambda$. This ratio is dimensionless and avoids interpreting an
+absolute gain without respect to the operating point. Fig.~~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}
+(d) reports the measured throughput multipliers. Fig.~~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}
+(c) reports throughput under increased background traffic and therefore
+provides a direct congestion-response evaluation.}
+
+\revblue{The additional experiments show that NSSON improves the
+throughput available to the logical inference slices, maintains stronger
+SLA fulfillment than the baseline, and retains useful throughput under
+heavy background load. Together with the latency, jitter, PDR, and
+drop-rate results in Fig.~\ref{fig:ieee_qos_panel}, these outcomes show
+that the benefit of inference-aware flow handling is not restricted to
+mean RTT. Rather, the observed benefit extends across reliability,
+bandwidth, delay variability, and slice-specific application objectives.}
+
+% IMPORTANT: Copy the four PNG files into the manuscript figures directory:
+% figures/fig1_per_slice_throughput.png
+% figures/fig2_heavy_load_throughput.png
+% figures/fig3_sla_fulfillment_heatmap.png
+% figures/fig4_throughput_multiplier.png
+
+% ============================================================
+% FIGURE 11 -- Original (a), full two-column width
+% ============================================================
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/fig1_per_slice_throughput.pdf}
+    \caption{\revblue{Per-slice throughput under the baseline and NSSON modes.}}
+    \label{fig:multislice_throughput}
+\end{figure*}
+
+
+% ============================================================
+% FIGURE 12 -- Original (b) and (c), side-by-side
+% ============================================================
+\begin{figure*}[!t]
+    \centering
+
+    \subfloat[\revblue{Measured per-slice SLA fulfillment heatmap.}]
+    {
+        \includegraphics[width=0.46\textwidth]{figures/fig3_sla_fulfillment_heatmap.pdf}
+        \label{fig:multislice_sla_heatmap}
+    }
+    \hfill
+    \subfloat[\revblue{Slice throughput under heavy background load.}]
+    {
+        \includegraphics[width=0.46\textwidth]{figures/fig2_heavy_load_throughput.pdf}
+        \label{fig:multislice_heavy_load}
+    }
+
+    \caption{\revblue{Measured multi-slice SLA fulfillment and congestion
+    performance. (a) reports the measured SLA fulfillment ratios, while
+    (b) evaluates slice throughput as the background load $\lambda$
+    increases.}}
+    \label{fig:multislice_sla_congestion}
+\end{figure*}
+
+
+% ============================================================
+% FIGURE 13 -- Original (d), full two-column width
+% ============================================================
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/fig4_throughput_multiplier.pdf}
+    \caption{\revblue{NSSON-to-baseline throughput multipliers. The dimensionless
+    throughput multiplier $\mu_T(s;\lambda)$ is computed according to
+    \eqref{eq:multislice_throughput_multiplier}.}}
+    \label{fig:multislice_multiplier}
+\end{figure*}
+% IMPORTANT: Copy this figure into the manuscript figures directory:
+% figures/ieee_qos_panel_2x2.png
+\begin{figure*}[!t]
+\centering
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/ieee_qos_panel_2x2.png}
+    \caption{\revblue{Multi-dimensional QoS comparison between baseline and NSSON, including latency, jitter, packet delivery ratio, and packet drop rate. These metrics complement the slice-level throughput and SLA results in Fig.~~\ref{fig:multislice_throughput}, \ref{fig:multislice_sla_congestion}, and \ref{fig:multislice_multiplier}.}}
+    \label{fig:ieee_qos_panel}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{nsson_ablation_suite_300.png}
+    \caption{NSSON ablation suite: (a) CNN vs SNN accuracy gap; (b) local vs offload latency distribution; (c) local vs offload power distribution; (d) SDN baseline vs NSSON RTT.}
+    \label{fig:ablation}
+\end{minipage}
+\end{figure*}
+
+\subsection{Comparative Study}
+
+Fig.~\ref{fig:ablation} presents the full four-panel comparative study of the proposed system along with the existing works.
+Table~\ref{tab:ablation} summarizes the contribution of each NSSON component.
+\begin{table}[!t]
+\caption{Ablation Study: Component-Level Contributions}
+\label{tab:ablation}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{2.5cm}p{5.2cm}}
+\toprule
+\textbf{Component} & \textbf{Contribution} \\
+\midrule
+CNN Sensing & 94.84\% test accuracy; provides strong baseline \\
+SNN Sensing & 77.66\% test accuracy; low power event-driven inference \\
+Adaptive Engine & 23\% latency reduction; 45\% of cycles offloaded \\
+Power Model & 18\% power saving under adaptive policy \\
+Feedback Loop & Threshold adjusted from 0.60 to 0.587; stable policy \\
+SDN Controller & 31\% RTT reduction; priority offload routing \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+Together with the extended QoS metrics in Figs.~\ref{fig:latency_cycle}–\ref{fig:throughput_cycle}, this ablation analysis demonstrates that each NSSON component contributes distinct benefits, and that the full SMCC pipeline yields improvements that cannot be achieved by any single component in isolation.
+
+% ─── VII. DISCUSSION ──────────────────────────────────────────────────────────
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Cross-Layer SMCC Integration}
+The primary contribution of NSSON is the demonstration that authentic SMCC necessitates the explicit convergence of all four architectural planes. In isolation, the sensing layer gives accurate results, the computation engine reduces latency, and the SDN controller improves RTT. However, when integrated through shared telemetry memory and the feedback loop, these three components function as a unified system whose effectiveness exceeds the contribution of each part individually. The feedback loop adapts the compute policy according to network conditions, while the SDN controller modifies traffic flows based on compute decisions. The bidirectional coupling serves as the architectural hallmark of NSSON's SMCC design. It differentiates the framework from other literature that typically decouples sensing, computing, and networking, thereby missing the cross-layer synergy essential for real-time autonomy \cite{10812728,9453402,chiang2023management,zeb2023toward}.
+
+\subsection{The Role of SDN in Collaborative Inference}
+
+The findings indicate that the absence of SDN in NSSON would negatively impact the performance in two distinct ways. First, the RTT increase (+31) would push
+$L_{\text{transfer}}$ higher, increasing average $L_{\text{e2e}}$ for
+offloaded samples. Second, in the absence of SDN observability, the shared queue effect (see Section~\ref{sec:nosdn}) would cause offloaded traffic to compete with background flows, leading to unpredictable burst-time delays that the feedback loop cannot mitigate due to the lack of SDN-based queue visibility.
+These concurrent effects diminish the realized gains of adaptive offloading, as the added communication latency begins to outweigh the computational saving. The 23\% latency reduction achieved by NSSON under full SDN could be reduced substantially in the no-SDN case, according to the queuing analysis. These findings demonstrate that SDN is not merely an optional enhancement, but a fundamental enabler of SMCC performance in AIoT deployments.
+
+\subsection{\revblue{Positioning within QoS-Aware SD-IoT}}
+
+\revblue{Conventional QoS-aware SD-IoT frameworks typically focus on
+generic latency, jitter, packet loss, and bandwidth guarantees enforced
+via static priority classes or weighted fair queuing, without explicitly
+conditioning flow rules on inference outcomes. In contrast, NSSON's Ryu
+controller installs flow rules based on neuromorphic offload decisions,
+making the SDN plane inference-aware and allowing network behavior to
+track SMCC utility variations over time. The extended QoS experiments in
+Section~\ref{sec:results} demonstrate that this design yields
+multi-dimensional improvements (latency, jitter, packet delivery ratio,
+packet drop rate, routing overhead, and throughput) compared to a
+baseline SDN-IoT configuration.}
+
+\revblue{At the same time, NSSON currently implements a relatively simple
+priority-based service differentiation rather than full-fledged
+per-tenant SLAs or hard isolation between slices. The per-slice QoS and
+SLA analyses on control, healthcare, and monitoring traffic, as presented in
+Fig.~\ref{fig:ieee_qos_panel} shows the telemetry-driven controller can
+already distinguish traffic classes and maintain different latency and
+reliability profiles, while the architecture and logging pipeline are
+designed so that more sophisticated mechanisms, such as
+network-calculus-based SLA enforcement, logical network slices for
+autonomous driving and industrial automation, and adaptive routing driven
+by real-time RTT, loss, SNR, and available bandwidth can be layered on
+top of the existing NSSON foundation. This positions NSSON as a concrete
+step toward fully QoS-aware SD-IoT, with clear upgrade paths for future
+5G/6G AIoT deployments.}
+
+\subsection{Neuromorphic Sensing Viability}
+The 17.18 percentage-point accuracy gap between CNN and SNN is consistent
+with the literature. SpikeNAS \cite{putra2025spikenas} gives similar gaps for non-NAS-optimized architectures, and EC-SNN~\cite{di2024ec} reports that SNN accuracy improves through split execution across multiple nodes. NSSON leverages this accuracy gap constructively: when the SNN confidence falls (below $\theta$), the sample is offloaded to a more accurate CNN running on the edge server, allowing the SNN to function as a fast, low-power pre-filter. The simulation-integrated neuromorphic-CNN-SNN pipeline represents a pioneering contribution of NSSON. Incorporating SpikeNAS-inspired techniques would facilitate the automated discovery of high-fidelity spiking neurons, thereby narrowing the observed accuracy gap.
+
+\subsection{Feedback Stability and Policy Quality}
+The evolution of the adaptive threshold demonstrates that the feedback loop remains stable and well-behaved. The threshold quickly settles within the range of 0.57--0.61 and shows no signs of oscillation. The selection of a feedback coefficient $\alpha_L = 0.1$ relative to typical latency ranges (0.4--0.7~s) ensures a damped response. This characteristic smooths the transient spike and prevents over-correction. A possible direction for future work is the application of reinforcement learning or Bayesian optimization to fine-grained tune the sensitivity coefficients, potentially yielding a higher-quality offload policy.
+
+\subsection{Theoretical and Practical Implications}
+
+From a theoretical perspective, NSSON illustrates how integrated sensing-communication-computation can be framed as an SMCC-aware control problem with explicit utility, decision, and feedback equations as mentioned in Section~\ref{sec:architecture}. The extended QoS experiments show that optimizing $\mathcal{J}_{\mathrm{SMCC}}(t)$ leads not only to lower latency and energy, but also to improved throughput and routing efficiency. Practically, this provides guidance for designing edge-AIoT networks where neuromorphic sensing and SDN controllers are co-engineered to meet application-level performance targets under strict hardware and bandwidth constraints.
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=0.4cm and 2.0cm,
+  >=Stealth,
+  theory/.style={rectangle, rounded corners, draw, thick, fill=blue!5,
+                 align=center, minimum width=3.3cm, minimum height=0.9cm},
+  practice/.style={rectangle, rounded corners, draw, thick, fill=green!5,
+                   align=center, minimum width=3.6cm, minimum height=0.9cm},
+  every node/.style={font=\footnotesize}
+]
+
+% Theoretical layer (left)
+\node[theory] (decision) {Offload decision\\model $D(s,t)$};
+\node[theory, below=of decision] (utility) {SMCC utility\\$\mathcal{J}_{\mathrm{SMCC}}(t)$};
+\node[theory, below=of utility] (models) {Latency \& power\\models $L_{\text{e2e}}, P_{\text{total}}$};
+\node[theory, below=of models] (feedback) {Feedback law\\$\theta(t)$};
+
+% Practical layer (right)
+\node[practice, right=1.5cm of decision] (latency) {Lower latency\\(23\% reduction)};
+\node[practice, below=of latency] (energy) {Lower energy\\(18\% saving)};
+\node[practice, below=of energy] (rtt) {Improved RTT\\(31\% reduction)};
+\node[practice, below=of rtt] (qos) {Better QoS\\(throughput, PDR,\\drop rate, overhead)};
+
+% Arrows: theory -> practice
+\draw[->, thick] (decision) -- (latency);
+\draw[->, thick] (utility) -- (energy);
+\draw[->, thick] (models) -- (rtt);
+\draw[->, thick] (feedback) -- (qos);
+
+% Layer labels
+\node[above=0.1cm of decision] {\textbf{Theoretical layer}};
+\node[above=0.1cm of latency] {\textbf{Practical layer}};
+
+\end{tikzpicture}
+\caption{Theoretical and practical implications of NSSON: theoretical models on the left lead to measurable improvements in latency, energy, RTT, and QoS on the right.}
+\label{fig:theory-practice}
+\end{figure}
+
+
+\subsection{Comparison with Prior Work}
+Compared with SpikeNAS~\cite{putra2025spikenas}, NSSON does not incorporate Neural Architecture Search (NAS); instead, it introduces critical network orchestration and offloading mechanisms—features that remain unaddressed by the SpikeNAS framework. Compared with EC-SNN~\cite{di2024ec}, NSSON adds a feedback loop and an SDN layer that EC-SNN lacks. In contrast to conventional SDN-IoT frameworks, NSSON also supports neuromorphic simulated sensing and adaptive split computing functionalities beyond standard SDN mechanisms.  
+Table~\ref{tab:comparison} in Section~\ref{sec:background}, together with the QoS results in Figs.~\ref{fig:latency_cycle}–\ref{fig:throughput_cycle}, confirms that NSSON is the sole system integrating all five dimensions of SMCC design while empirically demonstrating benefits across both compute and network metrics.
+
+% ─── VIII. LIMITATIONS AND FUTURE WORK ────────────────────────────────────────
+\section{Limitations and Future Work}
+\label{sec:limitations}
+
+\subsection{Current Limitations}
+
+\textbf{Accuracy gap in SNN}: While the CNN achieves 94.84\% accuracy, the LIF-based SNN yields a lower baseline of 77.66\% test accuracy. This intrinsic performance disparity limits autonomous edge decision-making, requiring a larger proportion of samples to be offloaded to avoid compromising overall system precision. Although consistent with prior literature, the gap is larger than what SpikeNAS achieved with memory-aware NAS. NSSON currently compensates via offloading low-confidence SNN outputs, but enhancing SNN performance would reduce offload frequency and further improve power and latency.
+
+\textbf{Simulated power model}: The Jetson Nano power estimation model uses calibrated constants sourced from published hardware profiles instead of real-world device measurements. \revblue{Consequently, the reported power values (including $4.12$~Wh and the
+adaptive $0.000133$~Wh) should be interpreted as modeled estimates
+obtained from calibrated coefficients rather than direct empirical
+measurements. Integrating on-board Jetson INA3221 sensors and
+correlating the telemetry-based model with actual rail readings is a
+vital next step to validate and refine these coefficients under realistic
+thermal throttling and dynamic voltage scaling behavior.}
+
+\subsection{Future Work}
+
+\textbf{SpikeNAS-informed SNN design}: Applying SpikeNAS~\cite{putra2025spikenas} memory-aware NAS to the NSSON SNN sensing layer is the most promising near-term enhancement. Bridging the performance disparity from 17.18~pp to under 5~pp would significantly enhance the operational utility of the local SNN, providing a sustainable path for scaling NSSON to higher-complexity vision tasks.
+
+\textbf{Real Jetson Nano deployment}: Running NSSON on actual Jetson Nano hardware would enable ground-truth measurement of the power model, and it would allow for the validation of the latency decomposition under authentic hardware and thermal constraints.\revblue{Although the current implementation is evaluated within a
+Mininet-WiFi emulation, all NSSON components are designed to map
+directly onto real deployments: the neuromorphic sensing plane runs on
+Jetson Nano-compatible PyTorch/SpikingJelly code, the telemetry bus uses
+filesystem-based logs or could be replaced by a message queue such as
+MQTT, and the Ryu controller operates identically on physical OpenFlow
+switches and wireless access points. The only emulation-specific aspects
+are the Mininet-WiFi topology description and link parameter settings,
+which can be instantiated on commodity SDN-enabled hardware without
+changing the control logic.}
+
+\textbf{Multi-AP mobile topology}: Scaling the Mininet-WiFi topology to support mobile stations and multiple access points would empower the Ryu controller to run proactive handover management. This extension is important for validation for NSSON's ability to dynamically re-route offloading traffic based on real-time signal strength and AP load.
+
+% ─── IX. CONCLUSION ───────────────────────────────────────────────────────────
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper presented NSSON, an SDN-orchestrated SMCC framework for
+collaborative neuromorphic offloading in large-scale AIoT systems.
+NSSON integrates five planes into a closed-loop system: a dual CNN/SNN
+sensing layer, a shared telemetry memory bus, a confidence-driven adaptive
+offload engine with feedback-controlled threshold, a Jetson Nano-calibrated
+power and latency model, and a Ryu OpenFlow SDN controller that steers
+offload traffic using inference telemetry.
+
+The evaluation demonstrates that CNN achieves 94.84\% test accuracy on
+CIFAR-10, while SNN achieves 77.66\%, with the 17.18~pp gap motivating
+adaptive offloading. Adaptive offloading reduces average latency by 23\%
+and power by 18\% compared to local-only execution. The SDN layer reduces
+station-to-station RTT by 31.3\%, and analytical queuing analysis confirms
+a 45\% reduction in queuing delay under moderate link load for offload
+traffic. Without SDN, these benefits of the network-layer disappear, and the
+system loses the ability to observe and manage the interaction between
+inference decisions and the state of the network \cite{kreutz2014software,mckeown2008openflow,gude2008nox,siddiqui2022toward,lo2023sdn}.
+
+The extended QoS experiments on latency, PDR, packet drop rate, routing overhead, and throughput show that NSSON’s SMCC-aware design consistently improves network performance relative to a baseline SDN-IoT configuration, while maintaining high sensing accuracy and energy efficiency. NSSON directly addresses the SMCC paradigm by co-designing sensing,
+memory, communication, and computation around a shared telemetry bus and
+feedback control loop. It is the first framework that combines neuromorphic
+sensing, split-computing offloading, feedback-adaptive thresholding, and
+OpenFlow SDN orchestration in a unified SMCC architecture.\cite{10812728,9453402,chiang2023management}.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,52 @@
+{
+  "requested_duration_s": 6,
+  "start": {
+    "background_ingress": {
+      "device": "pac2dc1-eth4",
+      "counter": "rx_bytes",
+      "bytes": 14571500,
+      "monotonic_s": 88971.65304987351,
+      "read_duration_s": 0.0003153149882564321,
+      "unix_s": 1793646882.2049525
+    },
+    "bottleneck_egress": {
+      "device": "pac2dc1-eth5",
+      "counter": "tx_bytes",
+      "bytes": 14624010,
+      "monotonic_s": 88971.653323143,
+      "read_duration_s": 8.844801050145179e-05,
+      "unix_s": 1793646882.2051086
+    }
+  },
+  "end": {
+    "background_ingress": {
+      "device": "pac2dc1-eth4",
+      "counter": "rx_bytes",
+      "bytes": 29337708,
+      "monotonic_s": 88977.6597410255,
+      "read_duration_s": 0.0002724009973462671,
+      "unix_s": 1793646888.211622
+    },
+    "bottleneck_egress": {
+      "device": "pac2dc1-eth5",
+      "counter": "tx_bytes",
+      "bytes": 29576834,
+      "monotonic_s": 88977.659996563,
+      "read_duration_s": 0.0001085379917640239,
+      "unix_s": 1793646888.2117927
+    }
+  },
+  "rates": {
+    "background_ingress": {
+      "bytes": 14766208,
+      "seconds": 6.0066911519970745,
+      "mbps": 19.66634558208055
+    },
+    "bottleneck_egress": {
+      "bytes": 14952824,
+      "seconds": 6.0066734200081555,
+      "mbps": 19.914948530669008
+    }
+  },
+  "scope": "Interface counter rates over a common target window. Not synchronized application-layer TCP goodput."
+}

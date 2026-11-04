@@ -1,0 +1,6 @@
+128: pa36494-eth5@pb36494-eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc htb master ovs-system state UP mode DEFAULT group default qlen 1000
+    link/ether 0e:50:9b:75:e4:72 brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+          3185      28      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+          4154      40      0       0       0       0

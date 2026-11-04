@@ -1,0 +1,2 @@
+index, name, uuid, driver_version, power.draw [W], power.limit [W], temperature.gpu, utilization.gpu [%]
+0, NVIDIA RTX 2000 Ada Generation, GPU-703505b2-17ec-6732-79e3-5124680b5d19, 595.99.02, 7.35 W, 70.00 W, 36, 0 %

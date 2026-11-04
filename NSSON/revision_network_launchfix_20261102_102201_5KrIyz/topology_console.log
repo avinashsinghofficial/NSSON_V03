@@ -1,0 +1,77 @@
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+*** Configuring hosts
+nrccc577c nrccc577r 
+*** Starting controller
+
+*** Starting 1 switches
+nrccc577s (20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+...(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+
+PING 10.231.77.2 (10.231.77.2) 56(84) bytes of data.
+64 bytes from 10.231.77.2: icmp_seq=1 ttl=64 time=16.8 ms
+64 bytes from 10.231.77.2: icmp_seq=2 ttl=64 time=8.11 ms
+
+--- 10.231.77.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 8.107/12.428/16.750/4.321 ms
+
+MONITORED SERVER PID: 25178
+SERVER PID VERIFIED: 25178
+MONITORED CLIENT PID: 25225
+CLIENT PID VERIFIED: 25225
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_network_launchfix_20261102_102201_5KrIyz",
+  "total_client_requests": 80,
+  "matched_remote_requests": 20,
+  "observed_identity_mismatches": 0,
+  "policies": {
+    "local_cnn": {
+      "requests": 20,
+      "offloaded": 0,
+      "correct": 20,
+      "mean_request_ms": 1.8581098
+    },
+    "local_snn": {
+      "requests": 20,
+      "offloaded": 0,
+      "correct": 19,
+      "mean_request_ms": 14.6954146
+    },
+    "remote_cnn": {
+      "requests": 20,
+      "offloaded": 20,
+      "correct": 20,
+      "mean_request_ms": 20.2401094
+    },
+    "adaptive_fixed": {
+      "requests": 20,
+      "offloaded": 0,
+      "correct": 19,
+      "mean_request_ms": 15.24402695
+    }
+  },
+  "limitations": [
+    "Smoke test only; 20 requests per policy.",
+    "Same workstation and shared physical GPU resources.",
+    "Static OpenFlow forwarding, not Ryu inference registration.",
+    "No queue differentiation, SLA enforcement, or adaptive routing.",
+    "Fixed threshold; no feedback update.",
+    "No Jetson energy or hardware measurements.",
+    "Timing excludes original image acquisition."
+  ]
+}
+*** Stopping 0 controllers
+
+*** Stopping 2 links
+..
+*** Stopping 1 switches
+nrccc577s 
+*** Stopping 2 hosts
+nrccc577c nrccc577r 
+*** Done

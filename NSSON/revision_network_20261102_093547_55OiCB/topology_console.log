@@ -1,0 +1,39 @@
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+*** Configuring hosts
+nr894a19c nr894a19r 
+*** Starting controller
+
+*** Starting 1 switches
+nr894a19s (20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+...(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+
+PING 10.231.77.2 (10.231.77.2) 56(84) bytes of data.
+64 bytes from 10.231.77.2: icmp_seq=1 ttl=64 time=17.3 ms
+64 bytes from 10.231.77.2: icmp_seq=2 ttl=64 time=8.17 ms
+
+--- 10.231.77.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 8.170/12.722/17.274/4.552 ms
+
+*** Stopping 0 controllers
+
+*** Stopping 2 links
+..
+*** Stopping 1 switches
+nr894a19s 
+*** Stopping 2 hosts
+nr894a19c nr894a19r 
+*** Done
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py", line 830, in <module>
+    main()
+  File "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py", line 821, in main
+    run_topology(args)
+  File "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py", line 659, in run_topology
+    raise RuntimeError(
+RuntimeError: Server exited. Inspect server_console.log

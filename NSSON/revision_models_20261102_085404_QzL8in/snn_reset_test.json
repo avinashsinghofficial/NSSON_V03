@@ -1,0 +1,8 @@
+{
+  "sequence": "A, B, A; reset before every forward",
+  "rtol": 0.0001,
+  "atol": 1e-05,
+  "maximum_absolute_score_difference": 0.0,
+  "passed": true,
+  "limitation": "A finite consistency check, not proof of all possible state-isolation cases."
+}

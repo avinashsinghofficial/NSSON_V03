@@ -1,0 +1,274 @@
+================ PROJECT FILE MANIFEST ================
+/home/avi/NSSON_V02/configs/qos_config.yaml
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py
+/home/avi/NSSON_V02/feedbackloop.py
+/home/avi/NSSON_V02/generate_qos_data.py
+/home/avi/NSSON_V02/jetson_emulation/calibrate_bases.py
+/home/avi/NSSON_V02/jetson_emulation/__init__.py
+/home/avi/NSSON_V02/jetson_emulation/jetson_emulation/__init__.py
+/home/avi/NSSON_V02/jetson_emulation/jetson_emulation/jetson_profile.py
+/home/avi/NSSON_V02/jetson_emulation/jetson_emulation/jetson_runner.py
+/home/avi/NSSON_V02/latencytracker.py
+/home/avi/NSSON_V02/models/cifar10_cnn.py
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py
+/home/avi/NSSON_V02/models/__init__.py
+/home/avi/NSSON_V02/nsson_qos_plots.py
+/home/avi/NSSON_V02/offloadengine.py
+/home/avi/NSSON_V02/plotting/__init__.py
+/home/avi/NSSON_V02/plotting/plot_latest_nsson_experimental.py
+/home/avi/NSSON_V02/plotting/plot_nsson_experimental.py
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py
+/home/avi/NSSON_V02/plotting/plot_results.py
+/home/avi/NSSON_V02/plotting/plot_results_templated.py
+/home/avi/NSSON_V02/powermodel.py
+/home/avi/NSSON_V02/qos/qos_metrics_builder.py
+/home/avi/NSSON_V02/qos/qos_plots_ieee.py
+/home/avi/NSSON_V02/run_all_experiments.sh
+/home/avi/NSSON_V02/scripts/__init__.py
+/home/avi/NSSON_V02/scripts/nsson_controller.py
+/home/avi/NSSON_V02/scripts/nsson_simulate.py
+/home/avi/NSSON_V02/scripts/nsson_simulate_with_telemetry.py
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate_with_telemetry.py
+/home/avi/NSSON_V02/scripts/scripts/plot_nsson_ieee.py
+/home/avi/NSSON_V02/scripts/scripts/plot_results.py
+/home/avi/NSSON_V02/scripts/scripts/plot_results_templated.py
+/home/avi/NSSON_V02/scripts/scripts/telemetry_logger.py
+/home/avi/NSSON_V02/scripts/telemetry_logger.py
+/home/avi/NSSON_V02/sim/__init__.py
+/home/avi/NSSON_V02/sim/nsson_utils/__init__.py
+/home/avi/NSSON_V02/sim/nsson_utils/run_utils.py
+/home/avi/NSSON_V02/simrunner.py
+/home/avi/NSSON_V02/snasnet/config.py
+/home/avi/NSSON_V02/snasnet/export_snasnet_ts.py
+/home/avi/NSSON_V02/snasnet/model_snn.py
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py
+/home/avi/NSSON_V02/snasnet/search_snn.py
+/home/avi/NSSON_V02/snasnet/utils.py
+/home/avi/NSSON_V02/snn/cifar10_snasnet.py
+/home/avi/NSSON_V02/snn/__init__.py
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py
+/home/avi/NSSON_V02/snn/snn_snasnet/__init__.py
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py
+/home/avi/NSSON_V02/traincnn.py
+/home/avi/NSSON_V02/trainsnn.py
+
+================ MODEL / DATASET / SNN SEARCH ================
+/home/avi/NSSON_V02/trainsnn.py:7:from torch.utils.data import DataLoader
+/home/avi/NSSON_V02/trainsnn.py:19:class SimpleSNN(nn.Module):
+/home/avi/NSSON_V02/trainsnn.py:20:    # Larger MLP to approximate neuromorphic SNN accuracy (~75–80%)
+/home/avi/NSSON_V02/trainsnn.py:41:    trainset = torchvision.datasets.CIFAR10(root=os.path.join(NSSON_ROOT, "datasets"),
+/home/avi/NSSON_V02/trainsnn.py:43:    testset = torchvision.datasets.CIFAR10(root=os.path.join(NSSON_ROOT, "datasets"),
+/home/avi/NSSON_V02/trainsnn.py:45:    train_loader = DataLoader(trainset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+/home/avi/NSSON_V02/trainsnn.py:46:    test_loader = DataLoader(testset, batch_size=BATCH_SIZE, shuffle=False, num_workers=4)
+/home/avi/NSSON_V02/trainsnn.py:67:    model = SimpleSNN(num_classes=10).to(DEVICE)
+/home/avi/NSSON_V02/trainsnn.py:92:        print(f"[SNN] Epoch {epoch}/{EPOCHS} train_loss={train_loss:.4f} "
+/home/avi/NSSON_V02/trainsnn.py:103:    torch.save(model.state_dict(), os.path.join(NSSON_ROOT, "models", "snn_run13.pth"))
+/home/avi/NSSON_V02/trainsnn.py:106:    print("SNN history written to", HIST_PATH)
+/home/avi/NSSON_V02/scripts/scripts/plot_nsson_ieee.py:94:               'IEEE-compliant: SNN 2.7× faster than CNN')
+/home/avi/NSSON_V02/scripts/scripts/plot_nsson_ieee.py:98:               'IEEE-compliant: SNN 63% lower power')
+/home/avi/NSSON_V02/scripts/scripts/plot_nsson_ieee.py:102:               'IEEE-compliant: CNN 93.1% vs SNN 90.3%',
+/home/avi/NSSON_V02/scripts/scripts/plot_nsson_ieee.py:107:               'IEEE-compliant: SNN 3× higher throughput')
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:14:    load_cnn_checkpoint,
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:19:    load_snn_checkpoint,
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:65:    # CNN
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:66:    cnn_model, cnn_device = load_cnn_checkpoint()
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:70:    # SNN
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:71:    snn_model, snn_args, snn_device = load_snn_checkpoint()
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:79:    # Use one batch from SNN loader for both models
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:105:        # CNN row (local exec)
+/home/avi/NSSON_V02/scripts/run_nsson_experiments_experimental.py:120:        # SNN row (local exec)
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:117:    # - CNN baseline files contain 'nsson_cnn_*'
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:118:    # - SNN baseline files contain 'nsson_snn_*'
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:126:    cnn_acc["model"] = "CNN baseline"
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:129:    snn_acc["model"] = "SNN baseline"
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:169:    # CNN vs SNN counts
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:224:    plt.title("Accuracy vs nodes (CNN vs SNN baselines)")
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:260:    plt.title("CNN vs SNN usage vs nodes")
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:302:        label="CNN hw latency",
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:309:        label="SNN hw latency",
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:313:    plt.title("Hardware latency vs nodes (CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:327:        label="CNN power",
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:334:        label="SNN power",
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:338:    plt.title("Hardware power vs nodes (CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:352:        label="CNN energy",
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:359:        label="SNN energy",
+/home/avi/NSSON_V02/plotting/plot_nsson_results.py:363:    plt.title("Hardware energy vs nodes (CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_nsson_experimental.py:43:    plt.title("Accuracy vs nodes (NSSON experimental CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_nsson_experimental.py:69:    plt.title("Hardware latency vs nodes (NSSON experimental CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_nsson_experimental.py:95:    plt.title("Hardware power vs nodes (NSSON experimental CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_nsson_experimental.py:121:    plt.title("Hardware energy vs nodes (NSSON experimental CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_results.py:32:        label="CNN hw latency",
+/home/avi/NSSON_V02/plotting/plot_results.py:39:        label="SNN hw latency",
+/home/avi/NSSON_V02/plotting/plot_results.py:43:    plt.title("Hardware latency vs nodes (CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_results.py:58:        label="CNN energy",
+/home/avi/NSSON_V02/plotting/plot_results.py:65:        label="SNN energy",
+/home/avi/NSSON_V02/plotting/plot_results.py:69:    plt.title("Hardware energy vs nodes (CNN vs SNN)")
+/home/avi/NSSON_V02/plotting/plot_results.py:84:        label="CNN power",
+/home/avi/NSSON_V02/plotting/plot_results.py:91:        label="SNN power",
+/home/avi/NSSON_V02/plotting/plot_results.py:95:    plt.title("Hardware power vs nodes (CNN vs SNN)")
+/home/avi/NSSON_V02/snasnet/utils.py:38:def save_checkpoint(state, iters, tag=''):
+/home/avi/NSSON_V02/snasnet/utils.py:41:    filename = os.path.join("./snapshots/{}_ckpt_{:04}.pth.tar".format(tag, iters))
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:3:from spikingjelly.clock_driven import functional, layer, surrogate, neuron
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:28:                        neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:37:                                neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:79:                        neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:89:                                neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:109:                        neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/searchcells/search_cell_snn.py:118:                        neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/model_snn.py:4:from spikingjelly.clock_driven import functional, layer, surrogate, neuron
+/home/avi/NSSON_V02/snasnet/model_snn.py:18:    train_data = torch.utils.data.DataLoader(trainset, batch_size=search_batchsize,
+/home/avi/NSSON_V02/snasnet/model_snn.py:22:    neuron_type = 'LIFNode'
+/home/avi/NSSON_V02/snasnet/model_snn.py:170:            neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau= args.tau,
+/home/avi/NSSON_V02/snasnet/model_snn.py:190:                        neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/model_snn.py:199:            neuron.LIFNode(v_threshold=args.threshold, v_reset=0.0, tau=args.tau,
+/home/avi/NSSON_V02/snasnet/export_snasnet_ts.py:13:        dataset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/snasnet/export_snasnet_ts.py:20:        dataset = torchvision.datasets.CIFAR100(
+/home/avi/NSSON_V02/snasnet/export_snasnet_ts.py:45:        checkpoint = torch.load(args.savemodel_pth, map_location=device)
+/home/avi/NSSON_V02/snasnet/export_snasnet_ts.py:46:        model.load_state_dict(checkpoint['state_dict'])
+/home/avi/NSSON_V02/snasnet/export_snasnet_ts.py:48:        raise FileNotFoundError(f"Pretrained checkpoint not found at {args.savemodel_pth}")
+/home/avi/NSSON_V02/snasnet/search_snn.py:13:from spikingjelly.clock_driven.functional import reset_net
+/home/avi/NSSON_V02/snasnet/search_snn.py:25:        trainset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/snasnet/search_snn.py:31:        train_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snasnet/search_snn.py:39:        valset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/snasnet/search_snn.py:45:        val_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snasnet/search_snn.py:54:        trainset = torchvision.datasets.CIFAR100(
+/home/avi/NSSON_V02/snasnet/search_snn.py:60:        train_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snasnet/search_snn.py:68:        valset = torchvision.datasets.CIFAR100(
+/home/avi/NSSON_V02/snasnet/search_snn.py:74:        val_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snasnet/search_snn.py:91:        train_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snasnet/search_snn.py:99:        val_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snasnet/search_snn.py:137:    # Optional pretrained checkpoint
+/home/avi/NSSON_V02/snasnet/search_snn.py:141:            checkpoint = torch.load(args.savemodel_pth, map_location=device)
+/home/avi/NSSON_V02/snasnet/search_snn.py:142:            print(checkpoint.keys())
+/home/avi/NSSON_V02/snasnet/search_snn.py:143:            model.load_state_dict(checkpoint['state_dict'])
+/home/avi/NSSON_V02/snasnet/search_snn.py:148:            print(f"[WARN] Pretrained checkpoint not found at {args.savemodel_pth}. "
+/home/avi/NSSON_V02/snasnet/search_snn.py:191:            utils.save_checkpoint(
+/home/avi/NSSON_V02/snasnet/search_snn.py:223:        # reset SNN states between batches
+/home/avi/NSSON_V02/snasnet/config.py:11:    parser.add_argument('--timestep', type=int, default=5, help='timestep for SNN')
+/home/avi/NSSON_V02/offloadengine.py:10:CNN_ACC = 0.9484
+/home/avi/NSSON_V02/offloadengine.py:11:SNN_ACC = 0.7766
+/home/avi/NSSON_V02/offloadengine.py:16:    # - SNN has lower accuracy and slightly lower max confidence than CNN.
+/home/avi/NSSON_V02/offloadengine.py:17:    correct = np.random.rand() < SNN_ACC
+/home/avi/NSSON_V02/offloadengine.py:23:    correct_cnn = np.random.rand() < CNN_ACC
+/home/avi/NSSON_V02/traincnn.py:7:from torch.utils.data import DataLoader
+/home/avi/NSSON_V02/traincnn.py:19:class SimpleResNetCNN(nn.Module):
+/home/avi/NSSON_V02/traincnn.py:36:    trainset = torchvision.datasets.CIFAR10(root=os.path.join(NSSON_ROOT, "datasets"),
+/home/avi/NSSON_V02/traincnn.py:38:    testset = torchvision.datasets.CIFAR10(root=os.path.join(NSSON_ROOT, "datasets"),
+/home/avi/NSSON_V02/traincnn.py:40:    train_loader = DataLoader(trainset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+/home/avi/NSSON_V02/traincnn.py:41:    test_loader = DataLoader(testset, batch_size=BATCH_SIZE, shuffle=False, num_workers=4)
+/home/avi/NSSON_V02/traincnn.py:62:    model = SimpleResNetCNN(num_classes=10).to(DEVICE)
+/home/avi/NSSON_V02/traincnn.py:88:        print(f"[CNN] Epoch {epoch}/{EPOCHS} "
+/home/avi/NSSON_V02/traincnn.py:100:    torch.save(model.state_dict(), os.path.join(NSSON_ROOT, "models", "cnn_run15.pth"))
+/home/avi/NSSON_V02/traincnn.py:103:    print("CNN history written to", HIST_PATH)
+/home/avi/NSSON_V02/simrunner.py:47:    Remove only runtime telemetry files. Do not delete model checkpoints,
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:35:    trainset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:41:    testset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:48:    train_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:55:    test_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:118:    print("CNN run dir:", run_dir)
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:134:    # CIFAR-style ResNet-18 for CIFAR-10 (10 classes)
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:191:                "checkpoints",
+/home/avi/NSSON_V02/models/cnn_baseline/train_cnn_cifar10.py:194:            ckpt_path = os.path.join(ckpt_dir, "resnet18_cifar10_best.pth")
+/home/avi/NSSON_V02/models/cifar10_cnn.py:9:    """CIFAR-style ResNet-18 for CIFAR-10 (10 classes)."""
+/home/avi/NSSON_V02/models/cifar10_cnn.py:19:def load_cnn_checkpoint(
+/home/avi/NSSON_V02/models/cifar10_cnn.py:20:    ckpt_path="models/cnn_baseline/checkpoints/resnet18_cifar10_best.pth",
+/home/avi/NSSON_V02/models/cifar10_cnn.py:23:    """Load best ResNet-18 CIFAR-10 checkpoint."""
+/home/avi/NSSON_V02/models/cifar10_cnn.py:29:    assert os.path.isfile(ckpt_path), f"Missing CNN checkpoint: {ckpt_path}"
+/home/avi/NSSON_V02/models/cifar10_cnn.py:30:    ckpt = torch.load(ckpt_path, map_location=device)
+/home/avi/NSSON_V02/models/cifar10_cnn.py:32:    model.load_state_dict(state)
+/home/avi/NSSON_V02/models/cifar10_cnn.py:47:    testset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/models/cifar10_cnn.py:53:    loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/models/cifar10_cnn.py:64:    """Evaluate CNN accuracy on CIFAR-10 test set."""
+/home/avi/NSSON_V02/snn/cifar10_snasnet.py:13:def load_snasnet_checkpoint(path="snn/snn_snasnet/checkpoints/snasnet_cifar10_best.pth"):
+/home/avi/NSSON_V02/snn/cifar10_snasnet.py:15:    state = torch.load(path, map_location="cpu")
+/home/avi/NSSON_V02/snn/cifar10_snasnet.py:16:    model.load_state_dict(state)
+/home/avi/NSSON_V02/snn/cifar10_snasnet.py:27:    test_set = torchvision.datasets.CIFAR10(root=data_root,
+/home/avi/NSSON_V02/snn/cifar10_snasnet.py:31:    loader = torch.utils.data.DataLoader(test_set,
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:25:    """Build SNASNet SNN model for CIFAR-10."""
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:36:    args.savemodel_pth = os.path.join(SNASNET_ROOT, "savemodel", "save_cifar10_bw.pth.tar")
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:46:def load_snn_checkpoint(device=None):
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:57:    ckpt = torch.load(weight_path, map_location=device)
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:59:    model.load_state_dict(state)
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:68:    testset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/snn/snn_snasnet/eval_snasnet_cifar10.py:74:    test_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:14:from spikingjelly.clock_driven.functional import reset_net
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:30:    trainset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:36:    testset = torchvision.datasets.CIFAR10(
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:43:    train_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:50:    test_loader = torch.utils.data.DataLoader(
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:131:    print("SNN fine-tune run dir:", run_dir)
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:157:    weight_path = os.path.join(SNASNET_ROOT, "savemodel", "save_cifar10_bw.pth.tar")
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:160:        ckpt = torch.load(weight_path, map_location=device)
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:161:        model.load_state_dict(ckpt["state_dict"])
+/home/avi/NSSON_V02/snn/snn_snasnet/train_snasnet_cifar10_finetune.py:217:            ckpt_path = os.path.join(ckpt_dir, "save_cifar10_bw_finetuned.pth.tar")
+/home/avi/NSSON_V02/jetson_emulation/jetson_emulation/jetson_runner.py:55:        #   - SNN assumed slightly lower power than CNN
+
+================ MININET / RYU / OPENFLOW SEARCH ================
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:10:from mininet.net import Mininet
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:11:from mininet.node import Controller, OVSKernelSwitch
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:12:from mininet.link import TCLink
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:13:from mininet.log import setLogLevel, info
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:14:from mininet.clean import cleanup
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:45:    net = Mininet(controller=Controller,
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:51:    c0 = net.addController('c0')
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:54:    s1 = net.addSwitch('s1', protocols='OpenFlow13')
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:59:        h = net.addHost(f'h{i+1}',
+/home/avi/NSSON_V02/scripts/scripts/nsson_simulate.py:64:        net.addLink(h, s1, bw=100, delay='1ms')
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:1:from ryu.base import app_manager
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:2:from ryu.controller import ofp_event
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:3:from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:4:from ryu.ofproto import ofproto_v1_3
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:5:from ryu.lib.packet import packet, ethernet
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:7:class NSSONController(app_manager.RyuApp):
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:27:        mod = parser.OFPFlowMod(datapath=dp, priority=priority,
+/home/avi/NSSON_V02/scripts/scripts/nsson_controller.py:31:    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:10:from mininet.net import Mininet
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:11:from mininet.node import Controller, OVSKernelSwitch
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:12:from mininet.link import TCLink
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:13:from mininet.log import setLogLevel, info
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:14:from mininet.clean import cleanup
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:45:    net = Mininet(controller=Controller,
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:51:    c0 = net.addController('c0')
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:54:    s1 = net.addSwitch('s1', protocols='OpenFlow13')
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:59:        h = net.addHost(f'h{i+1}',
+/home/avi/NSSON_V02/scripts/nsson_simulate.py:64:        net.addLink(h, s1, bw=100, delay='1ms')
+/home/avi/NSSON_V02/scripts/nsson_controller.py:1:from ryu.base import app_manager
+/home/avi/NSSON_V02/scripts/nsson_controller.py:2:from ryu.controller import ofp_event
+/home/avi/NSSON_V02/scripts/nsson_controller.py:3:from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
+/home/avi/NSSON_V02/scripts/nsson_controller.py:4:from ryu.ofproto import ofproto_v1_3
+/home/avi/NSSON_V02/scripts/nsson_controller.py:5:from ryu.lib.packet import packet, ethernet
+/home/avi/NSSON_V02/scripts/nsson_controller.py:7:class NSSONController(app_manager.RyuApp):
+/home/avi/NSSON_V02/scripts/nsson_controller.py:27:        mod = parser.OFPFlowMod(datapath=dp, priority=priority,
+/home/avi/NSSON_V02/scripts/nsson_controller.py:31:    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:21:from ryu.base import app_manager
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:22:from ryu.controller import ofp_event
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:23:from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER, set_ev_cls
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:24:from ryu.lib.packet import ethernet, packet
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:25:from ryu.ofproto import ofproto_v1_3
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:32:class BaselineSdnIotController(app_manager.RyuApp):
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:74:        flow_mod = parser.OFPFlowMod(
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:82:    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+/home/avi/NSSON_V02/controllers/baseline_sdn_iot_controller.py:119:            flow_mod = parser.OFPFlowMod(
+/home/avi/NSSON_V02/run_all_experiments.sh:32:# runs as simulation-level SDN scenarios. Do not claim physical OpenFlow/
+/home/avi/NSSON_V02/run_all_experiments.sh:33:# Mininet-WiFi results unless controller/link telemetry was actually recorded.
+/home/avi/NSSON_V02/run_all_experiments.sh:86:    pkill -f "ryu.cmd.manager" 2>/dev/null || true
+/home/avi/NSSON_V02/run_all_experiments.sh:229:        exec python -m ryu.cmd.manager \
+
+================ CHECKPOINTS / MODEL FILES ================
+/home/avi/NSSON_V02/models/cnn_baseline/checkpoints/resnet18_cifar10_best.pth | 44773837 bytes
+/home/avi/NSSON_V02/models/cnn_run15.pth | 44807179 bytes
+/home/avi/NSSON_V02/models/snn_run13.pth | 6832173 bytes
+
+================ DATASETS ================
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/data_batch_5
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/batches.meta
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/test_batch
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/data_batch_1
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/data_batch_2
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/data_batch_4
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/readme.html
+/home/avi/NSSON_V02/datasets/cifar-10-batches-py/data_batch_3
+/home/avi/NSSON_V02/datasets/cifar-10-python.tar.gz

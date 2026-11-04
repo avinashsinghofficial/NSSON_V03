@@ -1,0 +1,5 @@
+[project]
+name = "nsson-camnsson"
+version = "0.1.0"
+description = "SDN-first neuromorphic surveillance pipeline"
+requires-python = ">=3.10"

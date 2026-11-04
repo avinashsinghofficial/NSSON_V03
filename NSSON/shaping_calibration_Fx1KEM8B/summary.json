@@ -1,0 +1,12 @@
+{
+  "purpose": "Single-flow OVS shaping calibration, not NSSON evaluation",
+  "configured_limit_mbps": 20,
+  "receiver_mbps": 19.09906810413959,
+  "receiver_bytes": 28966912,
+  "receiver_seconds": 12.13333,
+  "wall_start_epoch": 1793643367.6210842,
+  "wall_end_epoch": 1793643379.990412,
+  "bridge": "calad292",
+  "egress_interface": "calad292-eth2",
+  "client_exit_code": 0
+}

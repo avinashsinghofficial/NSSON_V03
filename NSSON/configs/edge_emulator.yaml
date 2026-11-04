@@ -1,0 +1,8 @@
+host: 0.0.0.0
+port: 8090
+models:
+  verifier_model: models/verifier_yolo_cls.pt
+  verifier_task: classify
+  snn_checkpoint: models/snn_gate.pt
+runtime:
+  device: cpu

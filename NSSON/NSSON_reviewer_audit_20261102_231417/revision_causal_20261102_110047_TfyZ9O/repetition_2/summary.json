@@ -1,0 +1,54 @@
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_causal_20261102_110047_TfyZ9O/repetition_2",
+  "total_client_requests": 1800,
+  "matched_remote_requests": 323,
+  "observed_identity_mismatches": 0,
+  "policies": {
+    "local_cnn": {
+      "requests": 300,
+      "offloaded": 0,
+      "correct": 287,
+      "mean_request_ms": 1.3638518033333333
+    },
+    "local_snn": {
+      "requests": 300,
+      "offloaded": 0,
+      "correct": 278,
+      "mean_request_ms": 11.71567483
+    },
+    "remote_cnn": {
+      "requests": 300,
+      "offloaded": 300,
+      "correct": 287,
+      "mean_request_ms": 18.782829866666667
+    },
+    "adaptive_fixed": {
+      "requests": 300,
+      "offloaded": 1,
+      "correct": 279,
+      "mean_request_ms": 13.52979237
+    },
+    "feedback_latency": {
+      "requests": 300,
+      "offloaded": 11,
+      "correct": 281,
+      "mean_request_ms": 12.486191136666667
+    },
+    "feedback_label_oracle": {
+      "requests": 300,
+      "offloaded": 11,
+      "correct": 281,
+      "mean_request_ms": 12.487915863333335
+    }
+  },
+  "limitations": [
+    "300 requests per policy; one independent process/topology per repetition.",
+    "Same workstation and shared physical GPU resources.",
+    "Static OpenFlow forwarding, not Ryu inference registration.",
+    "No queue differentiation, SLA enforcement, or adaptive routing.",
+    "Includes fixed and causal-feedback policies; accuracy feedback is oracle-only.",
+    "No Jetson energy or hardware measurements.",
+    "Timing excludes original image acquisition."
+  ]
+}

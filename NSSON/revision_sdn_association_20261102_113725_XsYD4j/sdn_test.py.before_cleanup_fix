@@ -1,0 +1,217 @@
+import argparse, csv, hashlib, json, os, pwd, signal, socket, struct, subprocess, sys, threading, time, traceback, uuid
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+
+ROOT=Path("/home/avi/NSSON");CAUSAL_PATH="/home/avi/NSSON/revision_causal_20261102_110047_TfyZ9O/network_causal.py"; PYTHON=ROOT/".venv_nsson_gpu/bin/python3"; RYU=Path(os.environ["NSSON_RYU_MANAGER"]); SCRIPT=Path(__file__).resolve()
+CLIENT_IP="10.241.77.1"; SERVER_IP="10.241.77.2"; SERVER_PORT=8090; REGISTRATION_PORT=8091
+SESSIONS=4; REQUESTS_PER_SESSION=10
+TEST_CASES=("normal","delayed","stale","missing","reuse")
+
+def write_json(p,v): Path(p).write_text(json.dumps(v,indent=2,default=str)+"\n")
+def read_exact(s,n):
+    out=[]; left=n
+    while left:
+        b=s.recv(left)
+        if not b: raise EOFError
+        out.append(b); left-=len(b)
+    return b"".join(out)
+def send_json(s,v):
+    p=json.dumps(v).encode(); s.sendall(struct.pack("!I",len(p))+p)
+def receive_json(s):
+    n=struct.unpack("!I",read_exact(s,4))[0]
+    return json.loads(read_exact(s,n))
+def infer(torch,device,model,transform,image,reset=None):
+    if reset: reset()
+    x=transform(image).unsqueeze(0).to(device); y=model(x)
+    if tuple(y.shape)!=(1,10): raise ValueError("bad output")
+    if not torch.isfinite(y).all().item(): raise ValueError("nonfinite")
+    c,p=torch.softmax(y.float(),dim=1).max(dim=1)
+    if device.type=="cuda": torch.cuda.synchronize(device)
+    return int(p.item()),float(c.item())
+def verify_worker_network(args,expected_ip):
+    actual=os.readlink("/proc/self/ns/net"); expected=os.environ["NSSON_EXPECTED_NETNS"]
+    r=subprocess.run(["ip","-j","-4","address","show"],capture_output=True,text=True,timeout=10)
+    if r.returncode: raise RuntimeError("address inspection failed")
+    addrs=sorted({a["local"] for i in json.loads(r.stdout) for a in i.get("addr_info",[]) if a.get("family")=="inet" and "local" in a})
+    audit={"role":args.role,"pid":os.getpid(),"uid":os.getuid(),"actual_namespace":actual,"expected_namespace":expected,"expected_ip":expected_ip,"addresses":addrs,"namespace_matches":actual==expected,"ip_present":expected_ip in addrs}
+    write_json(Path(args.out)/f"{args.role}_namespace.json",audit); print(json.dumps(audit,indent=2),flush=True)
+    if os.getuid()==0: raise RuntimeError("worker retained root")
+    if actual!=expected: raise RuntimeError("wrong namespace")
+    if expected_ip not in addrs: raise RuntimeError("missing expected IP")
+    with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as s: s.bind((expected_ip,0))
+def run_server(args):
+    verify_worker_network(args,SERVER_IP)
+    sys.path.insert(0,str(ROOT)); import torch; from PIL import Image
+    import importlib.util
+    torch.manual_seed(20261102); torch.backends.cudnn.benchmark=False
+    device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    spec=importlib.util.spec_from_file_location("network_causal", str(CAUSAL_PATH))
+    causal=importlib.util.module_from_spec(spec); spec.loader.exec_module(causal)
+    model,transform=causal.cnn_components(device); model.eval()
+    with torch.no_grad():
+        for _ in range(10): infer(torch,device,model,transform,Image.new("RGB",(32,32)))
+    out=Path(args.out); fields=["run_id","session_id","request_id","sample_id","client_ip","client_port","server_ip","server_port","image_sha256","prediction","confidence_uncalibrated","server_inference_sec"]; seen=set()
+    with (out/"server_requests.csv").open("w",newline="") as log:
+        w=csv.DictWriter(log,fieldnames=fields); w.writeheader(); log.flush()
+        with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as l:
+            l.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1); l.bind((SERVER_IP,SERVER_PORT)); l.listen(16)
+            write_json(out/"server_ready.json",{"server_ip":SERVER_IP,"server_port":SERVER_PORT,"device":str(device)}); print("SERVER READY",flush=True)
+            while True:
+                c,a=l.accept()
+                with c:
+                    c.settimeout(60)
+                    while True:
+                        try: h=receive_json(c)
+                        except EOFError: break
+                        ident=(h["run_id"],h["session_id"],h["request_id"])
+                        if ident in seen: raise ValueError("duplicate")
+                        seen.add(ident)
+                        payload=read_exact(c,h["payload_bytes"]); digest=hashlib.sha256(payload).hexdigest()
+                        if digest!=h["image_sha256"]: raise ValueError("checksum")
+                        image=Image.frombytes("RGB",(32,32),payload)
+                        if device.type=="cuda": torch.cuda.synchronize(device)
+                        t=time.perf_counter_ns()
+                        with torch.no_grad(): pred,conf=infer(torch,device,model,transform,image)
+                        end=time.perf_counter_ns()
+                        resp={"run_id":h["run_id"],"session_id":h["session_id"],"request_id":h["request_id"],"sample_id":int(h["sample_id"]),"image_sha256":digest,"prediction":pred,"confidence_uncalibrated":conf,"server_inference_sec":(end-t)/1e9,"client_ip":a[0],"client_port":a[1],"server_ip":SERVER_IP,"server_port":SERVER_PORT}
+                        w.writerow(resp); log.flush(); send_json(c,resp)
+def run_client(args):
+    verify_worker_network(args,CLIENT_IP)
+    sys.path.insert(0,str(ROOT)); import numpy as np, torch, torchvision; from models.cifar10_cnn import load_cnn_checkpoint; import importlib.util
+    np.random.seed(20261102); torch.manual_seed(20261102); torch.backends.cudnn.benchmark=False
+    device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    spec=importlib.util.spec_from_file_location("network_causal", CAUSAL_PATH)
+    causal=importlib.util.module_from_spec(spec); spec.loader.exec_module(causal)
+    cnn,cnn_transform=causal.cnn_components(device); cnn.eval()
+    snn,snn_transform,reset=causal.snn_components(device)
+    snn.eval()
+    snn.eval()
+    ds=torchvision.datasets.CIFAR10(root=str(ROOT/"data/cifar10"),train=False,download=False,transform=None)
+    ids=np.random.default_rng(20261102).permutation(len(ds))[:SESSIONS*REQUESTS_PER_SESSION].tolist()
+    samples={}
+    for i in ids:
+        im,lab=ds[i]; p=im.tobytes(); samples[i]=(im,int(lab),p,hashlib.sha256(p).hexdigest())
+    with torch.no_grad():
+        for i in ids[:10]:
+            infer(torch,device,cnn,cnn_transform,samples[i][0]); infer(torch,device,snn,snn_transform,samples[i][0],reset=reset)
+    out=Path(args.out); write_json(out/"client_configuration.json",{"sessions":SESSIONS,"requests_per_session":REQUESTS_PER_SESSION,"sample_ids":ids,"device":str(device),"scope":"Concurrent sessions and stale/missing registration tests; static forwarding only."})
+    fields=["run_id","session_id","test_case","request_id","sample_id","label","decision","outcome","final_prediction","correct","request_sec","registration_wait_sec","client_ip","client_port","server_ip","server_port","image_sha256","server_inference_sec"]
+    with (out/"client_requests.csv").open("w",newline="") as log:
+        w=csv.DictWriter(log,fieldnames=fields); w.writeheader(); lock=threading.Lock(); results=[]
+        def session(idx):
+            sid=str(uuid.uuid4()); case=TEST_CASES[idx%len(TEST_CASES)]; rows=[]
+            for seq,sid_img in enumerate(ids[idx*REQUESTS_PER_SESSION:(idx+1)*REQUESTS_PER_SESSION]):
+                im,lab,payload,digest=samples[sid_img]; rid=f"session{idx}:{seq}:{sid_img}"; outcome="completed"; response=None; wait=0.0
+                start=time.perf_counter_ns()
+                with torch.no_grad(): pred,conf=infer(torch,device,snn,snn_transform,im,reset=reset)
+                offload=conf<0.60
+                if case in ("stale","missing"):
+                    offload=True
+                if offload:
+                    if case=="stale": wait=.15; time.sleep(wait); outcome="rejected_stale_registration"
+                    elif case=="missing": outcome="rejected_missing_registration"
+                    else:
+                        if case=="delayed": wait=.5; time.sleep(wait)
+                        reg={"run_id":out.name,"session_id":sid,"request_id":rid,"sample_id":sid_img,"image_sha256":digest,"expires_in_s":.1 if case=="stale" else 60}
+                        with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as u: u.sendto(json.dumps(reg).encode(),("127.0.0.1",REGISTRATION_PORT))
+                        time.sleep(.05); rpc=time.perf_counter_ns()
+                        with socket.create_connection((SERVER_IP,SERVER_PORT),timeout=60) as c:
+                            c.settimeout(60); h={"run_id":out.name,"session_id":sid,"request_id":rid,"sample_id":sid_img,"payload_bytes":len(payload),"image_sha256":digest}; send_json(c,h); c.sendall(payload); response=receive_json(c)
+                            actual=c.getsockname()
+                            if response["client_ip"]!=actual[0] or response["client_port"]!=actual[1]: raise RuntimeError("tuple mismatch")
+                            for k in ("run_id","session_id","request_id","sample_id","image_sha256"):
+                                if response.get(k)!=h[k]: raise RuntimeError(f"mismatch {k}")
+                            pred=int(response["prediction"])
+                req=(time.perf_counter_ns()-start)/1e9
+                if not offload:
+                    outcome="local"
+                row={"run_id":out.name,"session_id":sid,"test_case":case,"request_id":rid,"sample_id":sid_img,"label":lab,"decision":"offload" if offload else "local","outcome":outcome,"final_prediction":pred,"correct":int(pred==lab),"request_sec":req,"registration_wait_sec":wait,"client_ip":response["client_ip"] if response else "","client_port":response["client_port"] if response else "","server_ip":response["server_ip"] if response else "","server_port":response["server_port"] if response else "","image_sha256":digest,"server_inference_sec":response["server_inference_sec"] if response else ""}
+                rows.append(row)
+            with lock:
+                for r in rows: w.writerow(r); results.append(r)
+                log.flush()
+            return {"session_id":sid,"test_case":case,"requests":len(rows),"offloaded":sum(r["decision"]=="offload" for r in rows),"completed_remote":sum(r["decision"]=="offload" and r["outcome"]=="completed" for r in rows),"rejected_stale":sum(r["outcome"]=="rejected_stale_registration" for r in rows),"rejected_missing":sum(r["outcome"]=="rejected_missing_registration" for r in rows)}
+        print(f"CLIENT: starting {SESSIONS} concurrent sessions",flush=True)
+        with ThreadPoolExecutor(max_workers=SESSIONS) as ex:
+            fs=[ex.submit(session,i) for i in range(SESSIONS)]; session_results=[f.result() for f in as_completed(fs)]
+    write_json(out/"session_results.json",{"sessions":session_results,"scope":"Concurrent application sessions; functional registration association only."})
+    print(json.dumps({"status":"completed","total_requests":len(results),"session_results":session_results},indent=2),flush=True)
+def run_topology(args):
+    if os.geteuid()!=0: raise RuntimeError("sudo required")
+    from mininet.net import Mininet; from mininet.node import OVSSwitch; from mininet.link import TCLink; from mininet.log import setLogLevel
+    setLogLevel("info"); out=Path(args.out).resolve(); owner=pwd.getpwnam(args.user); suffix=uuid.uuid4().hex[:6]; bridge="ns"+suffix+"s"; cname="ns"+suffix+"c"; sname="ns"+suffix+"r"
+    def cmd(a,t=20):
+        r=subprocess.run(a,text=True,capture_output=True,timeout=t)
+        if r.returncode: raise RuntimeError(f"failed {a}\n{r.stdout}\n{r.stderr}")
+        return r.stdout
+    if subprocess.run(["ovs-vsctl","br-exists",bridge],capture_output=True).returncode==0: raise RuntimeError("bridge exists")
+    def worker(role):
+        e=server if role=="server" else client; ns=os.readlink(f"/proc/{e.pid}/ns/net")
+        return ["setpriv","--reuid",str(owner.pw_uid),"--regid",str(owner.pw_gid),"--init-groups","env",f"HOME={owner.pw_dir}",f"USER={args.user}",f"LOGNAME={args.user}",f"PYTHONPATH={ROOT}",f"NSSON_EXPECTED_NETNS={ns}","PYTHONUNBUFFERED=1","MPLBACKEND=Agg",str(PYTHON),"-u",str(SCRIPT),"--role",role,"--out",str(out)]
+    def save(n,t):
+        p=out/n; p.write_text(t); os.chown(p,owner.pw_uid,owner.pw_gid)
+    net=None; procs=[]; logs=[]
+    try:
+        net=Mininet(controller=None,switch=OVSSwitch,link=TCLink,build=False,autoSetMacs=True)
+        client=net.addHost(cname,ip=CLIENT_IP+"/24"); server=net.addHost(sname,ip=SERVER_IP+"/24"); switch=net.addSwitch(bridge,protocols="OpenFlow13",failMode="secure")
+        net.addLink(client,switch,port1=0,port2=1,bw=20,delay="2ms"); net.addLink(server,switch,port1=0,port2=2,bw=20,delay="2ms"); net.build(); net.start()
+        if cmd(["ovs-vsctl","get-controller",bridge]).strip(): raise RuntimeError("unexpected controller")
+        for rule in ("priority=10,in_port=1,actions=output:2","priority=10,in_port=2,actions=output:1"): cmd(["ovs-ofctl","-O","OpenFlow13","add-flow",bridge,rule])
+        save("flows_before.txt",cmd(["ovs-ofctl","-O","OpenFlow13","dump-flows",bridge]))
+        ping=client.cmd(f"ping -c 2 -W 3 {SERVER_IP}"); print(ping,flush=True); save("connectivity.txt",ping)
+        if " 0% packet loss" not in ping: raise RuntimeError("connectivity failed")
+        reglog=(out/"registration_console.log").open("w"); logs.append(reglog); os.chown(out/"registration_console.log",owner.pw_uid,owner.pw_gid)
+        reg=subprocess.Popen(["python3","-u","-c",'import json,os,socket,time\nfrom pathlib import Path\nout=Path(os.environ["NSSON_SDN_OUTPUT"]); log=out/"registrations.jsonl"\nwith socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as s:\n s.bind(("127.0.0.1",8091)); print("REGISTRATION READY",flush=True); (out/"registration_ready.json").write_text(json.dumps({"port":8091})+"\\n")\n while True:\n  d,p=s.recvfrom(65536)\n  try:\n   r=json.loads(d); r["received_at"]=time.time(); r["source"]=list(p)\n   with log.open("a") as f: f.write(json.dumps(r)+"\\n")\n  except Exception as e: print(f"Registration error: {e}",flush=True)'],stdout=reglog,stderr=subprocess.STDOUT,start_new_session=True); procs.append(reg)
+        deadline=time.monotonic()+30
+        while not (out/"registration_ready.json").is_file():
+            if reg.poll() is not None: raise RuntimeError("registration exited")
+            if time.monotonic()>deadline: raise TimeoutError("registration timeout")
+            time.sleep(.2)
+        slog=(out/"server_console.log").open("w"); logs.append(slog); os.chown(out/"server_console.log",owner.pw_uid,owner.pw_gid)
+        sp=server.popen(worker("server"),stdout=slog,stderr=subprocess.STDOUT,mncmd=["mnexec","-a",str(server.pid)]); procs.append(sp)
+        deadline=time.monotonic()+180
+        while not (out/"server_ready.json").is_file():
+            if sp.poll() is not None: raise RuntimeError("server exited")
+            if time.monotonic()>deadline: raise TimeoutError("server startup timeout")
+            time.sleep(.5)
+        clog=(out/"client_console.log").open("w"); logs.append(clog); os.chown(out/"client_console.log",owner.pw_uid,owner.pw_gid)
+        cp=client.popen(worker("client"),stdout=clog,stderr=subprocess.STDOUT,mncmd=["mnexec","-a",str(client.pid)]); procs.append(cp)
+        rc=cp.wait(timeout=900)
+        if rc: raise RuntimeError("client failed")
+        save("flows_after.txt",cmd(["ovs-ofctl","-O","OpenFlow13","dump-flows",bridge])); save("ports_after.txt",cmd(["ovs-ofctl","-O","OpenFlow13","dump-ports",bridge]))
+        with (out/"client_requests.csv").open() as f: cr=list(csv.DictReader(f))
+        with (out/"server_requests.csv").open() as f: sr=list(csv.DictReader(f))
+
+        session_results=json.loads(
+            (out/"session_results.json").read_text()
+        )
+        expected=[r for r in cr if r["outcome"]=="completed"]; lookup={(r["run_id"],r["session_id"],r["request_id"]):r for r in sr}
+        if len(lookup)!=len(sr): raise RuntimeError("duplicate server identity")
+        for r in expected:
+            o=lookup.get((r["run_id"],r["session_id"],r["request_id"]))
+            if not o: raise RuntimeError("missing server record")
+            for k in ("sample_id","image_sha256","client_ip","client_port","server_ip","server_port"):
+                if r[k]!=o[k]: raise RuntimeError(f"association mismatch {k}")
+            if r["final_prediction"]!=o["prediction"]: raise RuntimeError("prediction mismatch")
+        summary={"status":"completed","results_directory":str(out),"total_requests":len(cr),"completed_remote_requests":len(expected),"matched_server_records":len(expected),"observed_identity_mismatches":0,"session_results":session_results,"limitations":["Functional concurrent-session association test.","Controller records registrations; it does not install flows.","Static OpenFlow forwarding only.","No QoS queues, SLAs, slicing, or adaptive routing.","No Jetson measurements.","Local SNN inference sequential; network requests concurrent."]}
+        save("summary.json",json.dumps(summary,indent=2)+"\n"); print(json.dumps(summary,indent=2),flush=True)
+    finally:
+        for p in reversed(procs):
+            if p.poll() is None:
+                try: os.killpg(p.pid,signal.SIGTERM); p.wait(timeout=5)
+                except Exception:
+                    try: os.killpg(p.pid,signal.SIGKILL)
+                    except Exception: pass
+                    p.wait(timeout=5)
+        for h in logs: h.close()
+        if net: net.stop()
+def main():
+    ap=argparse.ArgumentParser(); ap.add_argument("--role",choices=("topology","server","client"),required=True); ap.add_argument("--out",required=True); ap.add_argument("--user"); a=ap.parse_args()
+    if a.role=="topology":
+        if not a.user: raise ValueError("--user required")
+        run_topology(a)
+    elif a.role=="server": run_server(a)
+    else: run_client(a)
+if __name__=="__main__":
+    try: main()
+    except Exception: traceback.print_exc(); sys.exit(1)

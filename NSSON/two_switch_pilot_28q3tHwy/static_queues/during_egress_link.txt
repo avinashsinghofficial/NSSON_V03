@@ -1,0 +1,6 @@
+83: pabc4ba-eth5@pbbc4ba-eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc htb master ovs-system state UP mode DEFAULT group default qlen 1000
+    link/ether c2:9a:0a:ab:65:f9 brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+         20100     277      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+      13023604    1724      0       0       0       0

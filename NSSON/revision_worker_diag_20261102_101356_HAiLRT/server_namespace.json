@@ -1,0 +1,20 @@
+{
+  "role": "server",
+  "pid": 24656,
+  "uid": 1000,
+  "gid": 1000,
+  "actual_network_namespace": "net:[4026533318]",
+  "expected_network_namespace": "net:[4026533318]",
+  "expected_ip": "10.231.77.2",
+  "observed_ipv4_addresses": [
+    "10.231.77.2",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "expected_ip_present": true,
+  "temporary_bind_test_passed": true,
+  "temporary_bound_address": [
+    "10.231.77.2",
+    51791
+  ]
+}

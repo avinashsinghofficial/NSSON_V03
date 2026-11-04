@@ -1,0 +1,32 @@
+{
+  "role": "server",
+  "pid": 27999,
+  "uid": 1000,
+  "gid": 1000,
+  "actual_network_namespace": "net:[4026533320]",
+  "expected_network_namespace": "net:[4026533320]",
+  "expected_ip": "10.231.77.2",
+  "observed_ipv4_addresses": [
+    "10.231.77.2",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "expected_ip_present": true
+}
+SERVER namespace and address checks passed
+STAGE: before NumPy import
+STAGE: NumPy import completed
+STAGE: before PyTorch import
+STAGE: PyTorch import completed; version=2.12.1+cu130
+STAGE: before torch.manual_seed
+STAGE: torch.manual_seed completed
+STAGE: before CUDA availability check
+STAGE: CUDA availability check completed: True
+STAGE: tensor environment ready: cuda:0
+STAGE: before CNN loading
+STAGE: CNN loading completed
+STAGE: before server warm-up
+STAGE: server warm-up completed
+STAGE: before bind 10.231.77.2:8090; netns=net:[4026533320]
+STAGE: server bind completed
+SERVER READY

@@ -1,0 +1,13 @@
+{
+  "model": "snn",
+  "architecture": "baseline",
+  "profile": "default",
+  "nodes": 30,
+  "cycles": 1200,
+  "accuracy": 90.0837,
+  "avg_latency_ms": 16.7234,
+  "avg_power_mw": 74.5382,
+  "avg_throughput_fps": 95.75,
+  "avg_rtt_ms": 18.5746,
+  "offload_ratio": 0.4375
+}

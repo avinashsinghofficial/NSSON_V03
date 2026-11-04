@@ -1,0 +1,24 @@
+{
+  "role": "server",
+  "pid": 23816,
+  "uid": 1000,
+  "gid": 1000,
+  "actual_network_namespace": "net:[4026533317]",
+  "expected_network_namespace": "net:[4026533317]",
+  "expected_ip": "10.231.77.2",
+  "observed_ipv4_addresses": [
+    "10.231.77.2",
+    "127.0.0.1"
+  ],
+  "namespace_matches": true,
+  "expected_ip_present": true
+}
+SERVER namespace and address checks passed
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_network_fix_20261102_095839_eDgjaD/network_smoke.py", line 928, in <module>
+    main()
+  File "/home/avi/NSSON/revision_network_fix_20261102_095839_eDgjaD/network_smoke.py", line 921, in main
+    run_server(args)
+  File "/home/avi/NSSON/revision_network_fix_20261102_095839_eDgjaD/network_smoke.py", line 264, in run_server
+    listener.bind((SERVER_IP, SERVER_PORT))
+OSError: [Errno 99] Cannot assign requested address

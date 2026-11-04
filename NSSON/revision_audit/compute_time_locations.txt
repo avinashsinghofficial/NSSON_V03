@@ -1,0 +1,391 @@
+./sim/nsson_utils/run_utils.py:34:        nonlocal file_exists
+./make_revision.py:44:    r"Over 300 simulated inference cycles, adaptive offloading reduces\s+"
+./make_revision.py:49:    r"\\revblue{Over 300 simulated inference cycles, adaptive offloading reduces "
+./make_revision.py:72:    r"so that large recent latency or power lowers \$\\theta\(t\)\$ and increases the probability that new samples are offloaded\."
+./make_revision.py:75:    r"samples are offloaded when $C(s)<\\theta(t)$, increasing $\\theta(t)$ "
+./make_revision.py:76:    r"increases the offload ratio, whereas decreasing $\\theta(t)$ reduces it. "
+./make_revision.py:87:    r"Since samples are offloaded\s+"
+./make_revision.py:88:    r"when \$C\(s\) < \$\\theta\(t\)\$ according to~\\eqref\{eq:decision\}, lowering\s+"
+./make_revision.py:89:    r"\$\\theta\(t\)\$ reduces the fraction of offloaded samples and raises\s+"
+./make_revision.py:92:    r"\\revblue{Since samples are offloaded when $C(s)<\\theta(t)$ according to "
+./make_revision.py:93:    r"Eq.~\\eqref{eq:decision}, increasing $\\theta(t)$ increases the fraction "
+./make_revision.py:94:    r"of offloaded samples, whereas decreasing $\\theta(t)$ reduces it. The "
+./make_revision.py:99:    r"can alter the decision for an already-completed request.}",
+./make_revision.py:142:For an offloaded sample with data volume $M_{\\text{data}}$, the
+./make_revision.py:201:the offload decision of another session. The current evaluation verifies
+./make_revision.py:216:    r"Adaptive offloading achieves a 23\\% reduction in average latency and an\s+18\\% reduction in power compared with local-only execution\.",
+./make_revision.py:217:    r"\\revblue{Adaptive offloading achieves a $38.7\\%$ reduction in average "
+./make_revision.py:218:    r"end-to-end latency relative to local-only execution. Energy results are "
+./make_revision.py:234:    r"Adaptive Engine & 23\\% latency reduction; 45\\% of cycles offloaded \\\\\s+Power Model & 18\\% power saving under adaptive policy \\\\",
+./make_revision.py:235:    r"\\revblue{Adaptive Engine & $38.7\\%$ latency reduction; $45\\%$ of cycles offloaded \\\\\n"
+./make_revision.py:243:    ("Adaptive offloading reduces average latency by 23\\%\nand power by 18\\% compared to local-only execution.",
+./make_revision.py:244:     "\\revblue{Adaptive offloading reduces average latency by 38.7\\% relative to local-only execution; energy results are modeled estimates produced by the coefficient-based energy model.}"),
+./scripts/scripts/plot_results_templated.py:44:    "local": "#4c72b0",
+./scripts/scripts/plot_results_templated.py:45:    "offload": "#dd8452",
+./scripts/scripts/plot_results_templated.py:60:    for col in ["model", "architecture", "decision"]:
+./scripts/scripts/plot_results_templated.py:252:# FIGURE 7: Local vs offload latency box
+./scripts/scripts/plot_results_templated.py:254:if "decision" in telemetry.columns:
+./scripts/scripts/plot_results_templated.py:257:        data=sampled[sampled["decision"].isin(["local", "offload"])],
+./scripts/scripts/plot_results_templated.py:258:        x="decision",
+./scripts/scripts/plot_results_templated.py:260:        hue="decision",
+./scripts/scripts/plot_results_templated.py:268:    savefig(fig, "local_offload_latency_box_templated.png")
+./scripts/scripts/plot_results_templated.py:271:# FIGURE 8: Local vs offload latency across nodes
+./scripts/scripts/plot_results_templated.py:273:if {"decision", "nodes_num", "total_latency_ms"}.issubset(telemetry.columns):
+./scripts/scripts/plot_results_templated.py:275:        telemetry[telemetry["decision"].isin(["local", "offload"])]
+./scripts/scripts/plot_results_templated.py:276:        .groupby(["nodes_num", "decision"], as_index=False)["total_latency_ms"]
+./scripts/scripts/plot_results_templated.py:282:        data=line_df.sort_values(["decision", "nodes_num"]),
+./scripts/scripts/plot_results_templated.py:285:        hue="decision",
+./scripts/scripts/plot_results_templated.py:286:        style="decision",
+./scripts/scripts/plot_results_templated.py:296:    savefig(fig, "local_vs_offload_latency_templated.png")
+./scripts/scripts/plot_results_templated.py:301:if {"decision", "nodes_num"}.issubset(telemetry.columns):
+./scripts/scripts/plot_results_templated.py:303:        telemetry[telemetry["decision"].isin(["local", "offload"])]
+./scripts/scripts/plot_results_templated.py:304:        .groupby(["nodes_num", "decision"], as_index=False)
+./scripts/scripts/plot_results_templated.py:310:        index="nodes_num", columns="decision", values="count", aggfunc="sum", fill_value=0
+./scripts/scripts/plot_results_templated.py:313:    for col in ["local", "offload"]:
+./scripts/scripts/plot_results_templated.py:318:    ax.bar(pivot["nodes_num"], pivot["local"], label="Local", color=DECISION_COLORS["local"])
+./scripts/scripts/plot_results_templated.py:321:        pivot["offload"],
+./scripts/scripts/plot_results_templated.py:322:        bottom=pivot["local"],
+./scripts/scripts/plot_results_templated.py:324:        color=DECISION_COLORS["offload"]
+./scripts/scripts/plot_results_templated.py:330:    savefig(fig, "decision_ratio_nodes_templated.png")
+./scripts/scripts/plot_results_templated.py:386:if {"decision", "nodes_num", "total_latency_ms", "threshold", "effective_power_mw"}.issubset(telemetry.columns):
+./scripts/scripts/plot_results_templated.py:391:        telemetry[telemetry["decision"].isin(["local", "offload"])]
+./scripts/scripts/plot_results_templated.py:392:        .groupby(["nodes_num", "decision"], as_index=False)
+./scripts/scripts/plot_results_templated.py:402:        hue="decision",
+./scripts/scripts/plot_results_templated.py:403:        style="decision",
+./scripts/scripts/plot_results_templated.py:414:    latency_box = telemetry[telemetry["decision"].isin(["local", "offload"])].copy()
+./scripts/scripts/plot_results_templated.py:419:        hue="decision",
+./scripts/scripts/plot_results_templated.py:455:    fig.savefig(os.path.join(FIG_DIR, "nsson_offload_telemetry_templated.png"), bbox_inches="tight")
+./scripts/scripts/telemetry_logger.py:18:            "cycle_id", "node_id", "model", "policy", "decision", "threshold",
+./scripts/scripts/telemetry_logger.py:19:            "decision_score", "rtt_ms", "uplink_ms", "edge_exec_ms", "local_exec_ms",
+./scripts/scripts/telemetry_logger.py:20:            "total_latency_ms", "local_power_mw", "offload_power_mw", "success", "timestamp"
+./scripts/scripts/telemetry_logger.py:28:    def log_cycle(self, cycle_id, node_id, decision, threshold, score,
+./scripts/scripts/telemetry_logger.py:29:                  rtt_ms, uplink_ms, edge_exec_ms, local_exec_ms,
+./scripts/scripts/telemetry_logger.py:30:                  total_latency_ms, local_power_mw, offload_power_mw, success=True):
+./scripts/scripts/telemetry_logger.py:41:                "decision": decision,
+./scripts/scripts/telemetry_logger.py:43:                "decision_score": score,
+./scripts/scripts/telemetry_logger.py:47:                "local_exec_ms": local_exec_ms,
+./scripts/scripts/telemetry_logger.py:49:                "local_power_mw": local_power_mw,
+./scripts/scripts/telemetry_logger.py:50:                "offload_power_mw": offload_power_mw,
+./scripts/scripts/telemetry_logger.py:78:        cycle_id=1, node_id=1, decision="local", threshold=0.7, score=0.85,
+./scripts/scripts/telemetry_logger.py:79:        rtt_ms=12.3, uplink_ms=5.2, edge_exec_ms=8.1, local_exec_ms=10.5,
+./scripts/scripts/telemetry_logger.py:80:        total_latency_ms=15.6, local_power_mw=320.0, offload_power_mw=450.0
+./scripts/scripts/nsson_simulate_with_telemetry.py:48:            "decision_quality": 1.00,
+./scripts/scripts/nsson_simulate_with_telemetry.py:56:            "decision_quality": 1.08,
+./scripts/scripts/nsson_simulate_with_telemetry.py:115:            offload_bias = 0.57 if architecture == "nsson" else 0.50
+./scripts/scripts/nsson_simulate_with_telemetry.py:117:            offload_bias = 0.47 if architecture == "nsson" else 0.43
+./scripts/scripts/nsson_simulate_with_telemetry.py:121:        decision_prob = clamp(offload_bias + pressure_term + threshold_term, 0.18, 0.82)
+./scripts/scripts/nsson_simulate_with_telemetry.py:122:        decision = "offload" if random.random() < decision_prob else "local"
+./scripts/scripts/nsson_simulate_with_telemetry.py:124:        local_noise = abs(np.random.normal(0.0, 0.55 * pf["network_jitter"]))
+./scripts/scripts/nsson_simulate_with_telemetry.py:125:        offload_noise = abs(np.random.normal(0.0, 0.75 * pf["network_jitter"]))
+./scripts/scripts/nsson_simulate_with_telemetry.py:127:        local_latency = (
+./scripts/scripts/nsson_simulate_with_telemetry.py:128:            md["base_local_latency"]
+./scripts/scripts/nsson_simulate_with_telemetry.py:134:            + local_noise
+./scripts/scripts/nsson_simulate_with_telemetry.py:137:        offload_latency = (
+./scripts/scripts/nsson_simulate_with_telemetry.py:138:            md["base_offload_latency"]
+./scripts/scripts/nsson_simulate_with_telemetry.py:144:            + offload_noise
+./scripts/scripts/nsson_simulate_with_telemetry.py:147:        if decision == "local":
+./scripts/scripts/nsson_simulate_with_telemetry.py:148:            total_latency = local_latency
+./scripts/scripts/nsson_simulate_with_telemetry.py:150:                md["base_power_local"]
+./scripts/scripts/nsson_simulate_with_telemetry.py:156:            total_latency = offload_latency
+./scripts/scripts/nsson_simulate_with_telemetry.py:158:                md["base_power_offload"]
+./scripts/scripts/nsson_simulate_with_telemetry.py:169:            + 0.16 * max(0.0, (total_latency / md["base_local_latency"]) - 1.0)
+./scripts/scripts/nsson_simulate_with_telemetry.py:173:            * af["decision_quality"]
+./scripts/scripts/nsson_simulate_with_telemetry.py:176:        if decision == "offload" and architecture == "nsson":
+./scripts/scripts/nsson_simulate_with_telemetry.py:196:            "decision": decision,
+./scripts/scripts/nsson_simulate_with_telemetry.py:198:            "local_latency_ms": round(local_latency, 4),
+./scripts/scripts/nsson_simulate_with_telemetry.py:199:            "offload_latency_ms": round(offload_latency, 4),
+./scripts/scripts/nsson_simulate_with_telemetry.py:203:            "local_power_mw": md["base_power_local"],
+./scripts/scripts/nsson_simulate_with_telemetry.py:204:            "offload_power_mw": md["base_power_offload"],
+./scripts/scripts/nsson_simulate_with_telemetry.py:222:        "offload_ratio": round(float((df["decision"] == "offload").mean()), 4),
+./scripts/scripts/plot_results.py:240:decision_counts = telemetry.groupby(["architecture", "model", "decision"], as_index=False).size()
+./scripts/scripts/plot_results.py:242:sns.barplot(data=decision_counts, x="decision", y="size", hue="architecture", palette=arch_palette, ax=ax)
+./scripts/scripts/plot_results.py:247:fig.savefig(f"{FIG_DIR}/decision_ablation.png", dpi=600, bbox_inches="tight")
+./scripts/run_nsson_experiments_experimental.py:105:        # CNN row (local exec)
+./scripts/run_nsson_experiments_experimental.py:112:                "execution_site": "local",
+./scripts/run_nsson_experiments_experimental.py:120:        # SNN row (local exec)
+./scripts/run_nsson_experiments_experimental.py:127:                "execution_site": "local",
+./scripts/nsson_ieee_four_extensions.py:34:offload = df[nsson_mask].copy()
+./scripts/nsson_ieee_four_extensions.py:37:if offload.empty or background.empty:
+./scripts/nsson_ieee_four_extensions.py:40:offload["loss_frac"] = offload["ping_loss_pct"] / 100.0
+./scripts/nsson_ieee_four_extensions.py:42:offload["pdr"] = 1.0 - offload["loss_frac"]
+./scripts/nsson_ieee_four_extensions.py:48:vals_off = [offload[m].mean() for m in metrics]
+./scripts/nsson_ieee_four_extensions.py:66:offload["sla_met"] = (
+./scripts/nsson_ieee_four_extensions.py:67:    (offload["rtt_avg_ms"] <= SLA_LATENCY_MAX) &
+./scripts/nsson_ieee_four_extensions.py:68:    (offload["ping_loss_pct"] <= SLA_LOSS_MAX) &
+./scripts/nsson_ieee_four_extensions.py:69:    (offload["control_tcp_throughput_mbps"] >= SLA_THROUGHPUT_MIN)
+./scripts/nsson_ieee_four_extensions.py:73:sfr = offload.groupby("load")["sla_met"].mean().reindex(load_order)
+./scripts/nsson_ieee_four_extensions.py:87:throughput_autonomous = offload["control_tcp_throughput_mbps"].mean()
+./scripts/nsson_ieee_four_extensions.py:118:rtt_samples = offload["rtt_avg_ms"].dropna().values
+./scripts/nsson_ieee_four_extensions.py:120:    raise ValueError("No RTT samples found for offload traffic.")
+./scripts/nsson_simulate.py:89:    info('*** Generating TCP/8090 offload-inference traffic for NSSON verification\n')
+./scripts/telemetry_logger.py:18:            "cycle_id", "node_id", "model", "policy", "decision", "threshold",
+./scripts/telemetry_logger.py:19:            "decision_score", "rtt_ms", "uplink_ms", "edge_exec_ms", "local_exec_ms",
+./scripts/telemetry_logger.py:20:            "total_latency_ms", "local_power_mw", "offload_power_mw", "success", "timestamp"
+./scripts/telemetry_logger.py:28:    def log_cycle(self, cycle_id, node_id, decision, threshold, score,
+./scripts/telemetry_logger.py:29:                  rtt_ms, uplink_ms, edge_exec_ms, local_exec_ms,
+./scripts/telemetry_logger.py:30:                  total_latency_ms, local_power_mw, offload_power_mw, success=True):
+./scripts/telemetry_logger.py:41:                "decision": decision,
+./scripts/telemetry_logger.py:43:                "decision_score": score,
+./scripts/telemetry_logger.py:47:                "local_exec_ms": local_exec_ms,
+./scripts/telemetry_logger.py:49:                "local_power_mw": local_power_mw,
+./scripts/telemetry_logger.py:50:                "offload_power_mw": offload_power_mw,
+./scripts/telemetry_logger.py:78:        cycle_id=1, node_id=1, decision="local", threshold=0.7, score=0.85,
+./scripts/telemetry_logger.py:79:        rtt_ms=12.3, uplink_ms=5.2, edge_exec_ms=8.1, local_exec_ms=10.5,
+./scripts/telemetry_logger.py:80:        total_latency_ms=15.6, local_power_mw=320.0, offload_power_mw=450.0
+./scripts/nsson_four_dimensions_plots.py:18:# SLA thresholds for offload traffic (tune if needed)
+./scripts/nsson_four_dimensions_plots.py:49:offload = df[nsson_mask].copy()      # treat NSSON rows as "offload"
+./scripts/nsson_four_dimensions_plots.py:52:if offload.empty or background.empty:
+./scripts/nsson_four_dimensions_plots.py:81:offload["loss_frac"] = offload["ping_loss_pct"] / 100.0
+./scripts/nsson_four_dimensions_plots.py:83:offload["pdr"] = 1.0 - offload["loss_frac"]
+./scripts/nsson_four_dimensions_plots.py:87:    "latency": offload["rtt_avg_ms"].mean(),
+./scripts/nsson_four_dimensions_plots.py:88:    "jitter": offload["rtt_jitter_mdev_ms"].mean(),
+./scripts/nsson_four_dimensions_plots.py:89:    "loss": offload["loss_frac"].mean(),
+./scripts/nsson_four_dimensions_plots.py:90:    "throughput": offload["control_tcp_throughput_mbps"].mean(),
+./scripts/nsson_four_dimensions_plots.py:91:    "pdr": offload["pdr"].mean(),
+./scripts/nsson_four_dimensions_plots.py:103:    "offload": agg_off,
+./scripts/nsson_four_dimensions_plots.py:144:offload["sla_met"] = (
+./scripts/nsson_four_dimensions_plots.py:145:    (offload["rtt_avg_ms"] <= SLA_LATENCY_MAX) &
+./scripts/nsson_four_dimensions_plots.py:146:    (offload["ping_loss_pct"] <= SLA_LOSS_MAX) &
+./scripts/nsson_four_dimensions_plots.py:147:    (offload["control_tcp_throughput_mbps"] >= SLA_THROUGHPUT_MIN)
+./scripts/nsson_four_dimensions_plots.py:151:if "load" in offload.columns:
+./scripts/nsson_four_dimensions_plots.py:153:    sfr_by_load = offload.groupby("load")["sla_met"].mean().reindex(load_order)
+./scripts/nsson_four_dimensions_plots.py:155:    sfr_by_load = pd.Series({"overall": offload["sla_met"].mean()})
+./scripts/nsson_four_dimensions_plots.py:173:# - NSSON (offload) → autonomous
+./scripts/nsson_four_dimensions_plots.py:175:throughput_autonomous = offload["control_tcp_throughput_mbps"].mean()
+./scripts/nsson_four_dimensions_plots.py:214:rtt_samples = offload["rtt_avg_ms"].dropna().values
+./scripts/nsson_four_dimensions_plots.py:217:    raise ValueError("No RTT samples found for offload traffic.")
+./scripts/nsson_simulate_with_telemetry.py:26:            "base_local_latency": 8.8,
+./scripts/nsson_simulate_with_telemetry.py:27:            "base_offload_latency": 23.2,
+./scripts/nsson_simulate_with_telemetry.py:28:            "base_power_local": 82.0,
+./scripts/nsson_simulate_with_telemetry.py:29:            "base_power_offload": 61.0,
+./scripts/nsson_simulate_with_telemetry.py:35:            "base_local_latency": 10.9,
+./scripts/nsson_simulate_with_telemetry.py:36:            "base_offload_latency": 25.4,
+./scripts/nsson_simulate_with_telemetry.py:37:            "base_power_local": 128.0,
+./scripts/nsson_simulate_with_telemetry.py:38:            "base_power_offload": 92.0,
+./scripts/nsson_simulate_with_telemetry.py:50:            "decision_quality": 1.00,
+./scripts/nsson_simulate_with_telemetry.py:58:            "decision_quality": 1.08,
+./scripts/nsson_simulate_with_telemetry.py:114:            offload_bias = 0.57 if architecture == "nsson" else 0.50
+./scripts/nsson_simulate_with_telemetry.py:116:            offload_bias = 0.47 if architecture == "nsson" else 0.43
+./scripts/nsson_simulate_with_telemetry.py:120:        decision_prob = clamp(offload_bias + pressure_term + threshold_term, 0.18, 0.82)
+./scripts/nsson_simulate_with_telemetry.py:121:        decision = "offload" if random.random() < decision_prob else "local"
+./scripts/nsson_simulate_with_telemetry.py:123:        local_noise = abs(np.random.normal(0.0, 0.55 * pf["network_jitter"]))
+./scripts/nsson_simulate_with_telemetry.py:124:        offload_noise = abs(np.random.normal(0.0, 0.75 * pf["network_jitter"]))
+./scripts/nsson_simulate_with_telemetry.py:126:        local_latency = (
+./scripts/nsson_simulate_with_telemetry.py:127:            md["base_local_latency"]
+./scripts/nsson_simulate_with_telemetry.py:133:            + local_noise
+./scripts/nsson_simulate_with_telemetry.py:136:        offload_latency = (
+./scripts/nsson_simulate_with_telemetry.py:137:            md["base_offload_latency"]
+./scripts/nsson_simulate_with_telemetry.py:143:            + offload_noise
+./scripts/nsson_simulate_with_telemetry.py:146:        if decision == "local":
+./scripts/nsson_simulate_with_telemetry.py:147:            total_latency = local_latency
+./scripts/nsson_simulate_with_telemetry.py:149:                md["base_power_local"]
+./scripts/nsson_simulate_with_telemetry.py:155:            total_latency = offload_latency
+./scripts/nsson_simulate_with_telemetry.py:157:                md["base_power_offload"]
+./scripts/nsson_simulate_with_telemetry.py:168:            + 0.16 * max(0.0, (total_latency / md["base_local_latency"]) - 1.0)
+./scripts/nsson_simulate_with_telemetry.py:172:            * af["decision_quality"]
+./scripts/nsson_simulate_with_telemetry.py:175:        if decision == "offload" and architecture == "nsson":
+./scripts/nsson_simulate_with_telemetry.py:195:            "decision": decision,
+./scripts/nsson_simulate_with_telemetry.py:197:            "local_latency_ms": round(local_latency, 4),
+./scripts/nsson_simulate_with_telemetry.py:198:            "offload_latency_ms": round(offload_latency, 4),
+./scripts/nsson_simulate_with_telemetry.py:202:            "local_power_mw": md["base_power_local"],
+./scripts/nsson_simulate_with_telemetry.py:203:            "offload_power_mw": md["base_power_offload"],
+./scripts/nsson_simulate_with_telemetry.py:221:        "offload_ratio": round(float((df["decision"] == "offload").mean()), 4),
+./plotting/plot_results_templated.py:46:    "local": "#4c72b0",
+./plotting/plot_results_templated.py:47:    "offload": "#dd8452",
+./plotting/plot_results_templated.py:62:    for col in ["model", "architecture", "decision"]:
+./plotting/plot_results_templated.py:260:# FIGURE 7: Local vs offload latency box
+./plotting/plot_results_templated.py:262:if "decision" in telemetry.columns:
+./plotting/plot_results_templated.py:265:        data=sampled[sampled["decision"].isin(["local", "offload"])],
+./plotting/plot_results_templated.py:266:        x="decision",
+./plotting/plot_results_templated.py:268:        hue="decision",
+./plotting/plot_results_templated.py:276:    savefig(fig, "local_offload_latency_box_templated.png")
+./plotting/plot_results_templated.py:279:# FIGURE 8: Local vs offload latency across nodes (color-only)
+./plotting/plot_results_templated.py:281:if {"decision", "nodes_num", "total_latency_ms"}.issubset(telemetry.columns):
+./plotting/plot_results_templated.py:283:        telemetry[telemetry["decision"].isin(["local", "offload"])]
+./plotting/plot_results_templated.py:284:        .groupby(["nodes_num", "decision"], as_index=False)["total_latency_ms"]
+./plotting/plot_results_templated.py:290:        data=line_df.sort_values(["decision", "nodes_num"]),
+./plotting/plot_results_templated.py:293:        hue="decision",
+./plotting/plot_results_templated.py:302:    savefig(fig, "local_vs_offload_latency_templated.png")
+./plotting/plot_results_templated.py:307:if {"decision", "nodes_num"}.issubset(telemetry.columns):
+./plotting/plot_results_templated.py:309:        telemetry[telemetry["decision"].isin(["local", "offload"])]
+./plotting/plot_results_templated.py:310:        .groupby(["nodes_num", "decision"], as_index=False)
+./plotting/plot_results_templated.py:316:        index="nodes_num", columns="decision", values="count", aggfunc="sum", fill_value=0
+./plotting/plot_results_templated.py:319:    for col in ["local", "offload"]:
+./plotting/plot_results_templated.py:324:    ax.bar(pivot["nodes_num"], pivot["local"], label="local", color=DECISION_COLORS["local"])
+./plotting/plot_results_templated.py:327:        pivot["offload"],
+./plotting/plot_results_templated.py:328:        bottom=pivot["local"],
+./plotting/plot_results_templated.py:329:        label="offload",
+./plotting/plot_results_templated.py:330:        color=DECISION_COLORS["offload"]
+./plotting/plot_results_templated.py:336:    savefig(fig, "decision_ratio_nodes_templated.png")
+./plotting/plot_results_templated.py:391:if {"decision", "nodes_num", "total_latency_ms", "threshold", "effective_power_mw"}.issubset(telemetry.columns):
+./plotting/plot_results_templated.py:396:        telemetry[telemetry["decision"].isin(["local", "offload"])]
+./plotting/plot_results_templated.py:397:        .groupby(["nodes_num", "decision"], as_index=False)
+./plotting/plot_results_templated.py:407:        hue="decision",
+./plotting/plot_results_templated.py:417:    latency_box = telemetry[telemetry["decision"].isin(["local", "offload"])].copy()
+./plotting/plot_results_templated.py:422:        hue="decision",
+./plotting/plot_results_templated.py:457:    fig.savefig(os.path.join(FIG_DIR, "nsson_offload_telemetry_templated.png"), bbox_inches="tight")
+./plotting/plot_nsson_results.py:6:- logs/logs/telemetry/*.csv -> detailed telemetry (local vs offload, cnn vs snn, latency)
+./plotting/plot_nsson_results.py:11:- local_vs_offload_vs_nodes.png
+./plotting/plot_nsson_results.py:67:    This is where local vs offload and cnn vs snn decisions should live,
+./plotting/plot_nsson_results.py:135:def aggregate_decisions_vs_nodes(tel_df):
+./plotting/plot_nsson_results.py:137:    Aggregate local vs offload, cnn vs snn usage per node.
+./plotting/plot_nsson_results.py:143:    - 'decision_type' in {'local', 'offload'}
+./plotting/plot_nsson_results.py:149:    required_cols = ["nodes", "decision_type", "model_type"]
+./plotting/plot_nsson_results.py:153:                             f"Update aggregate_decisions_vs_nodes to use your actual columns.")
+./plotting/plot_nsson_results.py:155:    # Local vs offload counts
+./plotting/plot_nsson_results.py:156:    local_offload = (
+./plotting/plot_nsson_results.py:157:        tel_df.groupby(["nodes", "decision_type"])
+./plotting/plot_nsson_results.py:162:        local_offload.groupby("nodes")["count"]
+./plotting/plot_nsson_results.py:166:    local_offload = local_offload.merge(total_per_node, on="nodes")
+./plotting/plot_nsson_results.py:167:    local_offload["percent"] = 100.0 * local_offload["count"] / local_offload["total"]
+./plotting/plot_nsson_results.py:183:    return local_offload, cnn_snn
+./plotting/plot_nsson_results.py:232:def plot_local_vs_offload_vs_nodes(local_offload):
+./plotting/plot_nsson_results.py:235:        data=local_offload,
+./plotting/plot_nsson_results.py:238:        hue="decision_type",
+./plotting/plot_nsson_results.py:242:    plt.title("Local vs offload decisions vs nodes")
+./plotting/plot_nsson_results.py:244:    out_path = FIG_DIR / "local_vs_offload_vs_nodes.png"
+./plotting/plot_nsson_results.py:379:    local_offload, cnn_snn = aggregate_decisions_vs_nodes(tel_df)
+./plotting/plot_nsson_results.py:384:    plot_local_vs_offload_vs_nodes(local_offload)
+./nsson_qos_plots.py:17:OFFLOAD_CSV = os.path.join(NSSON_ROOT, "offload_feedback.csv")
+./nsson_qos_plots.py:46:    offload = pd.read_csv(OFFLOAD_CSV) if os.path.exists(OFFLOAD_CSV) else pd.DataFrame()
+./nsson_qos_plots.py:51:    if "mode" in offload.columns:
+./nsson_qos_plots.py:52:        offload["mode"] = offload["mode"].astype("category")
+./nsson_qos_plots.py:56:    if not offload.empty:
+./nsson_qos_plots.py:58:        sns.lineplot(data=offload, x="cycle", y="offload_ratio", hue="mode")
+./nsson_qos_plots.py:61:        savefig("01_offload_ratio_vs_cycle_all_modes.png")
+./nsson_qos_plots.py:64:        sns.lineplot(data=offload, x="cycle", y="latency_ms", hue="mode")
+./nsson_qos_plots.py:69:        if "power_wh" in offload.columns:
+./nsson_qos_plots.py:71:            sns.lineplot(data=offload, x="cycle", y="power_wh", hue="mode")
+./nsson_qos_plots.py:77:        if "threshold" in offload.columns:
+./nsson_qos_plots.py:79:            sns.lineplot(data=offload, x="cycle", y="threshold", hue="mode")
+./nsson_qos_plots.py:87:        sns.boxplot(data=offload, x="mode", y="latency_ms")
+./nsson_qos_plots.py:92:        if "power_wh" in offload.columns:
+./nsson_qos_plots.py:94:            sns.boxplot(data=offload, x="mode", y="power_wh")
+./fix_remaining.py:6:start = "Since samples are offloaded"
+./fix_remaining.py:13:new_feedback = r"""\revblue{Since samples are offloaded when $C(s)<\theta(t)$ according to
+./fix_remaining.py:14:Eq.~\eqref{eq:decision}, increasing $\theta(t)$ increases the fraction
+./fix_remaining.py:15:of offloaded samples, whereas decreasing $\theta(t)$ reduces it. The
+./fix_remaining.py:20:can alter the decision for an already-completed request.}
+./latencytracker.py:7:LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+./latencytracker.py:24:        Lcompute = t2 - t1
+./latencytracker.py:27:        Le2e = Lsense + Lcompute + Ltransfer + Lidle
+./latencytracker.py:32:            "compute_sec": Lcompute,
+./latencytracker.py:46:                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+./feedbackloop.py:6:LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+./feedbackloop.py:7:POWER_LOG = os.path.join(NSSON_ROOT, "logs", "offloadpowerlog.csv")
+./feedbackloop.py:8:DECISION_LOG = os.path.join(NSSON_ROOT, "logs", "offloaddecisionlog.json")
+./feedbackloop.py:25:def compute_accuracy_window(decisions_df, cycles_window):
+./feedbackloop.py:26:    sub = decisions_df[decisions_df["cycle"].isin(cycles_window)]
+./feedbackloop.py:33:    decisions = pd.read_json(DECISION_LOG, lines=True)
+./feedbackloop.py:34:    decisions = decisions[decisions["mode"] == mode]
+./feedbackloop.py:46:        A_bar = compute_accuracy_window(decisions, window_cycles)
+./feedbackloop.py:61:                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+./offloadengine.py:7:DECISION_LOG = os.path.join(NSSON_ROOT, "logs", "offloaddecisionlog.json")
+./offloadengine.py:31:def run_offload(cycles=300, base_theta=0.6, mode="adaptive_no_sdn"):
+./offloadengine.py:39:            if mode == "local_only":
+./offloadengine.py:40:                decision = "local"
+./offloadengine.py:41:            elif mode == "offload_only":
+./offloadengine.py:42:                decision = "offload"
+./offloadengine.py:44:                decision = "offload" if conf_snn < base_theta else "local"
+./offloadengine.py:51:                "decision": decision,
+./offloadengine.py:59:    print("Offload decisions written to", DECISION_LOG)
+./offloadengine.py:65:                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+./offloadengine.py:67:    run_offload(cycles=300, base_theta=0.6, mode=args.mode)
+./controllers/baseline_sdn_iot_controller.py:136:                "decision": "not_inference_aware"
+./controllers/qos_nsson_controller.py:70:        TCP/UDP 8090 and 8091 correspond to offload inference endpoints.
+./controllers/qos_nsson_controller.py:77:                return "control", "offload_inference", PRIORITY_OFFLOAD
+./controllers/qos_nsson_controller.py:81:                return "control", "offload_inference", PRIORITY_OFFLOAD
+./controllers/qos_nsson_controller.py:201:                    "decision": (
+./powermodel.py:5:LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+./powermodel.py:6:POWER_LOG = os.path.join(NSSON_ROOT, "logs", "offloadpowerlog.csv")
+./powermodel.py:18:        Lcompute = row["compute_sec"]
+./powermodel.py:23:        Pcompute = Wc * (Lcompute / Le2e) if Le2e > 0 else 0.0
+./powermodel.py:32:            "compute_sec": Lcompute,
+./powermodel.py:49:                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+./simrunner.py:9:  local_only       : every sample is processed locally
+./simrunner.py:10:  offload_only     : every sample is offloaded
+./simrunner.py:27:    "local_only",
+./simrunner.py:28:    "offload_only",
+./simrunner.py:54:        "offloaddecisionlog.json",
+./simrunner.py:55:        "decisionlog.json",
+./simrunner.py:56:        "offloadlatencylog.csv",
+./simrunner.py:58:        "offloadpowerlog.csv",
+./simrunner.py:73:    Report only the files actually written by offloadengine, latencytracker,
+./simrunner.py:77:        "offloaddecisionlog.json",
+./simrunner.py:78:        "decisionlog.json",
+./simrunner.py:79:        "offloadlatencylog.csv",
+./simrunner.py:81:        "offloadpowerlog.csv",
+./simrunner.py:102:            "Check the hard-coded output paths in offloadengine.py, "
+./simrunner.py:115:        from offloadengine import run_offload
+./simrunner.py:121:            "  /home/avi/NSSON_V02/offloadengine.py\n"
+./simrunner.py:137:    if mode == "local_only":
+./simrunner.py:138:        print("[MODE] local_only: all decisions must be local; theta = 0.0")
+./simrunner.py:140:            run_offload,
+./simrunner.py:143:            force_decision="local",
+./simrunner.py:148:    elif mode == "offload_only":
+./simrunner.py:149:        print("[MODE] offload_only: all decisions must be offload; theta = 1.0")
+./simrunner.py:151:            run_offload,
+./simrunner.py:154:            force_decision="offload",
+./simrunner.py:162:            run_offload,
+./simrunner.py:172:            run_offload,
+./simrunner.py:182:            run_offload,
+./qos/qos_plots_ieee.py:15:OFFLOAD_CSV = os.path.join(NSSON_ROOT, "offload_feedback.csv")
+./qos/qos_plots_ieee.py:30:    offload = pd.read_csv(OFFLOAD_CSV)
+./qos/qos_plots_ieee.py:36:    # Ensure offload has 'mode' column
+./qos/qos_plots_ieee.py:37:    if "mode" not in offload.columns:
+./qos/qos_plots_ieee.py:38:        offload["mode"] = "nsson"
+./qos/qos_plots_ieee.py:39:    if "mode" in offload.columns:
+./qos/qos_plots_ieee.py:40:        offload["mode"] = offload["mode"].astype("category")
+./qos/qos_plots_ieee.py:215:    sns.lineplot(data=offload, x="cycle", y="offload_ratio", hue="mode")
+./qos/qos_plots_ieee.py:218:    savefig("25_offload_ratio_vs_cycle_mode.png")
+./qos/qos_plots_ieee.py:221:    sns.lineplot(data=offload, x="cycle", y="threshold")
+./qos/qos_plots_ieee.py:227:        merged = pd.merge(offload, qos[["cycle", "slice"]], on="cycle", how="left")
+./qos/qos_plots_ieee.py:229:        sns.boxplot(data=merged, x="slice", y="offload_ratio", hue="mode")
+./qos/qos_plots_ieee.py:232:        savefig("27_offload_box_slice_mode.png")
+./qos/qos_plots_ieee.py:242:    if "power_wh" in offload.columns:
+./qos/qos_plots_ieee.py:244:        sns.scatterplot(data=offload, x="latency_ms", y="power_wh", hue="mode")
+./fig_theta_vs_offload_ratio.py:26:        raise ValueError("No records found in the decision log.")
+./fig_theta_vs_offload_ratio.py:40:def normalize_decision(value) -> int:
+./fig_theta_vs_offload_ratio.py:46:    if token in {"offload", "remote", "edge", "1", "true", "yes"}:
+./fig_theta_vs_offload_ratio.py:48:    if token in {"local", "0", "false", "no"}:
+./fig_theta_vs_offload_ratio.py:50:    raise ValueError(f"Unrecognized decision value: {value!r}")
+./fig_theta_vs_offload_ratio.py:55:    parser.add_argument("--input", required=True, help="Real NSSON decision log (.jsonl/.json/.csv)")
+./fig_theta_vs_offload_ratio.py:67:    decision_col = pick_column(df, ["decision", "offload_decision", "placement", "action"], "decision")
+./fig_theta_vs_offload_ratio.py:71:        "offload": df[decision_col].map(normalize_decision),
+./fig_theta_vs_offload_ratio.py:75:        raise ValueError("At least 10 valid decisions are required for a meaningful plot.")
+./fig_theta_vs_offload_ratio.py:83:    # reports the empirical offload fraction from actual decisions in that threshold band.
+./fig_theta_vs_offload_ratio.py:91:        offload_ratio=("offload", "mean"),
+./fig_theta_vs_offload_ratio.py:92:        samples=("offload", "size"),
+./fig_theta_vs_offload_ratio.py:95:    # Wilson 95% confidence intervals for a binomial offload proportion.
+./fig_theta_vs_offload_ratio.py:97:    p = grouped["offload_ratio"].to_numpy()
+./fig_theta_vs_offload_ratio.py:106:    ax.plot(grouped["theta_mean"], grouped["offload_ratio"], marker="o", linewidth=1.6,
+./fig_theta_vs_offload_ratio.py:107:            color="#1f77b4", label="Measured offload ratio")
+./fig_theta_vs_offload_ratio.py:110:    for x, y, count in zip(grouped["theta_mean"], grouped["offload_ratio"], grouped["samples"]):
+./fig_theta_vs_offload_ratio.py:115:    ax.set_ylabel("Empirical offload ratio")
+./fig_theta_vs_offload_ratio.py:123:    print(grouped[["theta_mean", "offload_ratio", "samples"]].to_string(index=False))
+./experiments/qos_slicing/adaptive_routing.py:131:    decision = {
+./experiments/qos_slicing/adaptive_routing.py:144:    output_path.write_text(json.dumps(decision, indent=2))
+./experiments/qos_slicing/adaptive_routing.py:146:    print(json.dumps(decision, indent=2))
+./jetson_emulation/calibrate_bases.py:41:            "base_local_latency": sum(d["latencies"]) / len(d["latencies"]),
+./jetson_emulation/calibrate_bases.py:42:            "base_offload_latency": sum(d["latencies"]) / len(d["latencies"]),
+./jetson_emulation/calibrate_bases.py:43:            "base_power_local": sum(d["powers"]) / len(d["powers"]),
+./jetson_emulation/calibrate_bases.py:44:            "base_power_offload": sum(d["powers"]) / len(d["powers"]),
+./jetson_emulation/jetson_emulation/jetson_runner.py:114:        "base_local_latency": hw["latency_ms"],
+./jetson_emulation/jetson_emulation/jetson_runner.py:115:        "base_offload_latency": hw["latency_ms"],
+./jetson_emulation/jetson_emulation/jetson_runner.py:116:        "base_power_local": hw["power_mw"],
+./jetson_emulation/jetson_emulation/jetson_runner.py:117:        "base_power_offload": hw["power_mw"],
+./fig_theta_sweep_from_real_log.py:9:INPUT = Path("results/run_20260916_150942/nsson_full/decision_log.json")
+./fig_theta_sweep_from_real_log.py:36:    decisions = confidence < theta
+./fig_theta_sweep_from_real_log.py:39:        "offloaded_samples": int(decisions.sum()),
+./fig_theta_sweep_from_real_log.py:41:        "offload_ratio": float(decisions.mean()),
+./fig_theta_sweep_from_real_log.py:45:out.to_csv(OUT_DIR / "theta_offload_ratio_sweep.csv", index=False)
+./fig_theta_sweep_from_real_log.py:56:    out["offload_ratio"],
+./fig_theta_sweep_from_real_log.py:61:    label="Measured empirical offload ratio",
+./fig_theta_sweep_from_real_log.py:66:        f"{int(r['offloaded_samples'])}/{int(r['total_samples'])}",
+./fig_theta_sweep_from_real_log.py:67:        (r["theta"], r["offload_ratio"]),
+./fig_theta_sweep_from_real_log.py:83:ax.set_ylabel(r"Empirical offload ratio $\phi_{\mathrm{offload}}$")
+./fig_theta_sweep_from_real_log.py:91:    OUT_DIR / "fig_theta_vs_offload_ratio.pdf",
+./fig_theta_sweep_from_real_log.py:96:    OUT_DIR / "fig_theta_vs_offload_ratio.png",
+./fig_theta_sweep_from_real_log.py:101:print("Saved:", OUT_DIR / "theta_offload_ratio_sweep.csv")
+./fig_theta_sweep_from_real_log.py:102:print("Saved:", OUT_DIR / "fig_theta_vs_offload_ratio.pdf")
+./fig_theta_sweep_from_real_log.py:103:print("Saved:", OUT_DIR / "fig_theta_vs_offload_ratio.png")

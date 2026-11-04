@@ -1,0 +1,42 @@
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_network_launchfix_20261102_102201_5KrIyz",
+  "total_client_requests": 80,
+  "matched_remote_requests": 20,
+  "observed_identity_mismatches": 0,
+  "policies": {
+    "local_cnn": {
+      "requests": 20,
+      "offloaded": 0,
+      "correct": 20,
+      "mean_request_ms": 1.8581098
+    },
+    "local_snn": {
+      "requests": 20,
+      "offloaded": 0,
+      "correct": 19,
+      "mean_request_ms": 14.6954146
+    },
+    "remote_cnn": {
+      "requests": 20,
+      "offloaded": 20,
+      "correct": 20,
+      "mean_request_ms": 20.2401094
+    },
+    "adaptive_fixed": {
+      "requests": 20,
+      "offloaded": 0,
+      "correct": 19,
+      "mean_request_ms": 15.24402695
+    }
+  },
+  "limitations": [
+    "Smoke test only; 20 requests per policy.",
+    "Same workstation and shared physical GPU resources.",
+    "Static OpenFlow forwarding, not Ryu inference registration.",
+    "No queue differentiation, SLA enforcement, or adaptive routing.",
+    "Fixed threshold; no feedback update.",
+    "No Jetson energy or hardware measurements.",
+    "Timing excludes original image acquisition."
+  ]
+}

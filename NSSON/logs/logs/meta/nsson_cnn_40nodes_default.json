@@ -1,0 +1,13 @@
+{
+  "model": "cnn",
+  "architecture": "nsson",
+  "profile": "default",
+  "nodes": 40,
+  "cycles": 1200,
+  "accuracy": 92.9808,
+  "avg_latency_ms": 19.3203,
+  "avg_power_mw": 102.9696,
+  "avg_throughput_fps": 37.2205,
+  "avg_rtt_ms": 21.2231,
+  "offload_ratio": 0.57
+}

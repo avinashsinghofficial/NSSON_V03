@@ -1,0 +1,68 @@
+==================================================
+SCENARIO: local_only
+---------------- POWER LOG ----------------
+11 /home/avi/NSSON/offload/local_only/power_log.csv
+cycle,data_mb,compute_sec,idle_sec,compute_power_w,transfer_power_w,idle_power_w,total_power_wh,energy_j,mode
+0,0.1,0.0201025009155273,0.0050570964813232,2.2182116661580373,0.05,0.16740768413187712,3.0656602647569366e-05,0.1103637695312497,local_only
+1,0.1,0.0200624465942382,0.005061388015747,2.216871278781805,0.05,0.1677828125823257,3.060188558366549e-05,0.11016678810119578,local_only
+---------------- LATENCY LOG ----------------
+11 /home/avi/NSSON/offload/local_only/latency_log.csv
+cycle,sense_sec,compute_sec,transfer_sec,idle_sec,total_sec,mode
+0,0.010088920593261719,0.020102500915527344,0.010063886642456055,0.005057096481323242,0.04531240463256836,local_only
+1,0.010063886642456055,0.02006244659423828,0.01006174087524414,0.00506138801574707,0.04524946212768555,local_only
+---------------- DECISION LOG ----------------
+10 /home/avi/NSSON/offload/local_only/decision_log.json
+{"sampleid": 0, "label": 6, "conf_snn": 0.27337391594646554, "conf_cnn": 0.879055047383946, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6768537, "cycle": 0, "mode": "local_only"}
+{"sampleid": 1, "label": 9, "conf_snn": 0.6232334448672797, "conf_cnn": 0.8803345035229626, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6768835, "cycle": 1, "mode": "local_only"}
+{"sampleid": 2, "label": 7, "conf_snn": 0.6225646316108401, "conf_cnn": 0.981565812704725, "decision": "local", "theta": 0.0, "timestamp": 1789551582.6768963, "cycle": 2, "mode": "local_only"}
+==================================================
+SCENARIO: offload_only
+---------------- POWER LOG ----------------
+11 /home/avi/NSSON/offload/offload_only/power_log.csv
+cycle,data_mb,compute_sec,idle_sec,compute_power_w,transfer_power_w,idle_power_w,total_power_wh,energy_j,mode
+0,0.1,0.0201022624969482,0.0050992965698242,2.2157137901674497,0.05,0.16861656838321057,3.067455689112338e-05,0.11042840480804418,offload_only
+1,0.1,0.0200824737548828,0.0050630569458007,2.217436858648669,0.05,0.16771353807435085,3.063086337513388e-05,0.11027110815048197,offload_only
+---------------- LATENCY LOG ----------------
+11 /home/avi/NSSON/offload/offload_only/latency_log.csv
+cycle,sense_sec,compute_sec,transfer_sec,idle_sec,total_sec,mode
+0,0.010086774826049805,0.020102262496948242,0.010074615478515625,0.005099296569824219,0.04536294937133789,offload_only
+1,0.01006627082824707,0.020082473754882812,0.010071277618408203,0.005063056945800781,0.04528307914733887,offload_only
+---------------- DECISION LOG ----------------
+10 /home/avi/NSSON/offload/offload_only/decision_log.json
+{"sampleid": 0, "label": 6, "conf_snn": 0.27337391594646554, "conf_cnn": 0.879055047383946, "decision": "offload", "theta": 1.0, "timestamp": 1789551583.4140139, "cycle": 0, "mode": "offload_only"}
+{"sampleid": 1, "label": 9, "conf_snn": 0.6232334448672797, "conf_cnn": 0.8803345035229626, "decision": "offload", "theta": 1.0, "timestamp": 1789551583.414042, "cycle": 1, "mode": "offload_only"}
+{"sampleid": 2, "label": 7, "conf_snn": 0.6225646316108401, "conf_cnn": 0.981565812704725, "decision": "offload", "theta": 1.0, "timestamp": 1789551583.4140546, "cycle": 2, "mode": "offload_only"}
+==================================================
+SCENARIO: adaptive_no_sdn
+---------------- POWER LOG ----------------
+11 /home/avi/NSSON/offload/adaptive_no_sdn/power_log.csv
+cycle,data_mb,compute_sec,idle_sec,compute_power_w,transfer_power_w,idle_power_w,total_power_wh,energy_j,mode
+0,0.1,0.0201044082641601,0.0050981044769287,2.2153448438928502,0.05,0.16853109007030326,3.067721260918503e-05,0.1104379653930661,adaptive_no_sdn
+1,0.1,0.020068883895874,0.0051019191741943,2.2140944504942404,0.05,0.1688603759291689,3.0628704362445355e-05,0.11026333570480329,adaptive_no_sdn
+---------------- LATENCY LOG ----------------
+11 /home/avi/NSSON/offload/adaptive_no_sdn/latency_log.csv
+cycle,sense_sec,compute_sec,transfer_sec,idle_sec,total_sec,mode
+0,0.010100603103637695,0.020104408264160156,0.01007223129272461,0.005098104476928711,0.04537534713745117,adaptive_no_sdn
+1,0.010076761245727539,0.020068883895874023,0.010073184967041016,0.005101919174194336,0.045320749282836914,adaptive_no_sdn
+---------------- DECISION LOG ----------------
+10 /home/avi/NSSON/offload/adaptive_no_sdn/decision_log.json
+{"sampleid": 0, "label": 6, "conf_snn": 0.27337391594646554, "conf_cnn": 0.879055047383946, "decision": "offload", "theta": 0.6, "timestamp": 1789551584.1507044, "cycle": 0, "mode": "adaptive_no_sdn"}
+{"sampleid": 1, "label": 9, "conf_snn": 0.6232334448672797, "conf_cnn": 0.8803345035229626, "decision": "local", "theta": 0.6, "timestamp": 1789551584.1507335, "cycle": 1, "mode": "adaptive_no_sdn"}
+{"sampleid": 2, "label": 7, "conf_snn": 0.6225646316108401, "conf_cnn": 0.981565812704725, "decision": "local", "theta": 0.6, "timestamp": 1789551584.1507466, "cycle": 2, "mode": "adaptive_no_sdn"}
+==================================================
+SCENARIO: nsson_full
+---------------- POWER LOG ----------------
+11 /home/avi/NSSON/offload/nsson_full/power_log.csv
+cycle,data_mb,compute_sec,idle_sec,compute_power_w,transfer_power_w,idle_power_w,total_power_wh,energy_j,mode
+0,0.1,0.0201046466827392,0.0050995349884033,2.2159183480404203,0.05,0.16862002091753275,3.067798415819795e-05,0.11044074296951262,nsson_full
+1,0.1,0.0200996398925781,0.0051004886627197,2.2160536664353434,0.05,0.16870386726389414,3.06712322764926e-05,0.11041643619537336,nsson_full
+---------------- LATENCY LOG ----------------
+11 /home/avi/NSSON/offload/nsson_full/latency_log.csv
+cycle,sense_sec,compute_sec,transfer_sec,idle_sec,total_sec,mode
+0,0.0100860595703125,0.020104646682739258,0.01007390022277832,0.00509953498840332,0.0453641414642334,nsson_full
+1,0.010074138641357422,0.020099639892578125,0.010075807571411133,0.0051004886627197266,0.045350074768066406,nsson_full
+---------------- DECISION LOG ----------------
+10 /home/avi/NSSON/offload/nsson_full/decision_log.json
+{"sampleid": 0, "label": 6, "conf_snn": 0.27337391594646554, "conf_cnn": 0.879055047383946, "decision": "offload", "theta": 0.6, "timestamp": 1789551586.7206252, "cycle": 0, "mode": "nsson_full"}
+{"sampleid": 1, "label": 9, "conf_snn": 0.6232334448672797, "conf_cnn": 0.8803345035229626, "decision": "local", "theta": 0.6, "timestamp": 1789551586.720656, "cycle": 1, "mode": "nsson_full"}
+{"sampleid": 2, "label": 7, "conf_snn": 0.6225646316108401, "conf_cnn": 0.981565812704725, "decision": "local", "theta": 0.6, "timestamp": 1789551586.7206695, "cycle": 2, "mode": "nsson_full"}

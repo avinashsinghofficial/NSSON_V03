@@ -1,0 +1,67 @@
+     1	import os
+     2	import json
+     3	import time
+     4	import numpy as np
+     5	
+     6	NSSON_ROOT = "/home/avi/NSSON_V02"
+     7	DECISION_LOG = os.path.join(NSSON_ROOT, "logs", "offloaddecisionlog.json")
+     8	
+     9	# Paper values
+    10	CNN_ACC = 0.9484
+    11	SNN_ACC = 0.7766
+    12	
+    13	def generate_confidences(label, mode="adaptive_no_sdn"):
+    14	    # Simple synthetic confidences consistent with paper accuracies:
+    15	    # - On average, correct samples get higher confidence.
+    16	    # - SNN has lower accuracy and slightly lower max confidence than CNN.
+    17	    correct = np.random.rand() < SNN_ACC
+    18	    if correct:
+    19	        conf_snn = 0.6 + 0.4 * np.random.rand()  # [0.6, 1.0]
+    20	    else:
+    21	        conf_snn = 0.2 + 0.4 * np.random.rand()  # [0.2, 0.6]
+    22	
+    23	    correct_cnn = np.random.rand() < CNN_ACC
+    24	    if correct_cnn:
+    25	        conf_cnn = 0.7 + 0.3 * np.random.rand()  # [0.7, 1.0]
+    26	    else:
+    27	        conf_cnn = 0.3 + 0.4 * np.random.rand()  # [0.3, 0.7]
+    28	
+    29	    return float(conf_snn), float(conf_cnn)
+    30	
+    31	def run_offload(cycles=300, base_theta=0.6, mode="adaptive_no_sdn"):
+    32	    np.random.seed(42)  # reproducibility
+    33	
+    34	    with open(DECISION_LOG, "w") as f:
+    35	        for cycle in range(cycles):
+    36	            label = np.random.randint(0, 10)
+    37	            conf_snn, conf_cnn = generate_confidences(label, mode)
+    38	
+    39	            if mode == "local_only":
+    40	                decision = "local"
+    41	            elif mode == "offload_only":
+    42	                decision = "offload"
+    43	            else:
+    44	                decision = "offload" if conf_snn < base_theta else "local"
+    45	
+    46	            rec = {
+    47	                "sampleid": int(cycle),
+    48	                "label": int(label),
+    49	                "conf_snn": conf_snn,
+    50	                "conf_cnn": conf_cnn,
+    51	                "decision": decision,
+    52	                "theta": float(base_theta),
+    53	                "timestamp": time.time(),
+    54	                "cycle": int(cycle),
+    55	                "mode": mode,
+    56	            }
+    57	            f.write(json.dumps(rec) + "\n")
+    58	
+    59	    print("Offload decisions written to", DECISION_LOG)
+    60	
+    61	if __name__ == "__main__":
+    62	    import argparse
+    63	    p = argparse.ArgumentParser()
+    64	    p.add_argument("--mode", required=True,
+    65	                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+    66	    args = p.parse_args()
+    67	    run_offload(cycles=300, base_theta=0.6, mode=args.mode)

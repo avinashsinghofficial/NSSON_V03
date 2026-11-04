@@ -1,0 +1,86 @@
+{
+  "status": "completed",
+  "repetition": 1,
+  "results_directory": "/home/avi/NSSON/revision_causal_20261102_110047_TfyZ9O/repetition_1",
+  "feedback_unit_tests": "passed",
+  "request_causality_check": "passed",
+  "policy_summaries": {
+    "local_cnn": {
+      "requests": 300,
+      "offloaded": 0,
+      "accuracy_percent": 95.66666666666667,
+      "mean_request_ms": 1.3901526633333334,
+      "p95_request_ms": 1.45228615,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "local_snn": {
+      "requests": 300,
+      "offloaded": 0,
+      "accuracy_percent": 92.66666666666666,
+      "mean_request_ms": 11.711064306666668,
+      "p95_request_ms": 11.736048100000001,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "remote_cnn": {
+      "requests": 300,
+      "offloaded": 300,
+      "accuracy_percent": 95.66666666666667,
+      "mean_request_ms": 18.81541633333333,
+      "p95_request_ms": 19.7658179,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "adaptive_fixed": {
+      "requests": 300,
+      "offloaded": 1,
+      "accuracy_percent": 93.0,
+      "mean_request_ms": 11.85472952,
+      "p95_request_ms": 12.1967394,
+      "feedback_updates": 0,
+      "final_threshold": null,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "feedback_latency": {
+      "requests": 300,
+      "offloaded": 11,
+      "accuracy_percent": 93.33333333333333,
+      "mean_request_ms": 12.497613636666667,
+      "p95_request_ms": 12.8278817,
+      "feedback_updates": 30,
+      "final_threshold": 0.9,
+      "observed_response_mismatches": 0,
+      "label_feedback": "not_used"
+    },
+    "feedback_label_oracle": {
+      "requests": 300,
+      "offloaded": 11,
+      "accuracy_percent": 93.33333333333333,
+      "mean_request_ms": 12.485096216666667,
+      "p95_request_ms": 12.514255200000001,
+      "feedback_updates": 30,
+      "final_threshold": 0.9,
+      "observed_response_mismatches": 0,
+      "label_feedback": "oracle_only"
+    }
+  },
+  "limitations": [
+    "Same workstation and shared physical GPU resources.",
+    "Static OpenFlow forwarding; not inference-aware Ryu registration.",
+    "Policies run sequentially, not concurrently.",
+    "No QoS queues, adaptive routing, or SLA guarantees.",
+    "Energy feedback disabled; no justified power coefficients.",
+    "Accuracy-aware variant consumes evaluation labels and is oracle-only.",
+    "Parameters are declared engineering settings, not optimized.",
+    "Request timing excludes image acquisition and feedback computation.",
+    "Host results are not Jetson Nano measurements."
+  ]
+}

@@ -1,0 +1,213 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+\graphicspath{{figures/}}
+\newcommand{\evidencefigure}[2]{%
+\IfFileExists{figures/#1}{\includegraphics[width=\linewidth]{figures/#1}}{%
+\fbox{\parbox{0.92\linewidth}{Figure file not bundled: \texttt{\detokenize{#1}}. Copy the existing locally generated PDF into the figures directory.}}}%
+\caption{#2}}
+
+\title{NSSON: An SDN-Oriented Prototype for Neuromorphic Inference Offloading with Component-Level Validation}
+\author{Avinash~Singh and Rohit~Kumar~Das,~\IEEEmembership{Senior Member,~IEEE}%
+\thanks{A. Singh and R. K. Das are with the Department of Computer Science and Engineering, Indian Institute of Information Technology Design and Manufacturing (IIITDM) Kurnool, Andhra Pradesh 518007, India (e-mail: 225cs1013@iiitk.ac.in; rohitdas.it.13@gmail.com).}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Coordinating sensing, memory, communication, and computation (SMCC) requires distinguishing the behavior of execution-placement policies from that of network service differentiation. NSSON is an SDN-oriented prototype that combines CNN/SNN inference, request telemetry, confidence-based offloading, and causal threshold feedback, with a separately evaluated static network-service component. Actual CIFAR-10 inference was evaluated using six policies in three repetitions of the same 300-image set. Mean request duration was 1.378 ms for local CNN execution, 11.724 ms for local SNN execution, and 18.798 ms for remote CNN execution. Latency feedback increased the mean offload fraction from 0.333\% to 3.556\% relative to a fixed threshold, with evaluated accuracy increasing from 93.000\% to 93.667\%; mean request duration was 12.477 versus 12.414 ms. These observations demonstrate a trade-off, not a universal adaptive-policy advantage. A separate six-pair network campaign compared shared service with static per-class allocation under equal aggregate leaf-buffer capacity of 1.5 MB. Static allocation protected designated traffic classes and produced zero receiver-reported loss in all 18 low-rate probe tests, at the expense of background throughput. The experiments validate components separately; they do not establish integrated inference-aware controller operation, SLA guarantees, or target-device energy savings.
+\end{abstract}
+\begin{IEEEkeywords}
+Edge inference, spiking neural networks, confidence-based offloading, software-defined networking, service differentiation, reproducible evaluation.
+\end{IEEEkeywords}
+
+\section{Introduction}
+\label{sec:intro}
+Edge inference combines model execution with communication and resource-management decisions. Prior edge-computing and offloading research motivates evaluating placement decisions alongside the network conditions under which remote execution occurs~\cite{shi2016edge,satyanarayanan2017emergence,mach2017mobile,mao2017survey}. An architectural connection, however, is not itself evidence of a measured cross-layer performance benefit.
+
+NSSON organizes sensing, memory, communication, and computation around model outputs and persistent telemetry. Its implemented inference component obtains an SNN confidence score, selects local execution or remote CNN inference, and can update the decision threshold from completed-request latency. Its separately evaluated network component assigns static service classes. Coupling individual inference decisions to controller-installed network actions remains an architectural objective rather than a validated result in the experiments reported here.
+
+This paper makes three bounded contributions:
+\begin{enumerate}
+\item A real-model inference and offloading experiment with request identities, image hashes, transport endpoints, and client--server association checks.
+\item A causal latency-feedback implementation, evaluated against local CNN, local SNN, remote CNN, and fixed-threshold execution. A label-dependent variant is isolated as an oracle experiment.
+\item A repeated, buffer-controlled comparison of shared and static per-class network service, with concurrent UDP probes, measured ingress counters, and explicit accounting of the background-traffic cost.
+\end{enumerate}
+The evaluation does not claim that adaptive placement dominates local CNN execution on the tested hardware or that the separate components demonstrate a single integrated inference-aware SDN deployment.
+
+\section{Related Work and Positioning}
+\label{sec:background}
+Distributed and split inference research considers execution across devices and the communication required between execution sites~\cite{teerapittayanon2017distributed,chang2021survey}. The present experiment selects between complete local SNN execution and remote CNN execution; it transfers a raw image rather than intermediate activations. It should therefore be interpreted as confidence-based inference offloading, not validation of neural-network layer partitioning.
+
+SNN research includes architecture search and hardware-sensitive deployment considerations~\cite{putra2025spikenas,kim2022neural}. This evaluation measures a specific software implementation on a workstation; it does not infer hardware energy efficiency from the use of spiking neurons alone.
+
+SDN separates forwarding behavior from programmable control~\cite{kreutz2014software,mckeown2008openflow}. Our network experiment evaluates the data-plane effect of static service allocation through Open vSwitch and Linux queueing. It does not compare a telemetry-driven Ryu controller against an optimized static controller. No absolute first-system or state-of-the-art superiority claim is made.
+
+\section{Prototype and Decision Mechanism}
+\label{sec:architecture}
+The sensing component executes a local SNN and obtains a maximum-softmax confidence score $C(s)$. This score is uncalibrated and is not equated with the probability that a prediction is correct. The computation component applies
+\begin{equation}
+D(s,k)=\begin{cases}
+\mathrm{local},&C(s)\geq\theta_k,\\
+\mathrm{offload},&C(s)<\theta_k.
+\end{cases}
+\label{eq:decision}
+\end{equation}
+Local execution retains the SNN prediction. Offloading transmits the raw 32-by-32 RGB image to a CNN server. Increasing $\theta$ weakly increases the offload fraction for a fixed confidence trace; it does not necessarily improve accuracy or latency.
+
+The memory component records request decisions, predictions, thresholds, timing, image hashes, and request/session identities. The communication component carries requests between network namespaces over an emulated topology. In the inference experiment it uses static bidirectional OpenFlow forwarding, without a Ryu controller or QoS queues.
+
+\subsection{Implemented Causal Feedback}
+After each nonoverlapping window of ten completed requests, the latency-feedback policy computes mean request duration $\bar L_w$ and updates the threshold for subsequent requests:
+\begin{align}
+e_w&=\mathrm{clip}(\bar L_w/0.030-1,-1,1),\\
+\theta_{w+1}&=\mathrm{clip}(\theta_w-0.05e_w,0.30,0.90).
+\label{eq:feedback}
+\end{align}
+The initial threshold is 0.60. The implementation checks that the prior update is applied to the next request. These parameters are declared engineering settings, not optimized values. Energy feedback is disabled.
+
+A separate oracle variant adds $0.05(0.95-\bar a_w)$ before clipping, where $\bar a_w$ is the local SNN accuracy computed from evaluation labels in the completed window. These labels are not assumed available in deployment. The oracle variant is not a deployable accuracy-aware controller or a proven upper bound.
+
+\subsection{Network Component}
+The network experiment implements two policies: one shared 20 Mbps HTB class, and four static HTB classes under a 20 Mbps parent. Static rate/ceiling pairs are 8/15, 6/10, 3/6, and 1/3 Mbps for autonomous, healthcare, industrial, and background traffic, respectively. These names identify experimental traffic classes, not validated application workloads. Bandwidth allocation and buffer partitioning change together, so their individual effects are not isolated.
+
+\section{Experimental Method}
+\label{sec:setup}
+\subsection{Real-Model Inference}
+Three process/topology repetitions evaluated six policies, each with 300 CIFAR-10 images: local CNN, local SNN, remote CNN, fixed threshold, latency feedback, and label-oracle feedback. The same 300-image set was reused across repetitions and policies; 5,400 request executions are not 5,400 unique images. Request order was shuffled by repetition and policy order was rotated. The three repetitions do not exhaustively balance all policy-order positions.
+
+Client and server ran in distinct Mininet network namespaces on one workstation, sharing physical compute resources. Each endpoint link was configured at 20 Mbps with 2 ms delay. Configuration values are not measured delay or bandwidth guarantees. The experiment loads CNN and SNASNet SNN checkpoints and uses actual model outputs. It does not emulate a measured Jetson Nano deployment.
+
+Remote requests carry run, session, request, and sample identities plus a SHA-256 image hash. Server responses and logs are checked against client records, including endpoints and final predictions. All three repetitions passed these association checks: 323, 323, and 321 remote requests were matched. These counts include remote-only and oracle policies; they are not the offload counts of the latency-feedback policy alone.
+
+Request duration ends at local prediction or remote response completion. It includes the local SNN phase when confidence is needed before offloading. Image acquisition and initial payload preparation, subsequent feedback computation, and CSV logging are outside this timing interval. Remote execution transfers a 3,072-byte image plus framing and response traffic.
+
+\subsection{Buffer-Controlled Network Campaign}
+A separate two-switch Mininet/Open vSwitch topology compared shared and static per-class service in six paired repetitions, with three pairs in each execution order. The pair-order schedule was shuffled using a recorded seed. Each case rebuilt its topology. This experiment used traffic generators, not the inference requests from the preceding experiment.
+
+The shared leaf had a 1,500,000-byte FIFO limit. Four static leaves each had a 375,000-byte FIFO limit. The installed hierarchy and limits were verified. Equal aggregate capacity does not imply a common shared buffer pool or equal queueing delay. A background-source netem queue with 1 ms delay and a 1,000-packet limit was retained identically in both configurations.
+
+A 19 Mbps UDP background sender ran for 26 s. Three TCP clients began after 3 s and ran for 18 s. Three concurrent 100 Kbps UDP probes, using 1,200-byte payloads, began after a further 2 s and ran for 10 s. A six-second target window sampled background-ingress and bottleneck-egress interface counters after probe startup. Process-alive checks do not prove continuous transmission within every instant of that window.
+
+Receiver throughput is reconstructed from receiver interval bytes divided by the receiver interval span. These spans differ between flows and configurations; their averages are not summed as synchronized aggregate goodput. UDP loss is the receiver-reported final value. Jitter is the final iperf3 estimator, not mean latency or a run-averaged jitter series.
+
+\subsection{Analysis and Scope}
+Each topology/process repetition is the unit for descriptive variability. Tables report arithmetic means and sample SDs across repetitions. SDs are not confidence intervals. Request-level observations are not treated as independent process repetitions, and repeated accuracy on the same images does not establish generalization uncertainty. All scheduled completed runs were retained. No confirmatory significance test or universal SLA guarantee is claimed.
+
+\section{Results}
+\label{sec:results}
+\subsection{Real-Model Placement and Feedback}
+Table~\ref{tab:inference} summarizes run-level results. Local CNN execution was the fastest option and had the highest evaluated accuracy, tied with remote CNN. The tested SNN was not a faster software prefilter on this workstation. The fixed policy offloaded one request per repetition; latency feedback offloaded 11, 11, and 10 requests.
+
+\begin{table*}[!t]
+\centering
+\caption{Real-model inference: mean $\pm$ sample SD across three repetitions of the same 300-image set. Accuracy is evaluated on this set, not a new full-test-set accuracy estimate.}
+\label{tab:inference}
+\begin{tabular}{lccc}
+\toprule
+Policy & Mean request duration (ms) & Evaluated accuracy (\%) & Offloaded requests (\%)\\
+\midrule
+Local CNN & $1.378\pm0.013$ & $95.667\pm0.000$ & $0$\\
+Local SNN & $11.724\pm0.018$ & $92.667\pm0.000$ & $0$\\
+Remote CNN & $18.798\pm0.016$ & $95.667\pm0.000$ & $100$\\
+Fixed threshold & $12.414\pm0.966$ & $93.000\pm0.000$ & $0.333\pm0.000$\\
+Latency feedback & $12.477\pm0.027$ & $93.667\pm0.333$ & $3.556\pm0.192$\\
+Label-oracle feedback & $12.519\pm0.057$ & $93.667\pm0.333$ & $3.556\pm0.192$\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Feedback increased evaluated accuracy relative to the fixed threshold but did not lower its overall mean request duration. Its mean was lower in repetition 2 and higher in repetitions 1 and 3. This is a measured operating trade-off, not evidence of universal policy dominance. Both feedback variants reached the upper threshold bound of 0.9 in all repetitions. Bounded execution and causal update application do not establish optimal control or convergence to an interior equilibrium.
+
+\begin{figure*}[!t]
+\centering
+\evidencefigure{real_inference_policy_comparison.pdf}{Real-model policy comparison. Points represent the three run-level observations; open diamonds show arithmetic means. The label-oracle policy consumes ground-truth labels. The same 300 images are reused.}
+\label{fig:inference}
+\end{figure*}
+\begin{figure*}[!t]
+\centering
+\evidencefigure{causal_feedback_thresholds.pdf}{Thresholds applied to subsequent requests after each completed feedback window. The bounds are 0.30 and 0.90. Reaching the upper bound is not interpreted as optimal-policy convergence.}
+\label{fig:feedback}
+\end{figure*}
+
+\subsection{Static Service Differentiation}
+Table~\ref{tab:traffic} shows the throughput redistribution. Static service increased throughput for the three designated classes while decreasing background throughput. This is not an improvement for every flow or proof of higher total network throughput.
+\begin{table}[!t]
+\centering
+\caption{Receiver throughput (Mbps): mean $\pm$ sample SD across six runs per configuration.}
+\label{tab:traffic}
+\begin{tabular}{lcc}
+\toprule
+Class & Shared & Static per-class\\
+\midrule
+Autonomous & $1.374\pm0.802$ & $8.591\pm0.041$\\
+Healthcare & $0.539\pm0.652$ & $6.103\pm0.014$\\
+Industrial & $0.275\pm0.055$ & $3.437\pm0.026$\\
+Background & $17.476\pm0.366$ & $1.596\pm0.002$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Within-pair background-ingress differences were at most approximately 0.0033 Mbps in magnitude. The measured ingress rates were approximately 19.66 Mbps at the interface counter boundary; the application sender rate was approximately 19 Mbps. These are different accounting boundaries and are reported separately, not forced to equality.
+
+\begin{figure*}[!t]
+\centering
+\evidencefigure{paired_receiver_throughput.pdf}{Receiver throughput in six paired repetitions under equal aggregate leaf-buffer capacity. Lines connect matched runs, not time samples. The NSSON label refers only to the static-QoS component, not a full inference-aware controller. Background traffic is included to expose the allocation trade-off.}
+\label{fig:traffic}
+\end{figure*}
+
+All 18 static probe tests reported zero loss, with sender and receiver-accounted totals of 105 packets per test. Baseline mean receiver-reported loss was 10.794\%, 19.661\%, and 25.176\% for autonomous, healthcare, and industrial probes. Six baseline reports accounted for one or two fewer packets than their senders; their reported percentages were retained without adjustment. The available logs do not establish why those totals differ. Zero observed loss in these short tests is not a general loss-free guarantee.
+
+\begin{table*}[!t]
+\centering
+\caption{Concurrent probes: run-level mean $\pm$ sample SD across six runs. Jitter denotes the final receiver-reported estimator.}
+\label{tab:probes}
+\begin{tabular}{lcccc}
+\toprule
+Class & Shared loss (\%) & Static loss (\%) & Shared jitter (ms) & Static jitter (ms)\\
+\midrule
+Autonomous & $10.794\pm6.221$ & $0$ & $0.700\pm0.202$ & $0.163\pm0.020$\\
+Healthcare & $19.661\pm15.218$ & $0$ & $0.568\pm0.153$ & $0.126\pm0.017$\\
+Industrial & $25.176\pm16.908$ & $0$ & $0.409\pm0.124$ & $0.320\pm0.015$\\
+\bottomrule
+\end{tabular}
+\end{table*}
+\begin{figure*}[!t]
+\centering
+\evidencefigure{paired_probe_loss.pdf}{Receiver-reported loss of concurrent 100 Kbps probes. Six baseline packet-total discrepancies are documented separately; reported loss values are not silently redefined. Points show runs and open diamonds show means.}
+\label{fig:loss}
+\end{figure*}
+\begin{figure*}[!t]
+\centering
+\evidencefigure{paired_probe_jitter.pdf}{Final receiver-reported UDP jitter across six paired runs. Lower mean jitter does not imply improvement in every pair; industrial observations overlap between configurations.}
+\label{fig:jitter}
+\end{figure*}
+\begin{figure*}[!t]
+\centering
+\evidencefigure{paired_window_rates.pdf}{Interface rates over six-second target windows. Background ingress is closely matched; bottleneck egress is not claimed to improve under static allocation. Counter rates and application receiver throughput have different accounting boundaries.}
+\label{fig:windows}
+\end{figure*}
+
+\section{Discussion and Limitations}
+\label{sec:discussion}
+The inference and queue experiments provide complementary component evidence, not a measured cross-layer synergy. The inference experiment establishes actual execution, request matching, and causal threshold updates. The queue campaign establishes repeatable service differentiation under its tested workload. Neither experiment demonstrates that model confidence caused a Ryu flow action.
+
+The separate application-association diagnostic is not treated as controller-enforcement evidence: its stale and missing outcomes are assigned by client branches, and its summary includes only one completed remote request. A valid controller-association experiment would require independently recorded decisions, transport-flow mappings, controller actions, and observed forwarding behavior.
+
+The same workstation hosts local and remote workers, so results are not a comparison of physically separate edge hardware. The same 300 images are reused, confidence is uncalibrated, and only three inference process repetitions are available. The static network campaign has one background load, six pairs, short low-rate probes, and no measured inference deadlines. Equal aggregate leaf capacity does not independently control bandwidth allocation and buffer partitioning. No latency, reliability, or simultaneous per-slice SLA guarantee is established.
+
+Energy feedback is disabled in the inference experiment. This revision makes no quantitative energy claim because the reported experiments do not measure full originating-client or offloading-pipeline energy. Separate GPU power traces, if included in a future revision, require their own measurement-boundary and provenance checks; they cannot be substituted for Jetson measurements. Neural-network layer partitioning, wireless mobility, physical deployments, and integrated inference-aware control remain outside this evaluation.
+
+\subsection{Reproducibility}
+The retained artifacts include per-request client/server CSVs, feedback-update traces, topology configuration, per-run summaries, queue-limit checks, iperf3 JSON, interface-counter samples, campaign schedule, analysis CSVs, and locally generated matplotlib/seaborn figures. Checksummed copies of the two experiment directories have been archived locally. Local archival is not a claim of public availability; a persistent repository and access statement must be added before submission if required by the venue.
+
+\section{Conclusion}
+\label{sec:conclusion}
+NSSON provides an SDN-oriented prototype for component-level study of neuromorphic inference offloading and network service differentiation. Actual-model experiments demonstrate causal latency feedback and matched network requests, while showing that local CNN execution remains fastest on the tested workstation. A separate repeated network campaign shows that static allocation protects designated classes at a substantial background-throughput cost. These results support a bounded prototype evaluation, not universal adaptive superiority, integrated inference-aware orchestration, SLA enforcement, or energy savings. Future work should validate an explicit inference-to-flow mapping and evaluate it against the static service baseline under concurrent real inference traffic.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

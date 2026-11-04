@@ -1,0 +1,129 @@
+==================================================
+FILE: ./generate_qos_data.py
+6:#   - offload_feedback.csv (per-cycle offload ratio + theta + latency + power per mode)
+23:    "offload_only",
+30:    base = os.path.join(NSSON_ROOT, "offload", mode)
+33:        "power": os.path.join(base, "power_log.csv"),
+34:        "decision": os.path.join(base, "decision_log.json"),
+45:    # per paper: sense_sec, compute_sec, transfer_sec, idle_sec, total_sec
+48:        "compute_sec": "compute_sec",
+50:        "idle_sec": "idle_sec",
+54:        "data_mb": "data_mb",
+55:        "compute_sec": "compute_sec",
+56:        "idle_sec": "idle_sec",
+57:        "compute_power_w": "compute_power_w",
+58:        "transfer_power_w": "transfer_power_w",
+59:        "idle_power_w": "idle_power_w",
+68:def parse_decision_log(decision_path, mode):
+70:    if not os.path.exists(decision_path):
+72:    with open(decision_path, "r") as f:
+78:            # Telemetry fields per paper: sample_id, confidence, decision, threshold/theta, timestamp
+89:def build_offload_feedback(decisions_df, lat_pow_df):
+90:    if decisions_df.empty or lat_pow_df.empty:
+93:    if "threshold" not in decisions_df.columns:
+94:        decisions_df = decisions_df.copy()
+95:        decisions_df["threshold"] = 0.6  # default fallback
+97:    agg = decisions_df.groupby(["mode", "cycle"]).agg(
+98:        offload_ratio=("decision", lambda s: np.mean(np.array(s) == "offload")),
+147:def build_qos_metrics(config, lat_pow_df, offload_df, routing_df):
+159:    if offload_df.empty:
+161:        df["offload_ratio"] = np.nan
+165:            offload_df[["mode", "cycle", "offload_ratio", "threshold"]],
+226:    all_offload = []
+235:        decisions_df = parse_decision_log(paths["decision"], mode)
+236:        offload_df = build_offload_feedback(decisions_df, lat_pow_df)
+237:        if not offload_df.empty:
+238:            all_offload.append(offload_df)
+245:        qos_df = build_qos_metrics(config, lat_pow_df, offload_df, routing_df)
+251:    offload_feedback_df = pd.concat(all_offload, ignore_index=True) if all_offload else pd.DataFrame()
+265:    if offload_feedback_df.empty:
+266:        print("[WARN] No offload feedback data generated.")
+268:        offload_feedback_df.to_csv(os.path.join(NSSON_ROOT, "offload_feedback.csv"), index=False)
+269:        print("Written offload_feedback.csv in", NSSON_ROOT)
+==================================================
+FILE: ./powermodel.py
+5:LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+6:POWER_LOG = os.path.join(NSSON_ROOT, "logs", "offloadpowerlog.csv")
+18:        Lcompute = row["compute_sec"]
+20:        Lidle = row["idle_sec"]
+31:            "data_mb": mb_per_cycle,
+32:            "compute_sec": Lcompute,
+33:            "idle_sec": Lidle,
+34:            "compute_power_w": Pcompute,
+35:            "transfer_power_w": Ptransfer,
+36:            "idle_power_w": Pidle,
+38:            "energy_j": E,
+49:                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+==================================================
+FILE: ./qos/qos_metrics_builder.py
+11:DECISION_LOG = os.path.join(NSSON_ROOT, "offload", "decision_log.json")
+12:LATENCY_LOG = os.path.join(NSSON_ROOT, "offload", "latency_log.csv")
+13:POWER_LOG = os.path.join(NSSON_ROOT, "offload", "power_log.csv")
+21:OFFLOAD_FEEDBACK_CSV = os.path.join(NSSON_ROOT, "offload_feedback.csv")
+36:def parse_decision_log():
+64:def build_offload_feedback(decisions_df, lat_pow_df):
+65:    agg = decisions_df.groupby("cycle").agg(
+66:        offload_ratio=("decision", lambda s: np.mean(s == "offload")),
+95:def build_qos_metrics(config, lat_pow_df, offload_feedback_df, flow_df):
+105:    df = lat_pow_df.merge(offload_feedback_df[["cycle", "offload_ratio", "threshold"]],
+160:    decisions_df = parse_decision_log()
+165:    offload_feedback_df = build_offload_feedback(decisions_df, lat_pow_df)
+166:    offload_feedback_df.to_csv(OFFLOAD_FEEDBACK_CSV, index=False)
+171:    qos_df = build_qos_metrics(config, lat_pow_df, offload_feedback_df, flow_df)
+==================================================
+FILE: ./recompute_energy_correct.py
+5:BASE = Path("/home/avi/NSSON/offload")
+9:MODES = ["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"]
+19:    power_file = BASE / mode / "power_log.csv"
+21:    decision_file = BASE / mode / "decision_log.json"
+39:        "cycle", "data_mb", "compute_sec", "idle_sec",
+47:    df["energy_compute_J"] = W_C * df["compute_sec"]
+48:    df["energy_idle_J"] = W_I * df["idle_sec"]
+49:    df["energy_transfer_J"] = W_T * df["data_mb"]
+59:    df["original_logged_energy_J"] = df["energy_j"]
+65:    decisions = []
+66:    if decision_file.exists():
+67:        with open(decision_file) as f:
+71:                    decisions.append(json.loads(line))
+73:    offload_count = sum(1 for x in decisions if x.get("decision") == "offload")
+74:    local_count = sum(1 for x in decisions if x.get("decision") == "local")
+76:    threshold_file = decision_file.parent / "threshold_log.csv"
+84:        "offload_count": offload_count,
+86:        "offload_ratio": offload_count / len(df) if len(df) else None,
+111:        f"offload={row['offload_ratio']:.2f} | "
+==================================================
+FILE: ./revision_energy_audit_20261102_104221_dXdAaO/audit.py
+62:    row for row in clients if row["decision"] == "offload"
+134:    if row["decision"] == "local" and rpc != 0:
+137:    if row["decision"] == "offload" and rpc <= 0:
+156:        "decision": row["decision"],
+163:        "energy_j": "",
+177:        "offloaded": sum(r["decision"] == "offload" for r in rows),
+280:        "No feedback-controlled decision or QoS improvement is established.",
+==================================================
+FILE: ./revision_energy_audit_20261102_104221_dXdAaO/energy_model.py
+49:    energy_j = math.fsum(components_j.values())
+50:    average_power_w = energy_j / total_s
+60:        "component_energy_j": components_j,
+61:        "energy_j": energy_j,
+62:        "energy_wh": energy_j / 3600.0,
+76:    assert math.isclose(result["energy_j"], 10.0)
+89:    assert math.isclose(result["energy_j"], 10.0)
+==================================================
+FILE: ./revision_energy_audit_20261102_105931_3Jk2YC/audit.py
+62:    row for row in clients if row["decision"] == "offload"
+134:    if row["decision"] == "local" and rpc != 0:
+137:    if row["decision"] == "offload" and rpc <= 0:
+156:        "decision": row["decision"],
+163:        "energy_j": "",
+177:        "offloaded": sum(r["decision"] == "offload" for r in rows),
+280:        "No feedback-controlled decision or QoS improvement is established.",
+==================================================
+FILE: ./revision_energy_audit_20261102_105931_3Jk2YC/energy_model.py
+49:    energy_j = math.fsum(components_j.values())
+50:    average_power_w = energy_j / total_s
+60:        "component_energy_j": components_j,
+61:        "energy_j": energy_j,
+62:        "energy_wh": energy_j / 3600.0,
+76:    assert math.isclose(result["energy_j"], 10.0)
+89:    assert math.isclose(result["energy_j"], 10.0)

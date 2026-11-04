@@ -1,0 +1,2 @@
+run_id,session_id,request_id,sample_id,client_ip,client_port,server_ip,server_port,image_sha256,prediction,confidence_uncalibrated,server_inference_sec
+revision_sdn_association_20261102_113725_XsYD4j,e86a0ebc-ec3f-4d54-b6df-172a1fdd20b8,session0:9:2395,2395,10.241.77.1,46886,10.241.77.2,8090,ca45dc521165406b6aedea9da02865991c3ce6cb0aca77d3741583220b0835b9,7,0.9971963167190552,0.002010242

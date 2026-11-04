@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py", line 830, in <module>
+    main()
+  File "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py", line 823, in main
+    run_server(args)
+  File "/home/avi/NSSON/revision_network_20261102_093547_55OiCB/network_smoke.py", line 182, in run_server
+    listener.bind((SERVER_IP, SERVER_PORT))
+OSError: [Errno 99] Cannot assign requested address

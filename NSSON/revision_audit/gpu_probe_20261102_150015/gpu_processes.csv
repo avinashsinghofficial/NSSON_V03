@@ -1,0 +1,6 @@
+pid, process_name, used_gpu_memory [MiB]
+30329, /home/avi/NSSON/.venv_nsson_gpu/bin/python3, 218 MiB
+30949, /home/avi/NSSON/.venv_nsson_gpu/bin/python3, 218 MiB
+31597, /home/avi/NSSON/.venv_nsson_gpu/bin/python3, 218 MiB
+31942, /home/avi/NSSON/.venv_nsson_gpu/bin/python3, 218 MiB
+32300, /home/avi/NSSON/.venv_nsson_gpu/bin/python3, 218 MiB

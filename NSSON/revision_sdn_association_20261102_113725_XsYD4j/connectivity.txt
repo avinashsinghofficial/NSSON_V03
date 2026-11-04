@@ -1,0 +1,7 @@
+PING 10.241.77.2 (10.241.77.2) 56(84) bytes of data.
+64 bytes from 10.241.77.2: icmp_seq=1 ttl=64 time=17.2 ms
+64 bytes from 10.241.77.2: icmp_seq=2 ttl=64 time=8.08 ms
+
+--- 10.241.77.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 8.081/12.646/17.211/4.565 ms

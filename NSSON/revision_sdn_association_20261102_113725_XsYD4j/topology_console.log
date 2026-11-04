@@ -1,0 +1,98 @@
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+*** Configuring hosts
+ns2b6abec ns2b6aber 
+*** Starting controller
+
+*** Starting 1 switches
+ns2b6abes (20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+...(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+(20.00Mbit 2ms delay) *** Error: Warning: sch_htb: quantum of class 50001 is big. Consider r2q change.
+
+PING 10.241.77.2 (10.241.77.2) 56(84) bytes of data.
+64 bytes from 10.241.77.2: icmp_seq=1 ttl=64 time=17.2 ms
+64 bytes from 10.241.77.2: icmp_seq=2 ttl=64 time=8.08 ms
+
+--- 10.241.77.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 8.081/12.646/17.211/4.565 ms
+
+{
+  "status": "completed",
+  "results_directory": "/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j",
+  "total_requests": 40,
+  "completed_remote_requests": 1,
+  "matched_server_records": 1,
+  "observed_identity_mismatches": 0,
+  "session_results": {
+    "sessions": [
+      {
+        "session_id": "2906cfa7-1e86-4ef9-bad5-915158b47fb1",
+        "test_case": "delayed",
+        "requests": 10,
+        "offloaded": 0,
+        "completed_remote": 0,
+        "rejected_stale": 0,
+        "rejected_missing": 0
+      },
+      {
+        "session_id": "e8e90de8-6918-4e5f-8035-6bc60d97e546",
+        "test_case": "missing",
+        "requests": 10,
+        "offloaded": 10,
+        "completed_remote": 0,
+        "rejected_stale": 0,
+        "rejected_missing": 10
+      },
+      {
+        "session_id": "e86a0ebc-ec3f-4d54-b6df-172a1fdd20b8",
+        "test_case": "normal",
+        "requests": 10,
+        "offloaded": 1,
+        "completed_remote": 1,
+        "rejected_stale": 0,
+        "rejected_missing": 0
+      },
+      {
+        "session_id": "6629388e-01b8-483f-8568-9394616c1af5",
+        "test_case": "stale",
+        "requests": 10,
+        "offloaded": 10,
+        "completed_remote": 0,
+        "rejected_stale": 10,
+        "rejected_missing": 0
+      }
+    ],
+    "scope": "Concurrent application sessions; functional registration association only."
+  },
+  "limitations": [
+    "Functional concurrent-session association test.",
+    "Controller records registrations; it does not install flows.",
+    "Static OpenFlow forwarding only.",
+    "No QoS queues, SLAs, slicing, or adaptive routing.",
+    "No Jetson measurements.",
+    "Local SNN inference sequential; network requests concurrent."
+  ]
+}
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py", line 201, in run_topology
+    try: os.killpg(p.pid,signal.SIGTERM); p.wait(timeout=5)
+ProcessLookupError: [Errno 3] No such process
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py", line 216, in <module>
+    try: main()
+  File "/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py", line 212, in main
+    run_topology(a)
+  File "/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py", line 205, in run_topology
+    p.wait(timeout=5)
+  File "/usr/lib/python3.10/subprocess.py", line 1209, in wait
+    return self._wait(timeout=timeout)
+  File "/usr/lib/python3.10/subprocess.py", line 1951, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['mnexec', '-a', '32083', 'setpriv', '--reuid', '1000', '--regid', '1000', '--init-groups', 'env', 'HOME=/home/avi', 'USER=avi', 'LOGNAME=avi', 'PYTHONPATH=/home/avi/NSSON', 'NSSON_EXPECTED_NETNS=net:[4026533634]', 'PYTHONUNBUFFERED=1', 'MPLBACKEND=Agg', '/home/avi/NSSON/.venv_nsson_gpu/bin/python3', '-u', '/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j/sdn_test.py', '--role', 'server', '--out', '/home/avi/NSSON/revision_sdn_association_20261102_113725_XsYD4j']' timed out after 5 seconds

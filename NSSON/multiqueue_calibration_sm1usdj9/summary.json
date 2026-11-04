@@ -1,0 +1,42 @@
+{
+  "purpose": "Multi-queue calibration, not NSSON evaluation",
+  "parent_limit_mbps": 20,
+  "background_offered_mbps": 19,
+  "launch_epoch": {
+    "background": 1793643618.8717651,
+    "autonomous": 1793643620.8740659,
+    "healthcare": 1793643620.8752208,
+    "industrial": 1793643620.8757353
+  },
+  "tcp_results": [
+    {
+      "slice": "autonomous",
+      "queue_id": 1,
+      "minimum_mbps": 8,
+      "maximum_mbps": 15,
+      "receiver_mbps": 8.621569284448727,
+      "receiver_bytes": 17432576,
+      "receiver_seconds": 16.17578
+    },
+    {
+      "slice": "healthcare",
+      "queue_id": 2,
+      "minimum_mbps": 6,
+      "maximum_mbps": 10,
+      "receiver_mbps": 6.121150389926027,
+      "receiver_bytes": 12451840,
+      "receiver_seconds": 16.273856
+    },
+    {
+      "slice": "industrial",
+      "queue_id": 3,
+      "minimum_mbps": 3,
+      "maximum_mbps": 6,
+      "receiver_mbps": 3.393260667583226,
+      "receiver_bytes": 6946816,
+      "receiver_seconds": 16.377913
+    }
+  ],
+  "sum_separate_tcp_receiver_averages_mbps": 18.135980341957982,
+  "scope_note": "Per-flow averages have separate timing boundaries; their sum is diagnostic, not synchronized aggregate goodput."
+}

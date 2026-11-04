@@ -1,0 +1,1252 @@
+1 RLock(s) were not greened, to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+loading app /home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py
+loading app ryu.controller.ofp_handler
+instantiating app /home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py of NSSONMultiSliceSLAController
+NSSON multi-slice SLA controller started; TCP map={8090: 'autonomous', 8091: 'healthcare', 8092: 'industrial'}; UDP map={9090: 'autonomous', 9091: 'healthcare', 9092: 'industrial', 5001: 'background'}
+instantiating app ryu.controller.ofp_handler of OFPHandler
+Installed table-miss rule on datapath=1
+Installed table-miss rule on datapath=2
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=6 src_port=51726 dst_port=8090 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.1', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 51726, 'tcp_dst': 8090} out=5
+PacketIn dpid=2 in=3 out=1 proto=6 src_port=51726 dst_port=8090 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=2 slice=autonomous priority=400 queue=1 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.1', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 51726, 'tcp_dst': 8090} out=1
+PacketIn dpid=2 in=1 out=3 proto=6 src_port=8090 dst_port=51726 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=2 slice=autonomous priority=400 queue=1 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51726} out=3
+PacketIn dpid=1 in=5 out=1 proto=6 src_port=8090 dst_port=51726 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51726} out=1
+PacketIn dpid=1 in=5 out=1 proto=6 src_port=8090 dst_port=51726 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51726} out=1
+PacketIn dpid=1 in=5 out=1 proto=6 src_port=8090 dst_port=51726 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51726} out=1
+PacketIn dpid=1 in=5 out=1 proto=6 src_port=8090 dst_port=51726 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51726} out=1
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=2 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=6 src_port=50254 dst_port=8091 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 2, 'eth_type': 2048, 'ipv4_src': '10.20.0.2', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 50254, 'tcp_dst': 8091} out=5
+PacketIn dpid=2 in=3 out=1 proto=6 src_port=50254 dst_port=8091 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.2', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 50254, 'tcp_dst': 8091} out=1
+PacketIn dpid=2 in=1 out=3 proto=6 src_port=8091 dst_port=50254 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 6, 'tcp_src': 8091, 'tcp_dst': 50254} out=3
+PacketIn dpid=1 in=5 out=2 proto=6 src_port=8091 dst_port=50254 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 6, 'tcp_src': 8091, 'tcp_dst': 50254} out=2
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=6 src_port=48822 dst_port=8092 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.3', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 48822, 'tcp_dst': 8092} out=5
+PacketIn dpid=2 in=3 out=1 proto=6 src_port=48822 dst_port=8092 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.3', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 48822, 'tcp_dst': 8092} out=1
+PacketIn dpid=2 in=1 out=3 proto=6 src_port=8092 dst_port=48822 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 6, 'tcp_src': 8092, 'tcp_dst': 48822} out=3
+PacketIn dpid=1 in=5 out=3 proto=6 src_port=8092 dst_port=48822 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 6, 'tcp_src': 8092, 'tcp_dst': 48822} out=3
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=2 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=6 src_port=51734 dst_port=8090 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.1', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 51734, 'tcp_dst': 8090} out=5
+PacketIn dpid=1 in=2 out=5 proto=6 src_port=50264 dst_port=8091 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 2, 'eth_type': 2048, 'ipv4_src': '10.20.0.2', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 50264, 'tcp_dst': 8091} out=5
+PacketIn dpid=1 in=3 out=5 proto=6 src_port=48828 dst_port=8092 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.3', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 48828, 'tcp_dst': 8092} out=5
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=6 src_port=51734 dst_port=8090 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=2 slice=autonomous priority=400 queue=1 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.1', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 51734, 'tcp_dst': 8090} out=1
+PacketIn dpid=2 in=3 out=1 proto=6 src_port=50264 dst_port=8091 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.2', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 50264, 'tcp_dst': 8091} out=1
+PacketIn dpid=2 in=3 out=1 proto=6 src_port=48828 dst_port=8092 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.3', 'ipv4_dst': '10.20.0.10', 'ip_proto': 6, 'tcp_src': 48828, 'tcp_dst': 8092} out=1
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=6 src_port=8090 dst_port=51734 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=2 slice=autonomous priority=400 queue=1 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51734} out=3
+PacketIn dpid=1 in=5 out=1 proto=6 src_port=8090 dst_port=51734 matched_port=8090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 6, 'tcp_src': 8090, 'tcp_dst': 51734} out=1
+PacketIn dpid=2 in=1 out=3 proto=6 src_port=8091 dst_port=50264 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 6, 'tcp_src': 8091, 'tcp_dst': 50264} out=3
+PacketIn dpid=2 in=1 out=3 proto=6 src_port=8092 dst_port=48828 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 6, 'tcp_src': 8092, 'tcp_dst': 48828} out=3
+PacketIn dpid=2 in=2 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=2 proto=6 src_port=8091 dst_port=50264 matched_port=8091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 6, 'tcp_src': 8091, 'tcp_dst': 50264} out=2
+PacketIn dpid=1 in=5 out=3 proto=6 src_port=8092 dst_port=48828 matched_port=8092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 6, 'tcp_src': 8092, 'tcp_dst': 48828} out=3
+PacketIn dpid=1 in=4 out=5 proto=17 src_port=35412 dst_port=5001 matched_port=5001 slice=background queue=0 priority=10
+Installed flow dpid=1 slice=background priority=10 queue=0 match={'in_port': 4, 'eth_type': 2048, 'ipv4_src': '10.20.0.11', 'ipv4_dst': '10.20.0.12', 'ip_proto': 17, 'udp_src': 35412, 'udp_dst': 5001} out=5
+PacketIn dpid=1 in=4 out=5 proto=17 src_port=35412 dst_port=5001 matched_port=5001 slice=background queue=0 priority=10
+Installed flow dpid=1 slice=background priority=10 queue=0 match={'in_port': 4, 'eth_type': 2048, 'ipv4_src': '10.20.0.11', 'ipv4_dst': '10.20.0.12', 'ip_proto': 17, 'udp_src': 35412, 'udp_dst': 5001} out=5
+PacketIn dpid=1 in=4 out=5 proto=17 src_port=35412 dst_port=5001 matched_port=5001 slice=background queue=0 priority=10
+Installed flow dpid=1 slice=background priority=10 queue=0 match={'in_port': 4, 'eth_type': 2048, 'ipv4_src': '10.20.0.11', 'ipv4_dst': '10.20.0.12', 'ip_proto': 17, 'udp_src': 35412, 'udp_dst': 5001} out=5
+PacketIn dpid=1 in=4 out=5 proto=17 src_port=35412 dst_port=5001 matched_port=5001 slice=background queue=0 priority=10
+Installed flow dpid=1 slice=background priority=10 queue=0 match={'in_port': 4, 'eth_type': 2048, 'ipv4_src': '10.20.0.11', 'ipv4_dst': '10.20.0.12', 'ip_proto': 17, 'udp_src': 35412, 'udp_dst': 5001} out=5
+PacketIn dpid=2 in=3 out=2 proto=17 src_port=35412 dst_port=5001 matched_port=5001 slice=background queue=0 priority=10
+Installed flow dpid=2 slice=background priority=10 queue=0 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.11', 'ipv4_dst': '10.20.0.12', 'ip_proto': 17, 'udp_src': 35412, 'udp_dst': 5001} out=2
+PacketIn dpid=2 in=3 out=2 proto=17 src_port=35412 dst_port=5001 matched_port=5001 slice=background queue=0 priority=10
+Installed flow dpid=2 slice=background priority=10 queue=0 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.11', 'ipv4_dst': '10.20.0.12', 'ip_proto': 17, 'udp_src': 35412, 'udp_dst': 5001} out=2
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=17 src_port=55397 dst_port=9090 matched_port=9090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.1', 'ipv4_dst': '10.20.0.10', 'ip_proto': 17, 'udp_src': 55397, 'udp_dst': 9090} out=5
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=17 src_port=55397 dst_port=9090 matched_port=9090 slice=autonomous queue=1 priority=400
+Installed flow dpid=2 slice=autonomous priority=400 queue=1 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.1', 'ipv4_dst': '10.20.0.10', 'ip_proto': 17, 'udp_src': 55397, 'udp_dst': 9090} out=1
+PacketIn dpid=2 in=3 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9090 dst_port=55397 matched_port=9090 slice=autonomous queue=1 priority=400
+Installed flow dpid=2 slice=autonomous priority=400 queue=1 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 17, 'udp_src': 9090, 'udp_dst': 55397} out=3
+PacketIn dpid=1 in=5 out=1 proto=17 src_port=9090 dst_port=55397 matched_port=9090 slice=autonomous queue=1 priority=400
+Installed flow dpid=1 slice=autonomous priority=400 queue=1 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.1', 'ip_proto': 17, 'udp_src': 9090, 'udp_dst': 55397} out=1
+PacketIn dpid=1 in=2 out=5 proto=17 src_port=38683 dst_port=9091 matched_port=9091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 2, 'eth_type': 2048, 'ipv4_src': '10.20.0.2', 'ipv4_dst': '10.20.0.10', 'ip_proto': 17, 'udp_src': 38683, 'udp_dst': 9091} out=5
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=2 in=3 out=1 proto=17 src_port=38683 dst_port=9091 matched_port=9091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.2', 'ipv4_dst': '10.20.0.10', 'ip_proto': 17, 'udp_src': 38683, 'udp_dst': 9091} out=1
+PacketIn dpid=1 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=17 src_port=5353 dst_port=5353 matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=17 src_port=58259 dst_port=9092 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.3', 'ipv4_dst': '10.20.0.10', 'ip_proto': 17, 'udp_src': 58259, 'udp_dst': 9092} out=5
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=2 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9091 dst_port=38683 matched_port=9091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 17, 'udp_src': 9091, 'udp_dst': 38683} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9091 dst_port=38683 matched_port=9091 slice=healthcare queue=2 priority=300
+Installed flow dpid=2 slice=healthcare priority=300 queue=2 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 17, 'udp_src': 9091, 'udp_dst': 38683} out=3
+PacketIn dpid=1 in=5 out=2 proto=17 src_port=9091 dst_port=38683 matched_port=9091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 17, 'udp_src': 9091, 'udp_dst': 38683} out=2
+PacketIn dpid=1 in=5 out=2 proto=17 src_port=9091 dst_port=38683 matched_port=9091 slice=healthcare queue=2 priority=300
+Installed flow dpid=1 slice=healthcare priority=300 queue=2 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.2', 'ip_proto': 17, 'udp_src': 9091, 'udp_dst': 38683} out=2
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=2 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=2 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=1 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=2 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=17 src_port=58259 dst_port=9092 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 3, 'eth_type': 2048, 'ipv4_src': '10.20.0.3', 'ipv4_dst': '10.20.0.10', 'ip_proto': 17, 'udp_src': 58259, 'udp_dst': 9092} out=1
+PacketIn dpid=2 in=3 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=2 in=1 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=2 slice=industrial priority=200 queue=3 match={'in_port': 1, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=5 out=3 proto=17 src_port=9092 dst_port=58259 matched_port=9092 slice=industrial queue=3 priority=200
+Installed flow dpid=1 slice=industrial priority=200 queue=3 match={'in_port': 5, 'eth_type': 2048, 'ipv4_src': '10.20.0.10', 'ipv4_dst': '10.20.0.3', 'ip_proto': 17, 'udp_src': 9092, 'udp_dst': 58259} out=3
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=1 in=3 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+NSSONMultiSliceSLAController: Exception occurred during handler processing. Backtrace from offending handler [packet_in_handler] servicing event [EventOFPPacketIn] follows.
+Traceback (most recent call last):
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/base/app_manager.py", line 290, in _event_loop
+    handler(ev)
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 303, in packet_in_handler
+    self.add_flow(
+  File "/home/avi/NSSON_V02/controllers/nsson_multislice_sla_controller.py", line 172, in add_flow
+    datapath.send_msg(flow_mod)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/controller/controller.py", line 444, in send_msg
+    msg.serialize()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_parser.py", line 270, in serialize
+    self._serialize_body()
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 2743, in _serialize_body
+    match_len = self.match.serialize(self.buf, offset)
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/ofproto_v1_3_parser.py", line 1058, in serialize
+    field_offset += ofproto.oxm_serialize(n, value, mask, buf,
+  File "/home/avi/NSSON/.venv_nsson_gpu/lib/python3.10/site-packages/ryu/ofproto/oxx_fields.py", line 253, in _serialize
+    value_len = len(value)
+TypeError: object of type 'NoneType' has no len()
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=5 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=4 out=4294967291 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=2 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=2 out=3 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=1 in=5 out=4 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10
+PacketIn dpid=2 in=3 out=1 proto=None src_port=None dst_port=None matched_port=None slice=background queue=0 priority=10

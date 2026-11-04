@@ -1,0 +1,48 @@
+     1	import os
+     2	import time
+     3	import pandas as pd
+     4	import numpy as np
+     5	
+     6	NSSON_ROOT = "/home/avi/NSSON_V02"
+     7	LATENCY_LOG = os.path.join(NSSON_ROOT, "logs", "offloadlatencylog.csv")
+     8	
+     9	def measure_latency(cycles=300, mode="adaptive_no_sdn"):
+    10	    rows = []
+    11	    np.random.seed(42)
+    12	    for cycle in range(cycles):
+    13	        t0 = time.time()
+    14	        time.sleep(0.01)  # sense
+    15	        t1 = time.time()
+    16	        time.sleep(0.02)  # compute
+    17	        t2 = time.time()
+    18	        time.sleep(0.01)  # transfer
+    19	        t3 = time.time()
+    20	        time.sleep(0.005) # idle
+    21	        t4 = time.time()
+    22	
+    23	        Lsense = t1 - t0
+    24	        Lcompute = t2 - t1
+    25	        Ltransfer = t3 - t2
+    26	        Lidle = t4 - t3
+    27	        Le2e = Lsense + Lcompute + Ltransfer + Lidle
+    28	
+    29	        rows.append({
+    30	            "cycle": cycle,
+    31	            "sense_sec": Lsense,
+    32	            "compute_sec": Lcompute,
+    33	            "transfer_sec": Ltransfer,
+    34	            "idle_sec": Lidle,
+    35	            "total_sec": Le2e,
+    36	            "mode": mode,
+    37	        })
+    38	
+    39	    pd.DataFrame(rows).to_csv(LATENCY_LOG, index=False)
+    40	    print("Latency log written to", LATENCY_LOG)
+    41	
+    42	if __name__ == "__main__":
+    43	    import argparse
+    44	    p = argparse.ArgumentParser()
+    45	    p.add_argument("--mode", required=True,
+    46	                   choices=["local_only", "offload_only", "adaptive_no_sdn", "nsson_full"])
+    47	    args = p.parse_args()
+    48	    measure_latency(cycles=300, mode=args.mode)

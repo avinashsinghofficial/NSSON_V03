@@ -1,0 +1,13 @@
+{
+  "model": "cnn",
+  "architecture": "nsson",
+  "profile": "jetson_emulator",
+  "nodes": 2,
+  "cycles": 1200,
+  "accuracy": 92.9982,
+  "avg_latency_ms": 28.8317,
+  "avg_power_mw": 154.8285,
+  "avg_throughput_fps": 38.3555,
+  "avg_rtt_ms": 30.5518,
+  "offload_ratio": 0.5575
+}
