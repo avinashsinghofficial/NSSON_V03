@@ -9,9 +9,3 @@ SDN-first neuromorphic surveillance pipeline for workstation + Jetson Nano DK + 
 4. Optionally start remote worker.
 5. Start workstation demo.
 
-## Core flow
-- Webcam frame -> proposal detector -> hand ROI generation -> SNN gate + local verifier.
-- ROI metadata -> Ryu controller decision API.
-- Controller chooses local / Jetson / remote + QoS class.
-- ROI sent to selected node.
-- Result fused, masked, logged.
